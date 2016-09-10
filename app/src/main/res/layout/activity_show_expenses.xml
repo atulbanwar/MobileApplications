@@ -1,0 +1,221 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.homework.mad.expenseapp.ShowExpenses">
+
+    <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:shrinkColumns="*"
+        android:stretchColumns="*"
+        android:background="#ffffff"
+        android:id="@+id/tableLayout1">
+
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:gravity="center_horizontal">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:text="Expense Details"
+                android:layout_span="4"
+                android:padding="18dip"
+                android:textColor="#000"
+                android:gravity="center"
+                android:textStyle="bold"/>
+        </TableRow>
+        <TableRow></TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow1"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+            <TextView
+                android:id="@+id/TextView11"
+                android:text="Name"
+                android:layout_weight="1"
+                android:textSize="18dp"
+                android:padding="10dip"
+                android:gravity="left"
+                />
+            <TextView
+                android:id="@+id/TextView12"
+                android:text="Phone Bill"
+                android:layout_weight="1"
+                android:textSize="18dp"
+                android:padding="10dip"
+                android:gravity="left"
+                android:layout_span="9"/>
+        </TableRow>
+        <TableRow></TableRow>
+
+
+        <TableRow
+            android:id="@+id/tableRow2"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+            <TextView
+                android:id="@+id/TextView21"
+                android:text="Category"
+                android:layout_weight="1"
+                android:textSize="18dp"
+                android:padding="10dip"
+                android:gravity="left"/>
+            <TextView
+                android:id="@+id/TextView22"
+                android:text="Invoice"
+                android:layout_weight="1"
+                android:textSize="18dp"
+                android:padding="10dip"
+                android:gravity="left"
+                android:layout_span="9"/>
+        </TableRow>
+        <TableRow></TableRow>
+
+
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+            <TextView
+                android:id="@+id/TextView31"
+                android:text="Amount"
+                android:layout_weight="1"
+                android:textSize="18dp"
+                android:padding="10dip"
+                android:gravity="left"/>
+            <TextView
+                android:id="@+id/TextView32"
+                android:text="$ 40"
+                android:layout_weight="1"
+                android:textSize="18dp"
+                android:padding="10dip"
+                android:gravity="left"
+                android:layout_span="9"/>
+        </TableRow>
+        <TableRow></TableRow>
+
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_height="wrap_content"
+            android:layout_width="match_parent">
+
+            <TextView
+                android:id="@+id/TextView41"
+                android:text="Date"
+                android:layout_weight="1"
+                android:textSize="18dp"
+                android:padding="10dip"
+                android:gravity="left"/>
+            <TextView
+                android:id="@+id/TextView42"
+                android:text="11/25/2016"
+                android:layout_weight="1"
+                android:textSize="18dp"
+                android:padding="10dip"
+                android:gravity="left"
+                android:layout_span="9"/>
+        </TableRow>
+        <TableRow></TableRow>
+    </TableLayout>
+
+    <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:shrinkColumns="*"
+        android:stretchColumns="*"
+        android:background="#ffffff"
+        android:id="@+id/tableLayout2"
+        android:layout_below="@+id/tableLayout1"
+        android:layout_centerHorizontal="true">
+
+        <TableRow
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:gravity="center_horizontal"
+            android:id="@+id/tableRow5">
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:text="Recipt Details"
+                android:layout_span="3"
+                android:padding="18dip"
+                android:textColor="#000"
+                android:gravity="center"
+                android:textStyle="bold"/>
+        </TableRow>
+        <TableRow></TableRow>
+
+        <TableRow
+
+            android:layout_height="wrap_content"
+            android:layout_width="fill_parent"
+            android:gravity="center_horizontal"
+            android:id="@+id/tableRow6">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView"
+                android:maxWidth="10dp"
+                android:maxHeight="10dp"
+                android:scaleType="fitCenter"
+                android:adjustViewBounds="true"/>
+        </TableRow>
+    </TableLayout>
+
+
+    <TableLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:shrinkColumns="*"
+        android:stretchColumns="*"
+        android:background="#ffffff"
+        android:layout_below="@+id/tableLayout2"
+        android:layout_centerHorizontal="true">
+
+        <TableRow>
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton2" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="New Button"
+                android:id="@+id/button" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton3" />
+
+            <ImageButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageButton4" />
+        </TableRow>
+
+    </TableLayout>
+</RelativeLayout>

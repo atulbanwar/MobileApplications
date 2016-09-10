@@ -16,6 +16,7 @@
         </activity>
         <activity android:name=".AddExpense"></activity>
         <activity android:name=".EditActivity"></activity>
+        <activity android:name=".ShowExpenses"></activity>
     </application>
 
 </manifest>

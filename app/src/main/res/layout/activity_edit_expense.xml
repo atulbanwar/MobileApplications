@@ -142,14 +142,14 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/action_add_expense"
+            android:text="@string/action_save"
             android:id="@+id/button_save_edit_expense"
             android:layout_weight="0.50"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/action_add_expense"
+            android:text="@string/action_cancel"
             android:id="@+id/button_cancel_edit_expense"
             android:layout_weight="0.50"/>
     </LinearLayout>

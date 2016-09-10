@@ -26,8 +26,11 @@
     <string name="action_select_expense">Select Expense</string>
     <string name="action_save">Save</string>
     <string name="action_cancel">Cancel</string>
-    <string name="action_edit_expense">Edit Expense</string>
+
+	<string name="action_edit_expense">Edit Expense</string>
     <string name="action_delete_expense">Delete Expense</string>
     <string name="action_show_expense">Show Expense</string>
     <string name="action_finish">Finish</string>
+
+	<string name="action_delete">Delete</string>
 </resources>

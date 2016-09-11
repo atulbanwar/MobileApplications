@@ -19,6 +19,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+/**
+ * Home Work 2
+ * Sanket Patil
+ * Atul Kumar Banwar
+ * AddExpense.java
+ */
 public class AddExpense extends Activity implements DatePickerDialog.OnDateSetListener {
     private Calendar calendar;
     private EditText edtTxtExpenseName;
@@ -59,7 +65,11 @@ public class AddExpense extends Activity implements DatePickerDialog.OnDateSetLi
         edtTxtDate.setText(DateFormat.format("MM-dd-yyyy", calendar.getTime()).toString());
     }
 
-    public void onImageGallaryClicked(View view) {
+    /**
+     * ImageButton handler (image picker)
+     * @param view
+     */
+    public void onImageGalleryClicked(View view) {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
@@ -83,6 +93,10 @@ public class AddExpense extends Activity implements DatePickerDialog.OnDateSetLi
         }
     }
 
+    /**
+     * Add expense button handler
+     * @param view
+     */
     public void addExpense(View view) {
         String expenseName = edtTxtExpenseName.getText().toString();
         String category = spnrCategory.getSelectedItem().toString();

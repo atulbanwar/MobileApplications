@@ -20,10 +20,17 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+/**
+ * Home Work 2
+ * Atul Kumar Banwar
+ * Sanket Patil
+ * DeleteExpense.java
+ */
+
 public class DeleteExpense extends Activity {
     private ArrayList<Expense> expenses;
     private Expense expense;
-    private int editExpenceIndex = -1;
+    private int editExpenseIndex = -1;
     private static final int SELECT_PICTURE = 1;
 
     private Button btnSelectExpense;
@@ -88,8 +95,8 @@ public class DeleteExpense extends Activity {
     }
     @Override
     public boolean onContextItemSelected(MenuItem item) {
-        editExpenceIndex = item.getItemId();
-        expense = expenses.get(editExpenceIndex);
+        editExpenseIndex = item.getItemId();
+        expense = expenses.get(editExpenseIndex);
 
         edtTxtExpenseName.setText(expense.getName().toString());
 
@@ -121,8 +128,12 @@ public class DeleteExpense extends Activity {
         return super.onContextItemSelected(item);
     }
 
+    /**
+     * Delete button handler
+     * @param view
+     */
     public void deleteExpense(View view) {
-        expenses.remove(editExpenceIndex);
+        expenses.remove(editExpenseIndex);
 
         Intent intent = new Intent();
         intent.putExtra(MainActivity.EXPENSE_OBJS_KEY, expenses);
@@ -130,6 +141,10 @@ public class DeleteExpense extends Activity {
         finish();
     }
 
+    /**
+     * Cancel button handler
+     * @param view
+     */
     public void cancelDelete(View view) {
         finish();
     }

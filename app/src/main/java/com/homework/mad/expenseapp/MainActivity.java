@@ -15,6 +15,12 @@ import java.io.FileDescriptor;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * Home Work 2
+ * Atul Kumar Banwar
+ * Sanket Patil
+ * MainActivity.java
+ */
 public class MainActivity extends Activity {
     private ArrayList<Expense> expenses;
 
@@ -40,29 +46,49 @@ public class MainActivity extends Activity {
         checkAndDisableButtons();
     }
 
+    /**
+     * Add Expense Button handler
+     * @param view
+     */
     public void addExpense(View view) {
         intent = new Intent(MainActivity.this, AddExpense.class);
         startActivityForResult(intent, REQ_CODE_ADD);
     }
 
+    /**
+     * Edit Expense button handler
+     * @param view
+     */
     public void editExpense(View view) {
         intent = new Intent(MainActivity.this, EditExpense.class);
         intent.putExtra(EXPENSE_OBJS_KEY, expenses);
         startActivityForResult(intent, REQ_CODE_EDIT);
     }
 
+    /**
+     * Delete Expense button handler
+     * @param view
+     */
     public void deleteExpense(View view) {
         intent = new Intent(MainActivity.this, DeleteExpense.class);
         intent.putExtra(EXPENSE_OBJS_KEY, expenses);
         startActivityForResult(intent, REQ_CODE_DELETE);
     }
 
+    /**
+     * Show Expense button handler
+     * @param view
+     */
     public void showExpense(View view) {
         intent = new Intent(MainActivity.this, ShowExpense.class);
         intent.putExtra(EXPENSE_OBJS_KEY, expenses);
         startActivity(intent);
     }
 
+    /**
+     * Finish butotn handler
+     * @param view
+     */
     public void finish(View view) {
         finish();
     }
@@ -88,6 +114,13 @@ public class MainActivity extends Activity {
         }
     }
 
+    /**
+     * Method which generates bitmap image form a given uri
+     * @param uri
+     * @param cr
+     * @return Bitmap
+     * @throws IOException
+     */
     public static Bitmap getBitmapFromUri(Uri uri, ContentResolver cr) throws IOException {
         ParcelFileDescriptor parcelFileDescriptor = cr.openFileDescriptor(uri, "r");
         FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
@@ -96,6 +129,9 @@ public class MainActivity extends Activity {
         return image;
     }
 
+    /**
+     * Method checks for the condition to enable or disable show, delete and edit buttons
+     */
     private void checkAndDisableButtons() {
         if(expenses.isEmpty())
         {

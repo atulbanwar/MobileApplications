@@ -7,6 +7,7 @@ import java.util.Date;
  * Home Work 2
  * Sanket Patil
  * Atul Kumar Banwar
+ * Expense.java
  */
 public class Expense implements Serializable {
     private String name;

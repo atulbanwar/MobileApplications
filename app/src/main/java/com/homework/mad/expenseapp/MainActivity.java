@@ -9,12 +9,12 @@ import android.widget.Button;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
-    ArrayList<Expense> expenses;
-    Button btnAddExpense;
-    Button btnEditExpense;
-    Button btnDeleteExpense;
-    Button btnFinishActivity;
-    Intent intent;
+    private ArrayList<Expense> expenses;
+    private Button btnAddExpense;
+    private Button btnEditExpense;
+    private Button btnDeleteExpense;
+    private Button btnFinishActivity;
+    private Intent intent;
 
     public static final int REQ_CODE_ADD = 1;
     public static final int REQ_CODE_EDIT = 2;
@@ -57,5 +57,19 @@ public class MainActivity extends Activity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Expense expense;
+
+        if (resultCode == RESULT_OK) {
+            if (requestCode == REQ_CODE_ADD) {
+                expense = (Expense) data.getExtras().getSerializable(EXPENSE_OBJ_KEY);
+                expenses.add(expense);
+            } else if (requestCode == REQ_CODE_EDIT) {
+                // TODO: Implement Logic
+            } else if (requestCode == REQ_CODE_DELETE) {
+                // TODO: Implement Logic
+            }
+        } else if (resultCode == RESULT_CANCELED) {
+            //DO Nothing
+        }
     }
 }

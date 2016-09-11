@@ -15,6 +15,7 @@ public class MainActivity extends Activity {
     Button btnDeleteExpense;
     Button btnFinishActivity;
     Intent intent;
+
     public static final int REQ_CODE_ADD = 1;
     public static final int REQ_CODE_EDIT = 2;
     public static final int REQ_CODE_DELETE = 3;

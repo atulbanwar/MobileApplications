@@ -103,7 +103,7 @@
             android:layout_height="wrap_content"
             android:inputType="date"
             android:ems="10"
-            android:id="@+id/editText"
+            android:id="@+id/edit_text_date"
             android:layout_weight="0.70" />
 
         <ImageButton
@@ -112,7 +112,8 @@
             android:id="@+id/image_button_calendar"
             android:src="@drawable/calendar"
             android:background="@null"
-            android:layout_weight="0.30" />
+            android:layout_weight="0.30"
+            android:onClick="showCalendar" />
     </LinearLayout>
 
     <TextView

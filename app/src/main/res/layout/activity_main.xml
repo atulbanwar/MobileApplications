@@ -23,7 +23,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/action_edit_expense"
-        android:id="@+id/button_edit_expnse"
+        android:id="@+id/button_edit_expense"
         android:layout_below="@+id/button_add_expense"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
@@ -35,7 +35,7 @@
         android:layout_height="wrap_content"
         android:text="@string/action_delete_expense"
         android:id="@+id/button_delete_expense"
-        android:layout_below="@+id/button_edit_expnse"
+        android:layout_below="@+id/button_edit_expense"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"
         android:onClick="deleteExpense"/>

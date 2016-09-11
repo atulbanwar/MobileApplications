@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.view.View;
+import android.widget.Button;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -25,6 +26,7 @@ public class MainActivity extends Activity {
 
     public static final String EXPENSE_OBJ_KEY = "EXPENSE";
     public static final String EXPENSE_OBJS_KEY = "EXPENSES";
+    private Button btnShowExpense, btnDeleteExpense, btnEditExpense;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,6 +34,10 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         expenses = new ArrayList<Expense>();
+        btnShowExpense = (Button)findViewById(R.id.button_show_expense);
+        btnDeleteExpense = (Button)findViewById(R.id.button_delete_expense);
+        btnEditExpense = (Button)findViewById(R.id.button_edit_expense);
+        checkAndDisableButtons();
     }
 
     public void addExpense(View view) {
@@ -70,10 +76,12 @@ public class MainActivity extends Activity {
             if (requestCode == REQ_CODE_ADD) {
                 expense = (Expense) data.getExtras().getSerializable(EXPENSE_OBJ_KEY);
                 expenses.add(expense);
+                checkAndDisableButtons();
             } else if (requestCode == REQ_CODE_EDIT) {
                 expenses = (ArrayList<Expense>) data.getExtras().getSerializable(EXPENSE_OBJS_KEY);
             } else if (requestCode == REQ_CODE_DELETE) {
                 expenses = (ArrayList<Expense>) data.getExtras().getSerializable(EXPENSE_OBJS_KEY);
+                checkAndDisableButtons();
             }
         } else if (resultCode == RESULT_CANCELED) {
             //DO Nothing
@@ -86,5 +94,19 @@ public class MainActivity extends Activity {
         Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
         parcelFileDescriptor.close();
         return image;
+    }
+
+    private void checkAndDisableButtons() {
+        if(expenses.isEmpty())
+        {
+            btnShowExpense.setEnabled(false);
+            btnDeleteExpense.setEnabled(false);
+            btnEditExpense.setEnabled(false);
+        }else
+        {
+            btnShowExpense.setEnabled(true);
+            btnDeleteExpense.setEnabled(true);
+            btnEditExpense.setEnabled(true);
+        }
     }
 }

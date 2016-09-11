@@ -16,7 +16,8 @@
         android:id="@+id/button_add_expense"
         android:layout_alignParentTop="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="37dp" />
+        android:layout_marginTop="37dp"
+        android:onClick="addExpense"/>
 
     <Button
         android:layout_width="match_parent"
@@ -26,7 +27,8 @@
         android:layout_below="@+id/button_add_expense"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="20dp"
+        android:onClick="editExpense"/>
 
     <Button
         android:layout_width="match_parent"
@@ -35,7 +37,8 @@
         android:id="@+id/button_delete_expense"
         android:layout_below="@+id/button_edit_expnse"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:onClick="deleteExpense"/>
 
     <Button
         android:layout_width="match_parent"
@@ -44,5 +47,6 @@
         android:id="@+id/button_finish"
         android:layout_below="@+id/button_delete_expense"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:onClick="finish"/>
 </RelativeLayout>

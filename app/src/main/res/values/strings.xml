@@ -18,7 +18,7 @@
     <string name="text_view_amount">Amount</string>
     <string name="text_view_date">Date</string>
     <string name="text_view_receipt">Receipt</string>
-    <string name="text_view_name">Name</string>
+
     <string name="text_view_expense_detail">Expense Detail</string>
     <string name="text_view_reciept">Reciept</string>
     <string name="action_add_expense">Add Expense</string>
@@ -33,4 +33,5 @@
     <string name="action_finish">Finish</string>
 
 	<string name="action_delete">Delete</string>
+    <string name="text_view_name"> Name</string>
 </resources>

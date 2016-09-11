@@ -26,7 +26,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18dp"
-                android:text="Expense Details"
+                android:text="@string/text_view_expense_detail"
                 android:layout_span="4"
                 android:padding="18dip"
                 android:textColor="#000"
@@ -36,20 +36,18 @@
         <TableRow></TableRow>
 
         <TableRow
-            android:id="@+id/tableRow1"
+            android:id="@+id/table_row1"
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
             <TextView
-                android:id="@+id/TextView11"
-                android:text="Name"
+                android:text="@string/text_view_name"
                 android:layout_weight="1"
                 android:textSize="18dp"
                 android:padding="10dip"
                 android:gravity="left"
                 />
             <TextView
-                android:id="@+id/TextView12"
-                android:text="Phone Bill"
+                android:id="@+id/text_view_name_value"
                 android:layout_weight="1"
                 android:textSize="18dp"
                 android:padding="10dip"
@@ -60,20 +58,19 @@
 
 
         <TableRow
-            android:id="@+id/tableRow2"
+            android:id="@+id/table_row2"
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
 
             <TextView
-                android:id="@+id/TextView21"
-                android:text="Category"
+                android:id="@+id/text_view_category"
+                android:text="@string/text_view_category"
                 android:layout_weight="1"
                 android:textSize="18dp"
                 android:padding="10dip"
                 android:gravity="left"/>
             <TextView
-                android:id="@+id/TextView22"
-                android:text="Invoice"
+                android:id="@+id/text_view_category_value"
                 android:layout_weight="1"
                 android:textSize="18dp"
                 android:padding="10dip"
@@ -84,20 +81,19 @@
 
 
         <TableRow
-            android:id="@+id/tableRow3"
+            android:id="@+id/table_row3"
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
 
             <TextView
-                android:id="@+id/TextView31"
-                android:text="Amount"
+                android:id="@+id/text_view_amount"
+                android:text="@string/text_view_amount"
                 android:layout_weight="1"
                 android:textSize="18dp"
                 android:padding="10dip"
                 android:gravity="left"/>
             <TextView
-                android:id="@+id/TextView32"
-                android:text="$ 40"
+                android:id="@+id/text_view_amount_value"
                 android:layout_weight="1"
                 android:textSize="18dp"
                 android:padding="10dip"
@@ -107,20 +103,19 @@
         <TableRow></TableRow>
 
         <TableRow
-            android:id="@+id/tableRow4"
+            android:id="@+id/table_row4"
             android:layout_height="wrap_content"
             android:layout_width="match_parent">
 
             <TextView
-                android:id="@+id/TextView41"
-                android:text="Date"
+                android:id="@+id/text_view_date"
+                android:text="@string/text_view_date"
                 android:layout_weight="1"
                 android:textSize="18dp"
                 android:padding="10dip"
                 android:gravity="left"/>
             <TextView
-                android:id="@+id/TextView42"
-                android:text="11/25/2016"
+                android:id="@+id/text_view_value"
                 android:layout_weight="1"
                 android:textSize="18dp"
                 android:padding="10dip"
@@ -145,12 +140,12 @@
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:gravity="center_horizontal"
-            android:id="@+id/tableRow5">
+            android:id="@+id/table_row5">
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:textSize="18dp"
-                android:text="Recipt Details"
+                android:text="@string/text_view_reciept"
                 android:layout_span="3"
                 android:padding="18dip"
                 android:textColor="#000"
@@ -164,12 +159,12 @@
             android:layout_height="wrap_content"
             android:layout_width="fill_parent"
             android:gravity="center_horizontal"
-            android:id="@+id/tableRow6">
+            android:id="@+id/table_row6">
 
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageView"
+                android:id="@+id/image_view_receipt"
                 android:maxWidth="10dp"
                 android:maxHeight="10dp"
                 android:scaleType="fitCenter"
@@ -193,28 +188,33 @@
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageButton" />
+                android:id="@+id/image_button_first"
+                android:background="@drawable/first"/>
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageButton2" />
+                android:id="@+id/image_button_previous"
+                android:background="@drawable/previous"/>
 
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="New Button"
-                android:id="@+id/button" />
+                android:text="@string/action_delete"
+                android:id="@+id/button_finish"
+                />
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageButton3" />
+                android:id="@+id/image_button_next"
+                android:background="@drawable/next"/>
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/imageButton4" />
+                android:id="@+id/image_button_last"
+                android:background="@drawable/last"/>
         </TableRow>
 
     </TableLayout>

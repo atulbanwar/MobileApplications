@@ -7,14 +7,18 @@ import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.Spinner;
 
 import java.util.Calendar;
 import java.util.TimeZone;
 
 public class EditExpense extends Activity implements DatePickerDialog.OnDateSetListener {
-    Calendar calendar;
-    EditText edtTxtDate;
-    Expense expense;
+    private Calendar calendar;
+    private EditText edtTxtExpenseName;
+    private Spinner spnrCategory;
+    private EditText edtTxtAmount;
+    private EditText edtTxtDate;
+    private Expense expense;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +27,9 @@ public class EditExpense extends Activity implements DatePickerDialog.OnDateSetL
 
         expense = new Expense();
         calendar = Calendar.getInstance(TimeZone.getDefault());
+        edtTxtExpenseName = (EditText) findViewById(R.id.edit_text_expense_name);
+        spnrCategory = (Spinner) findViewById(R.id.spinner_category);
+        edtTxtAmount = (EditText) findViewById(R.id.edit_text_amount);
         edtTxtDate = (EditText) findViewById(R.id.edit_text_date);
     }
 

@@ -34,4 +34,9 @@
 
 	<string name="action_delete">Delete</string>
     <string name="text_view_name"> Name</string>
+
+    <string name="error_empty_expense_name">Please enter Expense Name</string>
+    <string name="error_empty_category">Please select category</string>
+    <string name="error_empty_amount">Please enter Amount</string>
+    <string name="error_empty_date">Please enter/select Date</string>
 </resources>

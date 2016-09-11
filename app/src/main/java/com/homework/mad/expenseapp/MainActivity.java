@@ -20,6 +20,8 @@ public class MainActivity extends Activity {
     public static final int REQ_CODE_EDIT = 2;
     public static final int REQ_CODE_DELETE = 3;
 
+    public static final String EXPENSE_OBJ_KEY = "EXPENSE";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

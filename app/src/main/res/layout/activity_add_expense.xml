@@ -134,7 +134,8 @@
         android:id="@+id/image_button_receipt"
         android:background="@null"
         android:src="@drawable/search"
-        android:layout_below="@+id/text_view_receipt" />
+        android:layout_below="@+id/text_view_receipt"
+        android:onClick="onImageGallaryClicked"/>
 
     <Button
         android:layout_width="match_parent"

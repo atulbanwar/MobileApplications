@@ -2,10 +2,8 @@ package com.homework.mad.expenseapp;
 
 import android.app.Activity;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.ParcelFileDescriptor;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -13,12 +11,16 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.io.FileDescriptor;
 import java.io.IOException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
+/**
+* Home Work 2
+* Sanket Patil
+* Atul Kumar Banwar
+*/
 public class ShowExpense extends Activity {
 
     private TextView txtVwName;
@@ -53,11 +55,13 @@ public class ShowExpense extends Activity {
         if (getIntent().getExtras() != null) {
             expenses = (ArrayList<Expense>) getIntent().getExtras().getSerializable(MainActivity.EXPENSE_OBJS_KEY);
         }
-
         displayContent(currentPosition);
-
     }
 
+    /**
+     * processes array list of expences according to position parameter
+     * @param position
+     */
     private void displayContent(int position) {
         Expense expense = expenses.get(position);
 
@@ -79,41 +83,50 @@ public class ShowExpense extends Activity {
             imgVwReceipt.setImageBitmap(bitmapImage);
             imgVwReceipt.setMaxHeight(400);
             imgVwReceipt.setMaxWidth(800);
-
         }
     }
 
-
-
+    /**
+     * Handler for finish button
+     * @param view
+     */
     public void finish(View view) {
         finish();
     }
 
+    /**
+     * Handler for go to first image button
+     * @param view
+     */
     public void getFirstExpense(View view) {
-
-        if( checkExisitance(currentPosition-1))
+        if( checkExistence(currentPosition-1))
         {displayContent(0);
         currentPosition = 0;}
         else{
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_empty_already_first), Toast.LENGTH_SHORT).show();
         }
-
     }
 
+    /**
+     * Handler for go to previous image button
+     * @param view
+     */
     public void getPreviousExpense(View view) {
 
-        if (checkExisitance(currentPosition - 1)) {
+        if (checkExistence(currentPosition - 1)) {
             displayContent(currentPosition - 1);
             currentPosition = currentPosition - 1;
         } else {
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_empty_reached_first), Toast.LENGTH_SHORT).show();
         }
-
-
     }
 
+    /**
+     * Handler for go to next image button
+     * @param view
+     */
     public void getNextExpense(View view) {
-        if (checkExisitance(currentPosition + 1)) {
+        if (checkExistence(currentPosition + 1)) {
             displayContent(currentPosition + 1);
             currentPosition = currentPosition + 1;
         } else {
@@ -121,7 +134,10 @@ public class ShowExpense extends Activity {
         }
     }
 
-
+    /**
+     * Handler for go to last image button
+     * @param view
+     */
     public void getLastExpense(View view) {
 
         if (! (currentPosition == expenses.size() - 1)) {
@@ -133,7 +149,12 @@ public class ShowExpense extends Activity {
         }
     }
 
-    private boolean checkExisitance(int position) {
+    /**
+     * checks the feasibility of requested postion
+     * @param position
+     * @return
+     */
+    private boolean checkExistence(int position) {
         if (position < expenses.size() && position >= 0) {
             return true;
         } else {

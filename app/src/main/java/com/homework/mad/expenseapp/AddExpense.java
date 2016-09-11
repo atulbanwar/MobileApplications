@@ -4,10 +4,8 @@ import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.ParcelFileDescriptor;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.DatePicker;
@@ -16,9 +14,7 @@ import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.io.FileDescriptor;
 import java.io.IOException;
-import java.net.URI;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -32,9 +28,6 @@ public class AddExpense extends Activity implements DatePickerDialog.OnDateSetLi
     private Expense expense;
     private ImageButton imgBtnReceipt;
 
-    private String expenseName;
-    private String category;
-    private double amount;
     private Date date;
     private static final int SELECT_PICTURE = 1;
     private Uri selectedImageUri;
@@ -91,9 +84,9 @@ public class AddExpense extends Activity implements DatePickerDialog.OnDateSetLi
     }
 
     public void addExpense(View view) {
-        expenseName = edtTxtExpenseName.getText().toString();
-        category = spnrCategory.getSelectedItem().toString();
-        amount = Double.parseDouble(edtTxtAmount.getText().toString().length() != 0 ? edtTxtAmount.getText().toString() : "0");
+        String expenseName = edtTxtExpenseName.getText().toString();
+        String category = spnrCategory.getSelectedItem().toString();
+        double amount = Double.parseDouble(edtTxtAmount.getText().toString().length() != 0 ? edtTxtAmount.getText().toString() : "0");
 
         if (expenseName.length() == 0) {
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_empty_expense_name), Toast.LENGTH_SHORT).show();

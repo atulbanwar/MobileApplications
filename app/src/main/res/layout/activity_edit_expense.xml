@@ -16,7 +16,8 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="-5dp"/>
+        android:layout_marginTop="-5dp"
+        android:onClick="selectExpense"/>
 
     <TextView
         android:layout_width="wrap_content"
@@ -131,7 +132,8 @@
         android:id="@+id/image_button_receipt"
         android:background="@null"
         android:src="@drawable/search"
-        android:layout_below="@+id/text_view_receipt" />
+        android:layout_below="@+id/text_view_receipt"
+        android:onClick="onImageGallaryClicked" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -146,13 +148,15 @@
             android:layout_height="wrap_content"
             android:text="@string/action_save"
             android:id="@+id/button_save_edit_expense"
-            android:layout_weight="0.50"/>
+            android:layout_weight="0.50"
+            android:onClick="saveEditedExpense"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/action_cancel"
             android:id="@+id/button_cancel_edit_expense"
-            android:layout_weight="0.50"/>
+            android:layout_weight="0.50"
+            android:onClick="cancelEdit"/>
     </LinearLayout>
 </RelativeLayout>

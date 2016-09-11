@@ -1,7 +1,5 @@
 package com.homework.mad.expenseapp;
 
-import android.net.Uri;
-
 import java.io.Serializable;
 import java.util.Date;
 

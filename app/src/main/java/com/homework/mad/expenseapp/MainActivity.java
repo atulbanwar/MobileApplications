@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.ParcelFileDescriptor;
 import android.view.View;
-import android.widget.Button;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
@@ -18,10 +17,6 @@ import java.util.ArrayList;
 public class MainActivity extends Activity {
     private ArrayList<Expense> expenses;
 
-    private Button btnAddExpense;
-    private Button btnEditExpense;
-    private Button btnDeleteExpense;
-    private Button btnFinishActivity;
     private Intent intent;
 
     public static final int REQ_CODE_ADD = 1;
@@ -37,10 +32,6 @@ public class MainActivity extends Activity {
         setContentView(R.layout.activity_main);
 
         expenses = new ArrayList<Expense>();
-        btnAddExpense = (Button) findViewById(R.id.button_add_expense);
-        btnEditExpense = (Button) findViewById(R.id.button_edit_expense);
-        btnDeleteExpense = (Button) findViewById(R.id.button_delete_expense);
-        btnFinishActivity = (Button) findViewById(R.id.button_finish);
     }
 
     public void addExpense(View view) {
@@ -56,7 +47,7 @@ public class MainActivity extends Activity {
 
     public void deleteExpense(View view) {
         intent = new Intent(MainActivity.this, DeleteExpense.class);
-        //intent.putExtra();
+        intent.putExtra(EXPENSE_OBJS_KEY, expenses);
         startActivityForResult(intent, REQ_CODE_DELETE);
     }
 
@@ -80,9 +71,9 @@ public class MainActivity extends Activity {
                 expense = (Expense) data.getExtras().getSerializable(EXPENSE_OBJ_KEY);
                 expenses.add(expense);
             } else if (requestCode == REQ_CODE_EDIT) {
-                // TODO: Implement Logic
+                expenses = (ArrayList<Expense>) data.getExtras().getSerializable(EXPENSE_OBJS_KEY);
             } else if (requestCode == REQ_CODE_DELETE) {
-                // TODO: Implement Logic
+                expenses = (ArrayList<Expense>) data.getExtras().getSerializable(EXPENSE_OBJS_KEY);
             }
         } else if (resultCode == RESULT_CANCELED) {
             //DO Nothing

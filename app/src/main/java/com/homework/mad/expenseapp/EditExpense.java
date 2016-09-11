@@ -9,10 +9,13 @@ import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.TimeZone;
 
 public class EditExpense extends Activity implements DatePickerDialog.OnDateSetListener {
+    private ArrayList<Expense> expenses;
+
     private Calendar calendar;
     private EditText edtTxtExpenseName;
     private Spinner spnrCategory;
@@ -31,6 +34,10 @@ public class EditExpense extends Activity implements DatePickerDialog.OnDateSetL
         spnrCategory = (Spinner) findViewById(R.id.spinner_category);
         edtTxtAmount = (EditText) findViewById(R.id.edit_text_amount);
         edtTxtDate = (EditText) findViewById(R.id.edit_text_date);
+
+        if (getIntent().getExtras() != null) {
+            expenses = (ArrayList<Expense>) getIntent().getExtras().getSerializable(MainActivity.EXPENSE_OBJS_KEY);
+        }
     }
 
     public void showCalendar(View view) {

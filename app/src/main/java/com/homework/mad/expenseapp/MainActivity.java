@@ -10,6 +10,7 @@ import java.util.ArrayList;
 
 public class MainActivity extends Activity {
     private ArrayList<Expense> expenses;
+
     private Button btnAddExpense;
     private Button btnEditExpense;
     private Button btnDeleteExpense;
@@ -21,6 +22,7 @@ public class MainActivity extends Activity {
     public static final int REQ_CODE_DELETE = 3;
 
     public static final String EXPENSE_OBJ_KEY = "EXPENSE";
+    public static final String EXPENSE_OBJS_KEY = "EXPENSES";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,7 +43,7 @@ public class MainActivity extends Activity {
 
     public void editExpense(View view) {
         intent = new Intent(MainActivity.this, EditExpense.class);
-        //intent.putExtra();
+        intent.putExtra(EXPENSE_OBJS_KEY, expenses);
         startActivityForResult(intent, REQ_CODE_EDIT);
     }
 
@@ -52,6 +54,7 @@ public class MainActivity extends Activity {
     }
 
     public void finish(View view) {
+        finish();
     }
 
     @Override

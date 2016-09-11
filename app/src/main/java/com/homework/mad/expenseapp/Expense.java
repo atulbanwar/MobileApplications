@@ -15,7 +15,7 @@ public class Expense implements Serializable {
     private String category;
     private double amount;
     private Date date;
-    private Uri receipt;
+    private String receiptImageUri;
 
     public String getName() {
         return name;
@@ -49,11 +49,11 @@ public class Expense implements Serializable {
         this.date = date;
     }
 
-    public Uri getReceipt() {
-        return receipt;
+    public String getReceipt() {
+        return receiptImageUri;
     }
 
-    public void setReceipt(Uri receipt) {
-        this.receipt = receipt;
+    public void setReceipt(String receipt) {
+        this.receiptImageUri = receipt;
     }
 }

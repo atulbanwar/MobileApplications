@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import java.io.FileDescriptor;
 import java.io.IOException;
+import java.net.URI;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -36,7 +37,6 @@ public class AddExpense extends Activity implements DatePickerDialog.OnDateSetLi
     private double amount;
     private Date date;
     private static final int SELECT_PICTURE = 1;
-    private String selectedImagePath;
     private Uri selectedImageUri;
 
     @Override
@@ -90,7 +90,7 @@ public class AddExpense extends Activity implements DatePickerDialog.OnDateSetLi
         }
     }
 
-    private Bitmap getBitmapFromUri(Uri uri) throws IOException {
+    public Bitmap getBitmapFromUri(Uri uri) throws IOException {
         ParcelFileDescriptor parcelFileDescriptor = getContentResolver().openFileDescriptor(uri, "r");
         FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
         Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
@@ -118,7 +118,7 @@ public class AddExpense extends Activity implements DatePickerDialog.OnDateSetLi
             expense.setCategory(category);
             expense.setDate(date);
             expense.setAmount(amount);
-            expense.setReceipt(selectedImageUri);
+            expense.setReceipt(selectedImageUri.toString());
             Intent intent = new Intent();
             intent.putExtra(MainActivity.EXPENSE_OBJ_KEY, expense);
             setResult(RESULT_OK, intent);

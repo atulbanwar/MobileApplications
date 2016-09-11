@@ -23,6 +23,12 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
+/**
+ * Home Work 2
+ * Sanket Patil
+ * Atul Kumar Banwar
+ * EditExpense.java
+ */
 public class EditExpense extends Activity implements DatePickerDialog.OnDateSetListener {
     private ArrayList<Expense> expenses;
     private Expense expense;
@@ -72,9 +78,13 @@ public class EditExpense extends Activity implements DatePickerDialog.OnDateSetL
         btnSave.setEnabled(false);
     }
 
+    /**
+     * Calendar Button Handler to display calendar
+     * @param view
+     */
     public void showCalendar(View view) {
         DatePickerDialog dialog = new DatePickerDialog(EditExpense.this, this, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH),
-                calendar.get(Calendar.DAY_OF_MONTH));
+                    calendar.get(Calendar.DAY_OF_MONTH));
         dialog.show();
     }
 
@@ -85,6 +95,10 @@ public class EditExpense extends Activity implements DatePickerDialog.OnDateSetL
         edtTxtDate.setText(DateFormat.format("MM-dd-yyyy", calendar.getTime()).toString());
     }
 
+    /**
+     * Select Expense Click Handler
+     * @param view
+     */
     public void selectExpense(View view) {
         if (expenses != null && expenses.size() != 0) {
             registerForContextMenu(view);
@@ -144,7 +158,11 @@ public class EditExpense extends Activity implements DatePickerDialog.OnDateSetL
         return super.onContextItemSelected(item);
     }
 
-    public void onImageGallaryClicked(View view) {
+    /**
+     * Receipt Select Click Handler
+     * @param view
+     */
+    public void onImageGalleryClicked(View view) {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
@@ -168,6 +186,10 @@ public class EditExpense extends Activity implements DatePickerDialog.OnDateSetL
         }
     }
 
+    /**
+     * Save Edited Expense Click Handler
+     * @param view
+     */
     public void saveEditedExpense(View view) {
         String expenseName = edtTxtExpenseName.getText().toString();
         String category = spnrCategory.getSelectedItem().toString();

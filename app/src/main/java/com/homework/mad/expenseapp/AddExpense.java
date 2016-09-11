@@ -3,14 +3,21 @@ package com.homework.mad.expenseapp;
 import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.text.format.DateFormat;
 import android.view.View;
 import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import java.io.FileDescriptor;
+import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
@@ -22,11 +29,15 @@ public class AddExpense extends Activity implements DatePickerDialog.OnDateSetLi
     private EditText edtTxtAmount;
     private EditText edtTxtDate;
     private Expense expense;
+    private ImageButton imgBtnReceipt;
 
     private String expenseName;
     private String category;
     private double amount;
     private Date date;
+    private static final int SELECT_PICTURE = 1;
+    private String selectedImagePath;
+    private Uri selectedImageUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +50,7 @@ public class AddExpense extends Activity implements DatePickerDialog.OnDateSetLi
         spnrCategory = (Spinner) findViewById(R.id.spinner_category);
         edtTxtAmount = (EditText) findViewById(R.id.edit_text_amount);
         edtTxtDate = (EditText) findViewById(R.id.edit_text_date);
+        imgBtnReceipt= (ImageButton) findViewById(R.id.image_button_receipt);
     }
 
     public void showCalendar(View view) {
@@ -54,6 +66,38 @@ public class AddExpense extends Activity implements DatePickerDialog.OnDateSetLi
         edtTxtDate.setText(DateFormat.format("MM-dd-yyyy", calendar.getTime()).toString());
     }
 
+    public void onImageGallaryClicked(View view) {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_PICTURE && data!=null) {
+                selectedImageUri = data.getData();
+                try {
+                    Bitmap bitmap =  getBitmapFromUri(selectedImageUri);
+                    imgBtnReceipt.setImageBitmap(bitmap);
+                    imgBtnReceipt.setAdjustViewBounds(true);
+                    imgBtnReceipt.setMaxHeight(150);
+                    imgBtnReceipt.setMaxWidth(150);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    private Bitmap getBitmapFromUri(Uri uri) throws IOException {
+        ParcelFileDescriptor parcelFileDescriptor = getContentResolver().openFileDescriptor(uri, "r");
+        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+        parcelFileDescriptor.close();
+        return image;
+    }
+
     public void addExpense(View view) {
         expenseName = edtTxtExpenseName.getText().toString();
         category = spnrCategory.getSelectedItem().toString();
@@ -67,12 +111,14 @@ public class AddExpense extends Activity implements DatePickerDialog.OnDateSetLi
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_empty_amount), Toast.LENGTH_SHORT).show();
         } else if (date == null) {
             Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_empty_date), Toast.LENGTH_SHORT).show();
-        } else {
+        } else if (selectedImageUri ==  null) {
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_empty_receipt), Toast.LENGTH_SHORT).show();
+        }else {
             expense.setName(expenseName);
             expense.setCategory(category);
             expense.setDate(date);
             expense.setAmount(amount);
-
+            expense.setReceipt(selectedImageUri);
             Intent intent = new Intent();
             intent.putExtra(MainActivity.EXPENSE_OBJ_KEY, expense);
             setResult(RESULT_OK, intent);

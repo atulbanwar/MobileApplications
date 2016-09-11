@@ -59,5 +59,6 @@
         android:layout_below="@+id/button_delete_expense"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:onClick="showExpense"/>
 </RelativeLayout>

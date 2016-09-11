@@ -17,7 +17,7 @@
         </activity>
         <activity android:name=".AddExpense"></activity>
         <activity android:name=".EditExpense"></activity>
-        <activity android:name=".ShowExpenses"></activity>
+        <activity android:name=".ShowExpense"></activity>
         <activity android:name=".DeleteExpense"></activity>
     </application>
 

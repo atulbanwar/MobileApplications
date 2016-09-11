@@ -53,6 +53,12 @@ public class MainActivity extends Activity {
         startActivityForResult(intent, REQ_CODE_DELETE);
     }
 
+    public void showExpense(View view) {
+        intent = new Intent(MainActivity.this, ShowExpense.class);
+        //intent.putExtra();
+        startActivityForResult(intent, REQ_CODE_DELETE);
+    }
+
     public void finish(View view) {
         finish();
     }

@@ -78,7 +78,7 @@ public class AddExpense extends Activity implements DatePickerDialog.OnDateSetLi
             if (requestCode == SELECT_PICTURE && data!=null) {
                 selectedImageUri = data.getData();
                 try {
-                    Bitmap bitmap =  getBitmapFromUri(selectedImageUri);
+                    Bitmap bitmap =  MainActivity.getBitmapFromUri(selectedImageUri, getContentResolver());
                     imgBtnReceipt.setImageBitmap(bitmap);
                     imgBtnReceipt.setAdjustViewBounds(true);
                     imgBtnReceipt.setMaxHeight(150);
@@ -88,14 +88,6 @@ public class AddExpense extends Activity implements DatePickerDialog.OnDateSetLi
                 }
             }
         }
-    }
-
-    public Bitmap getBitmapFromUri(Uri uri) throws IOException {
-        ParcelFileDescriptor parcelFileDescriptor = getContentResolver().openFileDescriptor(uri, "r");
-        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
-        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
-        parcelFileDescriptor.close();
-        return image;
     }
 
     public void addExpense(View view) {

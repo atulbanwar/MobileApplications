@@ -188,13 +188,14 @@
                 android:layout_height="wrap_content"
                 android:id="@+id/image_button_first"
                 android:background="@drawable/first"
-                />
+                android:onClick="getFirstExpense"/>
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/image_button_previous"
-                android:background="@drawable/previous"/>
+                android:background="@drawable/previous"
+                android:onClick="getPreviousExpense"/>
 
             <Button
                 android:layout_width="wrap_content"
@@ -208,13 +209,15 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/image_button_next"
-                android:background="@drawable/next"/>
+                android:background="@drawable/next"
+                android:onClick="getNextExpense"/>
 
             <ImageButton
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/image_button_last"
-                android:background="@drawable/last"/>
+                android:background="@drawable/last"
+                android:onClick="getLastExpense"/>
         </TableRow>
 
     </TableLayout>

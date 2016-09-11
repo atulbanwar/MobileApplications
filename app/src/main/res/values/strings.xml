@@ -41,5 +41,7 @@
     <string name="error_empty_date">Please enter/select Date</string>
     <string name="error_empty_receipt">Please select Receipt Image</string>
     <string name="error_empty_reached_first">Reached to First expense</string>
-    <string name="error_empty_reached_last">"Reached to Last expense</string>
+    <string name="error_empty_reached_last">Reached to Last expense</string>
+    <string name="error_empty_already_first">Already on First expense</string>
+    <string name="error_empty_already_last">Already on Last expense</string>
 </resources>

@@ -69,7 +69,7 @@ public class AddExpense extends Activity implements DatePickerDialog.OnDateSetLi
     public void onImageGallaryClicked(View view) {
         Intent intent = new Intent();
         intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);
+        intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
     }
 

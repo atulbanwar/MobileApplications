@@ -28,12 +28,11 @@
                 android:textSize="18dp"
                 android:text="@string/text_view_expense_detail"
                 android:layout_span="4"
-                android:padding="18dip"
+                android:padding="6dip"
                 android:textColor="#000"
                 android:gravity="center"
                 android:textStyle="bold"/>
         </TableRow>
-        <TableRow></TableRow>
 
         <TableRow
             android:id="@+id/table_row1"
@@ -43,7 +42,7 @@
                 android:text="@string/text_view_name"
                 android:layout_weight="1"
                 android:textSize="18dp"
-                android:padding="10dip"
+                android:padding="6dip"
                 android:gravity="left"
                 />
             <TextView
@@ -147,12 +146,11 @@
                 android:textSize="18dp"
                 android:text="@string/text_view_reciept"
                 android:layout_span="3"
-                android:padding="18dip"
+                android:padding="6dip"
                 android:textColor="#000"
                 android:gravity="center"
                 android:textStyle="bold"/>
         </TableRow>
-        <TableRow></TableRow>
 
         <TableRow
 
@@ -179,23 +177,28 @@
         android:stretchColumns="*"
         android:background="#ffffff"
         android:layout_below="@+id/tableLayout2"
-        android:layout_centerHorizontal="true">
+        android:layout_centerHorizontal="true"
+        android:padding="6dip">
 
         <TableRow>
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="10dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
                 android:id="@+id/image_button_first"
                 android:background="@drawable/first"
-                android:onClick="getFirstExpense"/>
+                android:onClick="getFirstExpense"
+                android:scaleType="fitXY"/>
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="10dp"
+                android:layout_height="50dp"
                 android:id="@+id/image_button_previous"
                 android:background="@drawable/previous"
-                android:onClick="getPreviousExpense"/>
+                android:onClick="getPreviousExpense"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"/>
 
             <Button
                 android:layout_width="wrap_content"
@@ -206,18 +209,22 @@
                 />
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="10dp"
+                android:layout_height="50dp"
                 android:id="@+id/image_button_next"
                 android:background="@drawable/next"
-                android:onClick="getNextExpense"/>
+                android:onClick="getNextExpense"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"/>
 
             <ImageButton
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="10dp"
+                android:layout_height="50dp"
                 android:id="@+id/image_button_last"
                 android:background="@drawable/last"
-                android:onClick="getLastExpense"/>
+                android:onClick="getLastExpense"
+                android:layout_gravity="center"
+                android:scaleType="fitXY"/>
         </TableRow>
 
     </TableLayout>

@@ -77,8 +77,8 @@ public class ShowExpense extends Activity {
 
             txtVwDate.setText(df.format(expense.getDate()));
             imgVwReceipt.setImageBitmap(bitmapImage);
-            imgVwReceipt.setMaxHeight(500);
-            imgVwReceipt.setMaxWidth(300);
+            imgVwReceipt.setMaxHeight(400);
+            imgVwReceipt.setMaxWidth(800);
 
         }
     }
@@ -91,8 +91,12 @@ public class ShowExpense extends Activity {
 
     public void getFirstExpense(View view) {
 
-        displayContent(0);
-        currentPosition = 0;
+        if( checkExisitance(currentPosition-1))
+        {displayContent(0);
+        currentPosition = 0;}
+        else{
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_empty_already_first), Toast.LENGTH_SHORT).show();
+        }
 
     }
 
@@ -120,9 +124,12 @@ public class ShowExpense extends Activity {
 
     public void getLastExpense(View view) {
 
-        if (currentPosition == expenses.size() - 1) {
+        if (! (currentPosition == expenses.size() - 1)) {
             displayContent(expenses.size() - 1);
             currentPosition = expenses.size() - 1;
+        }else
+        {
+            Toast.makeText(getApplicationContext(), getResources().getString(R.string.error_empty_already_last), Toast.LENGTH_SHORT).show();
         }
     }
 

@@ -55,8 +55,8 @@ public class MainActivity extends Activity {
 
     public void showExpense(View view) {
         intent = new Intent(MainActivity.this, ShowExpense.class);
-        //intent.putExtra();
-        startActivityForResult(intent, REQ_CODE_DELETE);
+        intent.putExtra(EXPENSE_OBJS_KEY, expenses);
+        startActivity(intent);
     }
 
     public void finish(View view) {

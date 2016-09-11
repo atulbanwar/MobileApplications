@@ -115,7 +115,7 @@
                 android:padding="10dip"
                 android:gravity="left"/>
             <TextView
-                android:id="@+id/text_view_value"
+                android:id="@+id/text_view_date_value"
                 android:layout_weight="1"
                 android:textSize="18dp"
                 android:padding="10dip"
@@ -165,8 +165,6 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/image_view_receipt"
-                android:maxWidth="10dp"
-                android:maxHeight="10dp"
                 android:scaleType="fitCenter"
                 android:adjustViewBounds="true"/>
         </TableRow>
@@ -189,7 +187,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:id="@+id/image_button_first"
-                android:background="@drawable/first"/>
+                android:background="@drawable/first"
+                />
 
             <ImageButton
                 android:layout_width="wrap_content"
@@ -200,8 +199,9 @@
             <Button
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/action_delete"
+                android:text="@string/action_finish"
                 android:id="@+id/button_finish"
+                android:onClick="finish"
                 />
 
             <ImageButton

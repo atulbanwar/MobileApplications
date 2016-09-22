@@ -14,9 +14,10 @@
     <string name="button_quit">Quit</string>
     <string name="button_next">Next</string>
 
-    <string name="text_view_trivia_stats">Trivia Stats</string>
+    <string name="title_stats">Trivia Stats</string>
     <string name="text_view_correct_answers">Correct Answers</string>
-    <string name="text_view">Try again and see if you can get all the correct answers!</string>
+    <string name="text_view_correct_percentage">%d\%</string>
+    <string name="text_view_try_again">Try again and see if you can get all the correct answers!</string>
     <string name="button_try_again">Try Again</string>
 
     <string name="error_no_option_selected">Please select one option.</string>

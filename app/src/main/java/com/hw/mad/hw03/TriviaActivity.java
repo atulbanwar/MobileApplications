@@ -46,8 +46,8 @@ public class TriviaActivity extends Activity implements DownloadQuestionPictureT
     private CountDownTimer countDownTimer;
     private Intent intent;
 
-    private static final String TOTAL_QUES_COUNT_KEY = "TOTAL_QUES_COUNT";
-    private static final String CORRECT_ANS_COUNT_KEY = "CORRECT_ANS_COUNT";
+    public static final String TOTAL_QUES_COUNT_KEY = "TOTAL_QUES_COUNT";
+    public static final String CORRECT_ANS_COUNT_KEY = "CORRECT_ANS_COUNT";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,7 +69,7 @@ public class TriviaActivity extends Activity implements DownloadQuestionPictureT
 
         setTriviaUIElements(questionIndex);
 
-        countDownTimer = new CountDownTimer((120 * 1000), (1 * 1000)) {
+        countDownTimer = new CountDownTimer((120 * 1000), (1000)) {
             @Override
             public void onTick(long millisUntilFinished) {
                 txtViewTimeLeft.setText(getResources().getString(R.string.text_view_time_left, (millisUntilFinished/1000)));
@@ -148,9 +148,10 @@ public class TriviaActivity extends Activity implements DownloadQuestionPictureT
     }
 
     private void loadStatActivity() {
-        //intent = new Intent(TriviaActivity.this, );
-        //intent.putExtra(TOTAL_QUES_COUNT_KEY, questions.size());
-        //intent.putExtra(CORRECT_ANS_COUNT_KEY, correctAnswersCount);
-        //setResult(RESULT_OK, intent);
+        intent = new Intent(TriviaActivity.this, StatsActivity.class);
+        intent.putExtra(MainActivity.QUESTIONS_LIST_KEY, questions);
+        intent.putExtra(CORRECT_ANS_COUNT_KEY, correctAnswersCount);
+        startActivity(intent);
+        finish();
     }
 }

@@ -2,6 +2,7 @@ package com.hw.mad.hw03;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
@@ -49,9 +50,9 @@ public class MainActivity extends Activity implements GetTriviaData.IData {
     }
 
     public void startTrivia(View view) {
-        //Intent intent = new Intent(MainActivity.this, TriviaActivity.class);
-        //intent.putExtra(QUESTIONS_LIST_KEY, questionList);
-        //startActivityForResult(intent, REQ_CODE_START);
+        Intent intent = new Intent(MainActivity.this, TriviaActivity.class);
+        intent.putExtra(QUESTIONS_LIST_KEY, questionList);
+        startActivityForResult(intent, REQ_CODE_START);
     }
 
     public void exit(View view) {

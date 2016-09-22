@@ -117,7 +117,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/button_exit"
                 android:id="@+id/action_exit"
-                android:onClick="quitAction"
+                android:onClick="exit"
                 android:background="@drawable/button_border" />
         </LinearLayout>
 

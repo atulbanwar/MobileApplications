@@ -18,29 +18,28 @@ import java.util.ArrayList;
 public class MainActivity extends Activity implements GetTriviaData.IData {
 
     private Button btnExit, btnStartTrivia;
-    private ProgressBar pgDiagLoading;
+    private ProgressBar pgBarLoading;
     private ImageView imgViewTrivia;
     private TextView txtViewLoadingReady;
     private ArrayList<Question> questionList;
     public static final String QUESTIONS_LIST_KEY = "QUESTIONS";
-    public static final int REQ_CODE_START = 1;
     public static final String JSON_URL = "http://dev.theappsdr.com/apis/trivia_json/index.php";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        btnExit = (Button) findViewById(R.id.button_exit);
-        btnStartTrivia = (Button) findViewById(R.id.button_start_trivia);
+        btnExit = (Button) findViewById(R.id.action_exit);
+        btnStartTrivia = (Button) findViewById(R.id.action_start_trivia);
         imgViewTrivia = (ImageView) findViewById(R.id.image_view_trivia);
-        pgDiagLoading = (ProgressBar) findViewById(R.id.progress_bar_loading);
+        pgBarLoading = (ProgressBar) findViewById(R.id.progress_bar_loading);
         txtViewLoadingReady = (TextView) findViewById(R.id.text_loading_ready);
         btnStartTrivia.setEnabled(false);
 
         questionList = new ArrayList<Question>();
 
         if (isConnectedOnline() && questionList.isEmpty()) {
-            pgDiagLoading.setVisibility(View.VISIBLE);
+            pgBarLoading.setVisibility(View.VISIBLE);
             txtViewLoadingReady.setText(getResources().getString(R.string.progress_bar_loading));
             new GetTriviaData(this).execute(JSON_URL);
         } else if (isConnectedOnline()) {
@@ -52,7 +51,7 @@ public class MainActivity extends Activity implements GetTriviaData.IData {
     public void startTrivia(View view) {
         Intent intent = new Intent(MainActivity.this, TriviaActivity.class);
         intent.putExtra(QUESTIONS_LIST_KEY, questionList);
-        startActivityForResult(intent, REQ_CODE_START);
+        startActivity(intent);
     }
 
     public void exit(View view) {
@@ -73,7 +72,7 @@ public class MainActivity extends Activity implements GetTriviaData.IData {
     @Override
     public void setupData(ArrayList<Question> result) {
 
-        pgDiagLoading.setVisibility(View.INVISIBLE);
+        pgBarLoading.setVisibility(View.INVISIBLE);
         txtViewLoadingReady.setText("");
         if (!result.isEmpty()) {
 

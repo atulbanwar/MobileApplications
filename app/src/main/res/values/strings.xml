@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">HW03</string>
     <string name="text_view_welcome">Welcome to Trivia App</string>
-    <string name="action_exit">Exit</string>
-    <string name="action_start_trivia">Start Trivia</string>
+    <string name="button_exit">Exit</string>
+    <string name="button_start_trivia">Start Trivia</string>
     <string name="progress_bar_loading">Loading Trivia</string>
     <string name="progress_bar_ready"> Trivia Ready</string>
     <string name="error_no_internet"> Check your internet connection.y</string>

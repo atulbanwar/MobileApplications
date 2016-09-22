@@ -7,7 +7,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.hw.mad.hw03.MainActivity">
+    tools:context="com.hw.mad.hw03.MainActivity"
+    android:background="#FFFFFF">
 
     <LinearLayout
         android:id="@+id/layout_question_text"
@@ -88,10 +89,9 @@
             android:layout_alignParentTop="true"
             android:layout_centerHorizontal="true"
             android:gravity="center"
-            android:text="adasdas"
             android:textAppearance="?android:attr/textAppearanceMedium"
-
-            android:textStyle="bold" />
+            android:textSize="30sp"
+            />
     </LinearLayout>
 
 
@@ -105,30 +105,38 @@
         android:layout_marginTop="5dp"
         android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/action_exit"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
+        <LinearLayout
             android:layout_height="wrap_content"
-            android:onClick="quitAction"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:text="@string/button_exit" />
-
-        <Space
             android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginRight="10dp">
 
-        <Button
-            android:id="@+id/action_start_trivia"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/button_exit"
+                android:id="@+id/action_exit"
+                android:onClick="exit"
+                android:background="@drawable/button_border" />
+        </LinearLayout>
+
+
+        <LinearLayout
             android:layout_height="wrap_content"
-            android:onClick="nextAction"
-            android:paddingLeft="20dp"
-            android:paddingRight="20dp"
-            android:text="@string/button_start_trivia" />
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginLeft="10dp">
+
+            <Button
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="@string/button_start_trivia"
+                android:id="@+id/action_start_trivia"
+                android:onClick="startTrivia"
+                android:background="@drawable/button_border"/>
+        </LinearLayout>
     </LinearLayout>
 
 </RelativeLayout>

@@ -15,7 +15,7 @@ public class MainActivity extends Activity {
         btnExit=(Button)findViewById(R.id.button_exit);
         btnStartTrivia=(Button) findViewById(R.id.button_start_trivia);
 
-
+        new GetTriviaData().execute("http://dev.theappsdr.com/apis/trivia_json/index.php");
     }
 
     public void startTrivia(View view) {

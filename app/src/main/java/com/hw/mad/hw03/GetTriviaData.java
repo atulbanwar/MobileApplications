@@ -1,7 +1,10 @@
 package com.hw.mad.hw03;
 
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.os.AsyncTask;
 import android.util.Log;
+import android.widget.ImageView;
 
 import org.json.JSONException;
 
@@ -12,11 +15,20 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 /**
  * Created by sanket on 9/22/16.
  */
 public class GetTriviaData extends AsyncTask<String, Void, ArrayList<Question>> {
+
+    IData activity;
+    ProgressDialog pgDiagLoading;
+
+    public GetTriviaData(IData activity) {
+        this.activity = activity;
+    }
+
     @Override
     protected ArrayList<Question> doInBackground(String... params) {
         BufferedReader reader = null;
@@ -51,14 +63,14 @@ public class GetTriviaData extends AsyncTask<String, Void, ArrayList<Question>> 
 
     }
 
-    @Override
-    protected void onPreExecute() {
-        super.onPreExecute();
-    }
 
     @Override
     protected void onPostExecute(ArrayList<Question> s) {
         super.onPostExecute(s);
-        Log.d("demo", s.toString());
+        activity.setupData(s);
+    }
+
+    static public interface IData {
+        public void setupData(ArrayList<Question> result);
     }
 }

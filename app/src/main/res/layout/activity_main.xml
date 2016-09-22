@@ -118,7 +118,7 @@
                 android:text="@string/button_exit"
                 android:id="@+id/action_exit"
                 android:onClick="exit"
-                android:background="@drawable/button_border" />
+                android:background="@drawable/button_border_grey" />
         </LinearLayout>
 
 
@@ -135,7 +135,7 @@
                 android:text="@string/button_start_trivia"
                 android:id="@+id/action_start_trivia"
                 android:onClick="startTrivia"
-                android:background="@drawable/button_border"/>
+                android:background="@drawable/button_border_grey"/>
         </LinearLayout>
     </LinearLayout>
 

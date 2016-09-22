@@ -86,7 +86,8 @@
             android:id="@+id/button_quit"
             android:paddingLeft="30dp"
             android:paddingRight="30dp"
-            android:onClick="quitAction"/>
+            android:onClick="quitAction"
+            android:background="@drawable/button_border_grey"/>
 
         <Space
             android:layout_width="0dp"
@@ -100,6 +101,7 @@
             android:id="@+id/button_try_again"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:onClick="tryAgainAction"/>
+            android:onClick="tryAgainAction"
+            android:background="@drawable/button_border_sky_blue"/>
     </LinearLayout>
 </RelativeLayout>

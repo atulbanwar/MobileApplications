@@ -130,7 +130,8 @@
             android:id="@+id/action_quit"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:onClick="quitAction"/>
+            android:onClick="quitAction"
+            android:background="@drawable/button_border"/>
 
         <Space
             android:layout_width="0dp"
@@ -145,7 +146,8 @@
             android:id="@+id/action_next"
             android:paddingLeft="20dp"
             android:paddingRight="20dp"
-            android:onClick="nextAction"/>
+            android:onClick="nextAction"
+            android:background="@drawable/button_border"/>
 
     </LinearLayout>
 

@@ -171,6 +171,7 @@ public class TriviaActivity extends Activity implements DownloadQuestionPictureT
      * Loads stats activity
      */
     private void loadStatActivity() {
+        countDownTimer.cancel();
         intent = new Intent(TriviaActivity.this, StatsActivity.class);
         intent.putExtra(MainActivity.QUESTIONS_LIST_KEY, questions);
         intent.putExtra(CORRECT_ANS_COUNT_KEY, correctAnswersCount);

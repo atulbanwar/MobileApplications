@@ -83,8 +83,9 @@ public class TriviaActivity extends Activity implements DownloadQuestionPictureT
     }
 
     @Override
-    public void setupData(Bitmap image) {
-        imgViewQuestionPic.setImageBitmap(image);
+    public void setupData(Bitmap image, int questionIndex) {
+        if (this.questionIndex == questionIndex)
+            imgViewQuestionPic.setImageBitmap(image);
     }
 
     @Override
@@ -122,7 +123,7 @@ public class TriviaActivity extends Activity implements DownloadQuestionPictureT
         imgViewQuestionPic.setImageBitmap(null);
         String url = questions.get(questionIndex).getUrl();
         if (url != null) {
-            new DownloadQuestionPictureTask(this).execute(url);
+            new DownloadQuestionPictureTask(this).execute(url, String.valueOf(questionIndex));
         }
 
         txtViewQuestion.setText(questions.get(questionIndex).getText());

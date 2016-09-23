@@ -17,6 +17,7 @@ import java.net.URL;
 
 public class DownloadQuestionPictureTask extends AsyncTask<String, Void, Bitmap> {
     IQuestionPicture activity;
+    int questionIndex = 0;
 
     public DownloadQuestionPictureTask(IQuestionPicture activity) {
         this.activity = activity;
@@ -26,13 +27,12 @@ public class DownloadQuestionPictureTask extends AsyncTask<String, Void, Bitmap>
     protected void onPreExecute() {
         super.onPreExecute();
         activity.startProgress();
-
     }
 
     @Override
     protected void onPostExecute(Bitmap bitmap) {
         super.onPostExecute(bitmap);
-        activity.setupData(bitmap);
+        activity.setupData(bitmap, questionIndex);
         activity.stopProgress();
     }
 
@@ -40,6 +40,8 @@ public class DownloadQuestionPictureTask extends AsyncTask<String, Void, Bitmap>
     protected Bitmap doInBackground(String... params) {
         try {
             URL url = new URL(params[0]);
+            questionIndex = Integer.valueOf(params[1]);
+
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             return BitmapFactory.decodeStream(con.getInputStream());
         } catch (IOException e) {
@@ -50,7 +52,7 @@ public class DownloadQuestionPictureTask extends AsyncTask<String, Void, Bitmap>
     }
 
     static public interface IQuestionPicture {
-        public void setupData(Bitmap image);
+        public void setupData(Bitmap image, int questionIndex);
         public void startProgress();
         public void stopProgress();
     }

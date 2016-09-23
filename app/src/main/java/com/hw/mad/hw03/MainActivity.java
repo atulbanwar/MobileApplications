@@ -12,9 +12,14 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.ArrayList;
 
+/**
+ * MainActivity.java
+ * Homework 03
+ * Sanket Patil
+ * Atul Kumar Banwar
+ */
 public class MainActivity extends Activity implements GetTriviaData.IData {
 
     private Button btnExit, btnStartTrivia;
@@ -48,17 +53,29 @@ public class MainActivity extends Activity implements GetTriviaData.IData {
 
     }
 
+    /**
+     * Handler for startTrivia
+     * @param view
+     */
     public void startTrivia(View view) {
         Intent intent = new Intent(MainActivity.this, TriviaActivity.class);
         intent.putExtra(QUESTIONS_LIST_KEY, questionList);
         startActivity(intent);
     }
 
+    /**
+     * Handler for exit
+     * @param view
+     */
     public void exit(View view) {
         finish();
         System.exit(0);
     }
 
+    /**
+     * Checking whether the internet connection is available
+     * @return
+     */
     private boolean isConnectedOnline() {
         ConnectivityManager cm = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
         NetworkInfo networkInfo = cm.getActiveNetworkInfo();
@@ -84,7 +101,5 @@ public class MainActivity extends Activity implements GetTriviaData.IData {
         } else {
             txtViewLoadingReady.setText(getResources().getString(R.string.error_no_questions));
         }
-
     }
-
 }

@@ -40,7 +40,6 @@ public class Question implements Serializable {
         if (!obj.isNull("image")) {
             person.setUrl(obj.getString("image"));
         }
-
         JSONObject choicesObj = obj.getJSONObject("choices");
         JSONArray choiceArray = choicesObj.getJSONArray("choice");
         ArrayList<String> choices = new ArrayList<String>();
@@ -48,7 +47,6 @@ public class Question implements Serializable {
             choices.add(choiceArray.getString(i));
         }
         person.setChoices(choices);
-
         person.setAnswer(choicesObj.getInt("answer"));
         return person;
     }

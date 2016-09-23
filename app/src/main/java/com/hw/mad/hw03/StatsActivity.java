@@ -9,6 +9,12 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+/**
+ * StatsActivity.java
+ * Homework 03
+ * Sanket Patil
+ * Atul Kumar Banwar
+ */
 public class StatsActivity extends Activity {
     private ArrayList<Question> questions;
 
@@ -44,10 +50,18 @@ public class StatsActivity extends Activity {
         }
     }
 
+    /**
+     * handler for quit button
+     * @param view
+     */
     public void quitAction(View view) {
         finish();
     }
 
+    /**
+     * handler for try again button
+     * @param view
+     */
     public void tryAgainAction(View view) {
         Intent intent = new Intent(StatsActivity.this, TriviaActivity.class);
         intent.putExtra(MainActivity.QUESTIONS_LIST_KEY, questions);

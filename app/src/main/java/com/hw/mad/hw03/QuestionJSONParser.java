@@ -7,7 +7,10 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 /**
- * Created by sanket on 9/22/16.
+ * QuestionJSONParser.java
+ * Homework 03
+ * Sanket Patil
+ * Atul Kumar Banwar
  */
 public class QuestionJSONParser {
     static ArrayList<Question> pasrseQuestions(String in) throws JSONException {
@@ -23,11 +26,7 @@ public class QuestionJSONParser {
             Question question = Question.getPerson(questionArrayJSONObject);
 
             questionsList.add(question);
-
         }
-
         return questionsList;
     }
-
-
 }

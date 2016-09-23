@@ -1,13 +1,8 @@
 package com.hw.mad.hw03;
 
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.os.AsyncTask;
-import android.util.Log;
-import android.widget.ImageView;
-
 import org.json.JSONException;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -15,11 +10,14 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 /**
- * Created by sanket on 9/22/16.
+ * GetTriviaData.java
+ * Homework 03
+ * Sanket Patil
+ * Atul Kumar Banwar
  */
+
 public class GetTriviaData extends AsyncTask<String, Void, ArrayList<Question>> {
 
     IData activity;
@@ -62,7 +60,6 @@ public class GetTriviaData extends AsyncTask<String, Void, ArrayList<Question>> 
         return null;
 
     }
-
 
     @Override
     protected void onPostExecute(ArrayList<Question> s) {

@@ -99,10 +99,18 @@ public class TriviaActivity extends Activity implements DownloadQuestionPictureT
             layout_image_loading.setVisibility(View.INVISIBLE);
     }
 
+    /**
+     * Handler for quit button
+     * @param view
+     */
     public void quitAction(View view) {
         finish();
     }
 
+    /**
+     * Handler for next button
+     * @param view
+     */
     public void nextAction(View view) {
         if (rdGrpOptions.getCheckedRadioButtonId() == -1) {
             Toast.makeText(TriviaActivity.this, getResources().getString(R.string.error_no_option_selected), Toast.LENGTH_SHORT).show();
@@ -118,6 +126,10 @@ public class TriviaActivity extends Activity implements DownloadQuestionPictureT
         }
     }
 
+    /**
+     * Update Trivia Activity elements
+     * @param questionIndex
+     */
     private void setTriviaUIElements(int questionIndex) {
         txtViewQuestionNo.setText(getResources().getString(R.string.text_view_question_no, (questionIndex + 1)));
 
@@ -142,6 +154,10 @@ public class TriviaActivity extends Activity implements DownloadQuestionPictureT
         }
     }
 
+    /**
+     * Keeps track of right and wrong ansers
+     * @param questionIndex
+     */
     private void checkAnswer(int questionIndex) {
         int usersAns = rdGrpOptions.getCheckedRadioButtonId();
         int originalAns = questions.get(questionIndex).getAnswer();
@@ -151,6 +167,9 @@ public class TriviaActivity extends Activity implements DownloadQuestionPictureT
         }
     }
 
+    /**
+     * Loads stats activity
+     */
     private void loadStatActivity() {
         intent = new Intent(TriviaActivity.this, StatsActivity.class);
         intent.putExtra(MainActivity.QUESTIONS_LIST_KEY, questions);

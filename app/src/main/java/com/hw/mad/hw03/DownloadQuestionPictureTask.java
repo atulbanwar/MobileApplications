@@ -53,7 +53,9 @@ public class DownloadQuestionPictureTask extends AsyncTask<String, Void, Bitmap>
 
     static public interface IQuestionPicture {
         public void setupData(Bitmap image, int questionIndex);
+
         public void startProgress();
+
         public void stopProgress(int questionIndex);
     }
 }

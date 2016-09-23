@@ -43,7 +43,7 @@ public class TriviaActivity extends Activity implements DownloadQuestionPictureT
     private Button btnNext;
     private View layout_image_loading;
 
-    private CountDownTimer countDownTimer;
+    private static CountDownTimer countDownTimer;
     private Intent intent;
 
     public static final String TOTAL_QUES_COUNT_KEY = "TOTAL_QUES_COUNT";
@@ -94,8 +94,9 @@ public class TriviaActivity extends Activity implements DownloadQuestionPictureT
     }
 
     @Override
-    public void stopProgress() {
-        layout_image_loading.setVisibility(View.INVISIBLE);
+    public void stopProgress(int questionIndex) {
+        if (this.questionIndex == questionIndex)
+            layout_image_loading.setVisibility(View.INVISIBLE);
     }
 
     public void quitAction(View view) {
@@ -124,6 +125,8 @@ public class TriviaActivity extends Activity implements DownloadQuestionPictureT
         String url = questions.get(questionIndex).getUrl();
         if (url != null) {
             new DownloadQuestionPictureTask(this).execute(url, String.valueOf(questionIndex));
+        } else {
+            layout_image_loading.setVisibility(View.INVISIBLE);
         }
 
         txtViewQuestion.setText(questions.get(questionIndex).getText());

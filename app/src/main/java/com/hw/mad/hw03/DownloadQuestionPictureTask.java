@@ -33,7 +33,7 @@ public class DownloadQuestionPictureTask extends AsyncTask<String, Void, Bitmap>
     protected void onPostExecute(Bitmap bitmap) {
         super.onPostExecute(bitmap);
         activity.setupData(bitmap, questionIndex);
-        activity.stopProgress();
+        activity.stopProgress(questionIndex);
     }
 
     @Override
@@ -54,6 +54,6 @@ public class DownloadQuestionPictureTask extends AsyncTask<String, Void, Bitmap>
     static public interface IQuestionPicture {
         public void setupData(Bitmap image, int questionIndex);
         public void startProgress();
-        public void stopProgress();
+        public void stopProgress(int questionIndex);
     }
 }

@@ -51,11 +51,12 @@
             android:layout_marginRight="10dp" />
 
         <ProgressBar
-            style="@android:style/Widget.ProgressBar.Horizontal"
+            style="@android:style/Widget.Holo.Light.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:id="@+id/progress_bar_correct_percentage"
             android:layout_gravity="center"
+            android:background="@drawable/progress_bar_style"
             />
 
     </LinearLayout>

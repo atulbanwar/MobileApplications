@@ -22,6 +22,7 @@ public class StatsActivity extends Activity {
         int percentage = 0;
 
         TextView txtViewCorrectPercentage = (TextView) findViewById(R.id.text_view_correct_percentage);
+        TextView txtViewTryAgain = (TextView) findViewById(R.id.text_view_try_again);
         ProgressBar pBarCorrectPercentage = (ProgressBar) findViewById(R.id.progress_bar_correct_percentage);
 
         if (getIntent().getExtras() != null) {
@@ -36,6 +37,10 @@ public class StatsActivity extends Activity {
 
             txtViewCorrectPercentage.setText(getResources().getString(R.string.text_view_correct_percentage, percentage));
             pBarCorrectPercentage.setProgress(percentage);
+
+            if (percentage == 100) {
+                txtViewTryAgain.setText("Congratulations!!! All your answers are correct.");
+            }
         }
     }
 

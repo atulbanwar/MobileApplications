@@ -26,8 +26,8 @@ public class MainActivity extends Activity {
 
         dm = new DatabaseDataManager(this);
 
-        dm.saveCity(new City("City 1", "Note 1 Text", 10));
-        dm.saveCity(new City("Note 2", "Note 2 Text", 15));
+        dm.saveCity(new City("City 1", "Note 1 Text", 10, true));
+        dm.saveCity(new City("Note 2", "Note 2 Text", 15, false));
 
         City city = dm.getCity(1);
         List<City> cities = dm.getALL();

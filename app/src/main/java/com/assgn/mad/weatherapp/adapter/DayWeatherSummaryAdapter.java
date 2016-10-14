@@ -86,6 +86,9 @@ public class DayWeatherSummaryAdapter extends
 
     @Override
     public int getItemCount() {
+        if(dailyWeathers !=null)
         return dailyWeathers.size();
+        else
+            return 0;
     }
 }

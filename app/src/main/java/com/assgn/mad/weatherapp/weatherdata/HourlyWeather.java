@@ -24,17 +24,8 @@ public class HourlyWeather implements Serializable {
     private double pressure;
     private String humidity;
     private String windSpeed;
-
-    public String getDate() {
-        return date;
-    }
-
-    public void setDate(String date) {
-        this.date = date;
-    }
-
     private String windDirection;
-
+    private double windDirectionDegree;
 
     private static final String ICON_URL = "http://api.openweathermap.org/img/w/%s.png";
 
@@ -47,6 +38,14 @@ public class HourlyWeather implements Serializable {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
     }
 
     public String getIconUrl() {
@@ -105,7 +104,14 @@ public class HourlyWeather implements Serializable {
         this.windDirection = windDirection;
     }
 
-    /* 	{
+    public double getWindDirectionDegree() {
+        return windDirectionDegree;
+    }
+
+    public void setWindDirectionDegree(double windDirectionDegree) {
+        this.windDirectionDegree = windDirectionDegree;
+    }
+/* 	{
             "dt": 1476414000,
 			"main": {
 				"temp": 281.71,
@@ -174,8 +180,10 @@ public class HourlyWeather implements Serializable {
         //To fetch wind speed and direction
         JSONObject windObj = obj.getJSONObject("wind");
         hourlyWeather.setWindSpeed(windObj.getString("speed"));
+        double windDirectionDegree= windObj.getDouble("deg");
+        hourlyWeather.setWindDirectionDegree(WeatherUtils.getWindDirectionDegree(windDirectionDegree));
         try {
-            direction = WeatherUtils.getWindDirection(windObj.getString("deg"));
+            direction = WeatherUtils.getWindDirection(String.valueOf(windDirectionDegree));
         } catch (Exception e) {
             e.printStackTrace();
         }

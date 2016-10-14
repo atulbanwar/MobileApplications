@@ -36,6 +36,12 @@ public class WeatherUtils {
         return WIND_DIRECTION[value % 16];
     }
 
+
+    public static double getWindDirectionDegree(double directionDegree)
+    {
+        return (Math.round(directionDegree * 100.0) / 100.0);
+    }
+
     public static String getFormattedDate(String dateString) {
         Date requireDate = null;
         try {

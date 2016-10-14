@@ -9,6 +9,33 @@ import java.util.List;
 public class DailyWeather {
 
     private List<HourlyWeather> hourlyWeathers;
+    private String date;
+    private String medianImageUrl;
+    private double medianTemprature;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
+    public String getMedianImageUrl() {
+        return medianImageUrl;
+    }
+
+    public void setMedianImageUrl(String medianImageUrl) {
+        this.medianImageUrl = medianImageUrl;
+    }
+
+    public double getMedianTemprature() {
+        return medianTemprature;
+    }
+
+    public void setMedianTemprature(double medianTemprature) {
+        this.medianTemprature = medianTemprature;
+    }
 
     public DailyWeather(List<HourlyWeather> hourlyWeathers) {
         this.hourlyWeathers = hourlyWeathers;

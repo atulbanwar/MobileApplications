@@ -26,7 +26,7 @@ public class HourlyWeather implements Serializable {
     private String time;
     private String date;
     private String iconUrl;
-    private String temperature;
+    private double temperature;
     private String condition;
     private double pressure;
     private String humidity;
@@ -64,11 +64,11 @@ public class HourlyWeather implements Serializable {
         this.iconUrl = iconUrl;
     }
 
-    public String getTemperature() {
+    public double getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(String temperature) {
+    public void setTemperature(double temperature) {
         this.temperature = temperature;
     }
 
@@ -174,7 +174,7 @@ public class HourlyWeather implements Serializable {
 
         //To fetch temp, pressure and humidity
         JSONObject tempObj = obj.getJSONObject("main");
-        hourlyWeather.setTemperature(tempObj.getString("temp"));
+        hourlyWeather.setTemperature(tempObj.getDouble("temp"));
         hourlyWeather.setPressure(tempObj.getDouble("pressure"));
         hourlyWeather.setPressure(tempObj.getDouble("humidity"));
 

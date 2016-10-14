@@ -32,6 +32,8 @@ public class WeatherJSONParser {
 
         String oldDate = null;
         int counter = 0;
+        double temperature=0;
+        String medianImageUrl = null;
         ArrayList<HourlyWeather> dayWiseHourlyList = new ArrayList<HourlyWeather>();
         for (HourlyWeather hWeather : weatherList) {
             String currentDate = hWeather.getDate();
@@ -40,13 +42,29 @@ public class WeatherJSONParser {
 
                 oldDate = currentDate;
 
+
+                if( hWeather.getTime().equals("09:00 AM"))
+                {
+                    medianImageUrl=hWeather.getIconUrl();
+                }
+                temperature =temperature+hWeather.getTemperature();
+
                 if (counter + 1 == weatherList.size()) {
-                    DailyWeather dw = new DailyWeather(dayWiseHourlyList);
+                    DailyWeather dw = processDailyWeather(dayWiseHourlyList, temperature, oldDate,medianImageUrl);
                     dailyWeathers.add(dw);
                 }
             } else {
-                DailyWeather dw = new DailyWeather(dayWiseHourlyList);
+
+
+                DailyWeather dw= processDailyWeather(dayWiseHourlyList, temperature, oldDate,medianImageUrl);
                 dailyWeathers.add(dw);
+
+                //Resetting temperature
+                temperature=0.0;
+
+                //Resetting ImageIconUrl
+                medianImageUrl=null;
+
                 dayWiseHourlyList = null;
                 dayWiseHourlyList = new ArrayList<HourlyWeather>();
 
@@ -57,5 +75,25 @@ public class WeatherJSONParser {
             counter++;
         }
         return dailyWeathers;
+    }
+
+    private static DailyWeather processDailyWeather(ArrayList<HourlyWeather> dayWiseHourlyList, double temperature, String date , String medianImageUrl) {
+        DailyWeather dw = new DailyWeather(dayWiseHourlyList);
+
+        //Setting median Temperature for each day
+        double medianTemp = temperature / dayWiseHourlyList.size();
+        dw.setMedianTemprature(medianTemp);
+
+        //Setting median imageUrl
+        if(medianImageUrl !=null)
+        {
+            dw.setMedianImageUrl(medianImageUrl);
+        }else {
+            dw.setMedianImageUrl(dayWiseHourlyList.get(0).getIconUrl());
+        }
+
+        //Setting Date for the Day
+        dw.setDate(date);
+        return dw;
     }
 }

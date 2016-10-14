@@ -81,7 +81,7 @@ public class WeatherJSONParser {
         DailyWeather dw = new DailyWeather(dayWiseHourlyList);
 
         //Setting median Temperature for each day
-        double medianTemp = temperature / dayWiseHourlyList.size();
+        double medianTemp = Math.round((temperature / dayWiseHourlyList.size()) * 100.0) / 100.0;
         dw.setMedianTemprature(medianTemp);
 
         //Setting median imageUrl

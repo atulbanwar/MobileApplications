@@ -1,4 +1,4 @@
-package com.assgn.mad.weatherapp.com.assgn.mad.weatherapp.utils;
+package com.assgn.mad.weatherapp.utils;
 
 import java.text.DateFormat;
 import java.text.ParseException;

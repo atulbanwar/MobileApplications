@@ -10,4 +10,8 @@
 
     <string name="err_msg_no_internet">Check your internet connection.</string>
     <string name="err_msg_select_city_state">Please insert City and State.</string>
+    <string name="text_view_daily_forecast_for">Daily Forecast for&#160;</string>
+    <string name="text_view_daily_forecast_value">%1$s, %2$s&#160;</string>
+    <string name="msg_progress_dialog_loading">Loading Hourly Data</string>
+    <string name="msg_no_matches">No cities match your query</string>
 </resources>

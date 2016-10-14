@@ -19,6 +19,11 @@ import java.util.ArrayList;
 
 public class GetWeatherForecastAsyncTask extends AsyncTask<String, Void, ArrayList<DailyWeather>> {
 
+    private IData activity;
+
+    public GetWeatherForecastAsyncTask(IData activity) {
+        this.activity = activity;
+    }
 
     @Override
     protected ArrayList<DailyWeather> doInBackground(String... params) {
@@ -53,5 +58,22 @@ public class GetWeatherForecastAsyncTask extends AsyncTask<String, Void, ArrayLi
         }
 
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(ArrayList<DailyWeather> dailyWeathers) {
+        super.onPostExecute(dailyWeathers);
+        activity.setupData(dailyWeathers);
+    }
+
+    @Override
+    protected void onPreExecute() {
+        super.onPreExecute();
+        activity.startDataFetch();
+    }
+
+    static public interface IData {
+        public void startDataFetch();
+        public void setupData(ArrayList<DailyWeather> dailyWeathers);
     }
 }

@@ -1,19 +1,12 @@
 package com.assgn.mad.weatherapp.weatherdata;
 
-import android.widget.Toast;
-
-import com.assgn.mad.weatherapp.com.assgn.mad.weatherapp.utils.WeatherUtils;
+import com.assgn.mad.weatherapp.utils.WeatherUtils;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
 
 /**
  * Homework 05
@@ -174,7 +167,7 @@ public class HourlyWeather implements Serializable {
 
         //To fetch temp, pressure and humidity
         JSONObject tempObj = obj.getJSONObject("main");
-        hourlyWeather.setTemperature(tempObj.getDouble("temp"));
+        hourlyWeather.setTemperature((((tempObj.getDouble("temp"))*9/5)-459.67));
         hourlyWeather.setPressure(tempObj.getDouble("pressure"));
         hourlyWeather.setPressure(tempObj.getDouble("humidity"));
 

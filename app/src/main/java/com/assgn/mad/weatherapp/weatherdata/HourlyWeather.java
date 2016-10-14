@@ -1,9 +1,19 @@
 package com.assgn.mad.weatherapp.weatherdata;
 
+import android.widget.Toast;
+
+import com.assgn.mad.weatherapp.com.assgn.mad.weatherapp.utils.WeatherUtils;
+
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 
 /**
  * Homework 05
@@ -14,28 +24,93 @@ import java.io.Serializable;
 
 public class HourlyWeather implements Serializable {
     private String time;
+    private String date;
     private String iconUrl;
     private String temperature;
     private String condition;
-    private String pressure;
+    private double pressure;
     private String humidity;
     private String windSpeed;
+
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     private String windDirection;
 
-    public HourlyWeather(String time, String iconUrl,
-                         String temperature, String condition,
-                         String pressure, String humidity,
-                         String windSpeed, String windDirection ) {
+
+    private static final String ICON_URL = "http://api.openweathermap.org/img/w/%s.png";
+
+    public HourlyWeather() {
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
         this.time = time;
-        this.temperature = temperature;
+    }
+
+    public String getIconUrl() {
+        return iconUrl;
+    }
+
+    public void setIconUrl(String iconUrl) {
         this.iconUrl = iconUrl;
-        this.windSpeed = windSpeed;
-        this.windDirection = windDirection;
+    }
+
+    public String getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(String temperature) {
+        this.temperature = temperature;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
         this.condition = condition;
-        this.humidity = humidity;
+    }
+
+    public double getPressure() {
+        return pressure;
+    }
+
+    public void setPressure(double pressure) {
         this.pressure = pressure;
     }
 
+    public String getHumidity() {
+        return humidity;
+    }
+
+    public void setHumidity(String humidity) {
+        this.humidity = humidity;
+    }
+
+    public String getWindSpeed() {
+        return windSpeed;
+    }
+
+    public void setWindSpeed(String windSpeed) {
+        this.windSpeed = windSpeed;
+    }
+
+    public String getWindDirection() {
+        return windDirection;
+    }
+
+    public void setWindDirection(String windDirection) {
+        this.windDirection = windDirection;
+    }
 
     /* 	{
             "dt": 1476414000,
@@ -74,71 +149,53 @@ public class HourlyWeather implements Serializable {
 		}*/
 
 
- /*    public static HourlyWeather getWeather(JSONObject obj) throws JSONException {
-        //HourlyWeather hourlyWeather = new HourlyWeather();
+    public static HourlyWeather getWeather(JSONObject obj) throws JSONException {
+        String iconCode = null;
+        String direction = null;
+        HourlyWeather hourlyWeather = new HourlyWeather();
 
-       JSONObject timeObj = obj.getJSONObject("FCTTIME");
-        hourlyWeather.setTime(timeObj.getString("pretty"));
+        //To fetch icon code and Description
+        JSONArray weatherArray = obj.getJSONArray("weather");
+        for (int i = 0; i < weatherArray.length(); i++) {
+            JSONObject weatherArrayJSONObject = weatherArray.getJSONObject(i);
+            if(!weatherArrayJSONObject.getString("icon").isEmpty())
+            {
+                iconCode=weatherArrayJSONObject.getString("icon");
+            }
 
-        JSONObject tempObj = obj.getJSONObject("temp");
-        hourlyWeather.setTemperature(tempObj.getString("english"));
-        hourlyWeather.setMaximumTemperature(tempObj.getString("english"));
-        hourlyWeather.setMinimumTemperature(tempObj.getString("english"));
+            if(!weatherArrayJSONObject.getString("description").isEmpty())
+            {
+                hourlyWeather.setCondition(weatherArrayJSONObject.getString("description"));
+            }
+        }
+        hourlyWeather.setIconUrl(String.format(ICON_URL, iconCode));
 
-        JSONObject dewPointObj = obj.getJSONObject("dewpoint");
-        hourlyWeather.setDewPoint(dewPointObj.getString("english"));
 
-        hourlyWeather.setClouds(obj.getString("condition"));
-        hourlyWeather.setIconUrl(obj.getString("icon_url"));
 
-        JSONObject windSpeedObj = obj.getJSONObject("wspd");
-        hourlyWeather.setWindSpeed(windSpeedObj.getString("english") + " mph");
+        //To fetch temp, pressure and humidity
+        JSONObject tempObj = obj.getJSONObject("main");
+        hourlyWeather.setTemperature(tempObj.getString("temp"));
+        hourlyWeather.setPressure(tempObj.getDouble("pressure"));
+        hourlyWeather.setPressure(tempObj.getDouble("humidity"));
 
-        JSONObject windDirObj = obj.getJSONObject("wdir");
-        String direction = windDirObj.getString("dir");
-        direction = getFullDirection(direction);
-        hourlyWeather.setWindDirection(windDirObj.getString("degrees") + "\u00B0 " + direction);
-
-        hourlyWeather.setClimateType(obj.getString("wx"));
-        hourlyWeather.setHumidity(obj.getString("humidity"));
-
-        JSONObject feelsLikeObj = obj.getJSONObject("feelslike");
-        hourlyWeather.setFeelsLike(feelsLikeObj.getString("english"));
-
-        JSONObject pressureObj = obj.getJSONObject("mslp");
-        hourlyWeather.setPressure(pressureObj.getString("metric"));
-
-       // return hourlyWeather;
-    }*/
-
-    private static String getFullDirection(String direction) {
-        if (direction.equals("E")) {
-            direction = "East";
-        } else if (direction.equals("W")) {
-            direction = "West";
-        } else if (direction.equals("S")) {
-            direction = "South";
-        } else if (direction.equals("N")) {
-            direction = "North";
-        } else if (direction.equals("ES")) {
-            direction = "East South";
-        } else if (direction.equals("EN")) {
-            direction = "East North";
-        } else if (direction.equals("WS")) {
-            direction = "West South";
-        } else if (direction.equals("WN")) {
-            direction = "West North";
-        } else if (direction.equals("SE")) {
-            direction = "South East";
-        } else if (direction.equals("SW")) {
-            direction = "South West";
-        } else if (direction.equals("NE")) {
-            direction = "North East";
-        } else if (direction.equals("NW")) {
-            direction = "North West";
+        //To fetch wind speed and direction
+        JSONObject windObj = obj.getJSONObject("wind");
+        hourlyWeather.setWindSpeed(windObj.getString("speed"));
+        try {
+            direction = WeatherUtils.getWindDirection(windObj.getString("deg"));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        if (direction != null) {
+            hourlyWeather.setWindDirection(direction);
         }
 
-        return direction;
+        //To fetch Time and Date;
+        String dateTimeJSON = obj.getString("dt_txt");
+        hourlyWeather.setDate(WeatherUtils.getFormattedDate(dateTimeJSON));
+
+        hourlyWeather.setTime(WeatherUtils.getFormattedTime(dateTimeJSON));
+        return hourlyWeather;
     }
 
 }

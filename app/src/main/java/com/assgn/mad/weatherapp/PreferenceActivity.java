@@ -1,13 +1,16 @@
 package com.assgn.mad.weatherapp;
 
-import android.support.v7.app.AppCompatActivity;
+import android.app.Activity;
 import android.os.Bundle;
 
-public class PreferenceActivity extends AppCompatActivity {
-
+public class PreferenceActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_preference);
+
+        // Display the fragment as the main content.
+        getFragmentManager().beginTransaction()
+                .replace(android.R.id.content, new PreferenceFragment())
+                .commit();
     }
 }

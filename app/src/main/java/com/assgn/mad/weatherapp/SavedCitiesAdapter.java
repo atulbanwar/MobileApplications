@@ -1,7 +1,9 @@
 package com.assgn.mad.weatherapp;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,10 +27,12 @@ import java.util.List;
 public class SavedCitiesAdapter extends RecyclerView.Adapter<SavedCitiesAdapter.ViewHolder> {
     private List<City> cities;
     private Context context;
+    private SharedPreferences sharedPreferences;
 
     public SavedCitiesAdapter(Context context, List<City> cities) {
         this.cities = cities;
         this.context = context;
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
     }
 
     private Context getContext() {
@@ -55,7 +59,17 @@ public class SavedCitiesAdapter extends RecyclerView.Adapter<SavedCitiesAdapter.
                     City city = cities.get(getAdapterPosition());
                     boolean newFavourites = !city.isFavourite();
                     city.setFavourite(newFavourites);
-                    MainActivity.dm.updateCity(city);
+
+                    String pref_temp_type = sharedPreferences.getString("preference_temperature_type", "");
+                    if (pref_temp_type.equals("f")) {
+                        Double newTemp = (city.getTemperature() - 32) / 1.8;
+                        city.setTemperature(newTemp.intValue());
+                        MainActivity.dm.updateCity(city);
+                        newTemp = (city.getTemperature() * 1.8) + 32;
+                        city.setTemperature(newTemp.intValue());
+                    } else {
+                        MainActivity.dm.updateCity(city);
+                    }
 
                     moveFavouritesOnTop();
                     notifyDataSetChanged();
@@ -83,7 +97,12 @@ public class SavedCitiesAdapter extends RecyclerView.Adapter<SavedCitiesAdapter.
         textViewSavedCityState.setText(city.getCity() + ", " + city.getCountry());
 
         TextView textViewSavedTemp = holder.textViewSavedTemp;
-        textViewSavedTemp.setText(String.valueOf(city.getTemperature()));
+        String pref_temp_type = sharedPreferences.getString("preference_temperature_type", "");
+        if (pref_temp_type.isEmpty() || pref_temp_type.equals("c")) {
+            textViewSavedTemp.setText(context.getResources().getString(R.string.text_view_saved_temperature_celsius, String.valueOf(city.getTemperature())));
+        } else {
+            textViewSavedTemp.setText(context.getResources().getString(R.string.text_view_saved_temperature_fahrenhiet, String.valueOf(city.getTemperature())));
+        }
 
         TextView textViewSavedUpdatedDate  = holder.textViewSavedUpdatedDate;
         textViewSavedUpdatedDate.setText(context.getResources().getString(R.string.text_view_updated_on, city.getDate()));

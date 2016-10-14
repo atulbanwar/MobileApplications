@@ -17,6 +17,7 @@ public class CityTable {
     static final String COLUMN_COUNTRY = "country";
     static final String COLUMN_TEMERATURE = "temperature";
     static final String COLUMN_IS_FAVOURITE = "is_favourite";
+    static final String COLUMN_DATE = "date";
 
     static public void onCreate(SQLiteDatabase db) {
         StringBuilder sb = new StringBuilder();
@@ -25,7 +26,8 @@ public class CityTable {
         sb.append(COLUMN_CITY_NAME + " text not null,");
         sb.append(COLUMN_COUNTRY + " text not null,");
         sb.append(COLUMN_TEMERATURE + " integer not null,");
-        sb.append(COLUMN_IS_FAVOURITE + " integer not null");
+        sb.append(COLUMN_IS_FAVOURITE + " integer not null,");
+        sb.append(COLUMN_DATE + " text not null");
         sb.append(");");
 
         try {

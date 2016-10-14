@@ -12,15 +12,17 @@ public class City {
     private String city, country;
     private int temperature;
     private boolean isFavourite;
+    private String date;
 
     public City() {
     }
 
-    public City(String city, String country, int temperature, boolean isFavourite) {
+    public City(String city, String country, int temperature, boolean isFavourite, String date) {
         this.city = city;
         this.country = country;
         this.temperature = temperature;
         this.isFavourite = isFavourite;
+        this.date = date;
     }
 
     public String getCity() {
@@ -63,6 +65,14 @@ public class City {
         isFavourite = favourite;
     }
 
+    public String getDate() {
+        return date;
+    }
+
+    public void setDate(String date) {
+        this.date = date;
+    }
+
     @Override
     public String toString() {
         return "City{" +
@@ -71,6 +81,7 @@ public class City {
                 ", country='" + country + '\'' +
                 ", temperature=" + temperature +
                 ", isFavourite=" + isFavourite +
+                ", date='" + date + '\'' +
                 '}';
     }
 }

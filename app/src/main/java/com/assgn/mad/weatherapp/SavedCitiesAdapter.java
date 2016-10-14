@@ -1,6 +1,7 @@
 package com.assgn.mad.weatherapp;
 
 import android.content.Context;
+import android.graphics.BitmapFactory;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,8 @@ import android.widget.TextView;
 
 import com.assgn.mad.weatherapp.db.City;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -19,23 +22,20 @@ import java.util.List;
  * Atul Kumar Banwar
  */
 
-public class SavedCitiesAdapter extends
-        RecyclerView.Adapter<SavedCitiesAdapter.ViewHolder> {
-
+public class SavedCitiesAdapter extends RecyclerView.Adapter<SavedCitiesAdapter.ViewHolder> {
     private List<City> cities;
-    // Store the context for easy access
-    private Context mContext;
+    private Context context;
 
     public SavedCitiesAdapter(Context context, List<City> cities) {
         this.cities = cities;
-        mContext = context;
+        this.context = context;
     }
 
     private Context getContext() {
-        return mContext;
+        return context;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder {
         public TextView textViewSavedCityState;
         public TextView textViewSavedTemp;
         public TextView textViewSavedUpdatedDate;
@@ -48,6 +48,19 @@ public class SavedCitiesAdapter extends
             textViewSavedTemp = (TextView) itemView.findViewById(R.id.textViewSavedTemp);
             textViewSavedUpdatedDate = (TextView) itemView.findViewById(R.id.textViewSavedUpdatedDate);
             imageViewFavouriteStar = (ImageView) itemView.findViewById(R.id.imageViewFavouriteStar);
+
+            imageViewFavouriteStar.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    City city = cities.get(getAdapterPosition());
+                    boolean newFavourites = !city.isFavourite();
+                    city.setFavourite(newFavourites);
+                    MainActivity.dm.updateCity(city);
+
+                    moveFavouritesOnTop();
+                    notifyDataSetChanged();
+                }
+            });
         }
     }
 
@@ -63,7 +76,7 @@ public class SavedCitiesAdapter extends
     }
 
     @Override
-    public void onBindViewHolder(SavedCitiesAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(SavedCitiesAdapter.ViewHolder holder, final int position) {
         City city = cities.get(position);
 
         TextView textViewSavedCityState = holder.textViewSavedCityState;
@@ -73,14 +86,48 @@ public class SavedCitiesAdapter extends
         textViewSavedTemp.setText(String.valueOf(city.getTemperature()));
 
         TextView textViewSavedUpdatedDate  = holder.textViewSavedUpdatedDate;
-        textViewSavedUpdatedDate.setText(mContext.getResources().getString(R.string.text_view_updated_on, city.getDate()));
+        textViewSavedUpdatedDate.setText(context.getResources().getString(R.string.text_view_updated_on, city.getDate()));
 
         ImageView imageViewFavouriteStar  = holder.imageViewFavouriteStar;
-        //imageViewFavouriteStar.setImageBitmap();
+        if (city.isFavourite()) {
+            imageViewFavouriteStar.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.star_gold));
+        } else {
+            imageViewFavouriteStar.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.star_gray));
+        }
+
+        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                MainActivity.dm.delete(cities.get(position));
+                cities.remove(position);
+                notifyDataSetChanged();
+                return true;
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         return cities.size();
+    }
+
+    private void moveFavouritesOnTop() {
+        /*Collections.sort(cities, new Comparator<City>(){
+            public int compare(City c1, City c2){
+                return c1.getId() < c2.getId() ? -1 : 1;
+            }
+        });*/
+
+        int favouriteIndex = 0;
+        City city;
+        for (int i = 0; i < cities.size(); i++) {
+            if (cities.get(i).isFavourite()) {
+                city = cities.get(i);
+                cities.remove(i);
+                cities.add(favouriteIndex, city);
+                favouriteIndex++;
+                notifyDataSetChanged();
+            }
+        }
     }
 }

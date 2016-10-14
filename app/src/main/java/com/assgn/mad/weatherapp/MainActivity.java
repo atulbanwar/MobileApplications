@@ -9,9 +9,7 @@ import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Gravity;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -32,7 +30,6 @@ import java.util.List;
  */
 
 public class MainActivity extends Activity {
-    private DatabaseDataManager dm;
     private EditText edtTxtCity, edtTxtState;
     private RecyclerView rvSavedCities;
     private TextView txtViewSavedCities;
@@ -41,6 +38,8 @@ public class MainActivity extends Activity {
     private LinearLayout linearLayout;
     SavedCitiesAdapter adapter;
     List<City> cities;
+
+    public static DatabaseDataManager dm;
 
     //URL setup
     public static final String API_KEY = "c145e85ff53d712456d2a094f94e404f";
@@ -77,7 +76,7 @@ public class MainActivity extends Activity {
         txtViewNoSavedCities.setTextColor(getResources().getColor(R.color.black));
         layout.addView(txtViewNoSavedCities, params1);
 
-        dm.saveCity(new City("Charlotte", "NC", 70, true, "14/10/2016"));
+        dm.saveCity(new City("Charlotte", "NC", 70, false, "14/10/2016"));
         dm.saveCity(new City("Raleigh", "NC", 65, false, "10/22/2016"));
 
         setSavedCityItems();
@@ -150,5 +149,9 @@ public class MainActivity extends Activity {
             txtViewNoSavedCities.setVisibility(View.VISIBLE);
             txtViewSavedCities.setVisibility(View.INVISIBLE);
         }
+    }
+
+    private void moveFavouritesOnTop() {
+
     }
 }

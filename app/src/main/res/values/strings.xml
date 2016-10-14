@@ -27,6 +27,20 @@
     <string name="preference_item_temperature_dialog_title">Select Temperature Unit</string>
     <string name="preference_item_temperature_dialog_description">Choose between Celsius and Fahrenheit</string>
     <string name="preference_item_temperature_default_value">c</string>
+	<string name="text_view_hourly_forecast">Three Hourly Forecast on&#160; </string>
+    <string name="text_view_hourly_forecast_value">%1$s </string>
+
+    <string name="text_view_temperature"> Temperature: </string>
+
+    <string name="text_view_temperature_value"> %1$s° %2$s</string>
+
+    <string name="text_view_condition"> Condition: </string>
+    <string name="text_view_pressure"> Pressure: </string>
+    <string name="text_view_pressure_value"> %1$s° hPa</string>
+    <string name="text_view_humidity"> Humidity: </string>
+    <string name="text_view_humidity_value"> %1$s </string>
+    <string name="text_view_winds"> Winds: </string>
+    <string name="text_view_winds_value"> %1$s mPs, %2$s° %3$s </string>
     <string-array name="preference_item_temperature_entries">
         <item>\u00B0 C</item>
         <item>\u00B0 F</item>

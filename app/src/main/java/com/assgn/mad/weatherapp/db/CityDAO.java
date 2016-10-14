@@ -27,6 +27,7 @@ public class CityDAO {
         contentValues.put(CityTable.COLUMN_COUNTRY, city.getCountry());
         contentValues.put(CityTable.COLUMN_TEMERATURE, city.getTemperature());
         contentValues.put(CityTable.COLUMN_IS_FAVOURITE, city.isFavourite());
+        contentValues.put(CityTable.COLUMN_DATE, city.getDate());
         return db.insert(CityTable.TABLE_NAME, null, contentValues);
     }
 
@@ -36,6 +37,7 @@ public class CityDAO {
         contentValues.put(CityTable.COLUMN_COUNTRY, city.getCountry());
         contentValues.put(CityTable.COLUMN_TEMERATURE, city.getTemperature());
         contentValues.put(CityTable.COLUMN_IS_FAVOURITE, city.isFavourite());
+        contentValues.put(CityTable.COLUMN_DATE, city.getDate());
         return db.update(CityTable.TABLE_NAME, contentValues, CityTable.COLUMN_ID + "=?", new String[]{city.getId() + ""}) > 0;
     }
 
@@ -46,7 +48,7 @@ public class CityDAO {
     public City get(long id) {
         City city = null;
         Cursor c = db.query(true, CityTable.TABLE_NAME,
-                new String[]{CityTable.COLUMN_ID, CityTable.COLUMN_CITY_NAME, CityTable.COLUMN_COUNTRY, CityTable.COLUMN_TEMERATURE, CityTable.COLUMN_IS_FAVOURITE},
+                new String[]{CityTable.COLUMN_ID, CityTable.COLUMN_CITY_NAME, CityTable.COLUMN_COUNTRY, CityTable.COLUMN_TEMERATURE, CityTable.COLUMN_IS_FAVOURITE, CityTable.COLUMN_DATE},
                 CityTable.COLUMN_ID + "=?",
                 new String[]{id + ""},
                 null, null, null, null, null);
@@ -60,7 +62,7 @@ public class CityDAO {
     public List<City> getAll() {
         List<City> citys = new ArrayList<City>();
         Cursor c = db.query(CityTable.TABLE_NAME,
-                new String[]{CityTable.COLUMN_ID, CityTable.COLUMN_CITY_NAME, CityTable.COLUMN_COUNTRY, CityTable.COLUMN_TEMERATURE, CityTable.COLUMN_IS_FAVOURITE},
+                new String[]{CityTable.COLUMN_ID, CityTable.COLUMN_CITY_NAME, CityTable.COLUMN_COUNTRY, CityTable.COLUMN_TEMERATURE, CityTable.COLUMN_IS_FAVOURITE, CityTable.COLUMN_DATE},
                 null, null, null, null, null);
 
         if (c != null && c.moveToFirst()) {
@@ -83,6 +85,7 @@ public class CityDAO {
             city.setCountry(c.getString(2));
             city.setTemperature(c.getInt(3));
             city.setFavourite(c.getInt(4) != 0);
+            city.setDate(c.getString(5));
         }
         return city;
     }

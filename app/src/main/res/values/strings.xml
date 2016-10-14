@@ -1,3 +1,13 @@
 <resources>
     <string name="app_name">WeatherApp</string>
+
+    <string name="hint_city">City (i.e. Charlotte) </string>
+    <string name="hint_state">State (i.e. NC) </string>
+    <string name="action_submit">Search</string>
+    <string name="text_lable_no_saved_cities">There are no cities to display. Search the city from the search box and save.</string>
+    <string name="text_view_updated_on">Updated on: %s</string>
+    <string name="text_view_saved_cities">Saved Cities</string>
+
+    <string name="err_msg_no_internet">Check your internet connection.</string>
+    <string name="err_msg_select_city_state">Please insert City and State.</string>
 </resources>

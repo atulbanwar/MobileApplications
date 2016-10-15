@@ -5,14 +5,14 @@ import android.os.AsyncTask;
 import java.util.ArrayList;
 
 /**
- * Homework 05
+ * Homework 06
  * GetHourlyForcastData.java
  * Sanket Patil
  * Atul Banwar
  */
 
 /**
- * If a city/state is does not exist, then as per requirement the application should wait for 5 seconds and go back to mainActivity
+ * If a city/state does not exist, then as per requirement the application should wait for 5 seconds and go back to mainActivity
  * Implementing the wait logic in AsyncTask, because Thread.Sleep in CityWeather activity will block the activity for 5 seconds and
  * won't allow the user to go back manually, if he/she wants to.
  */

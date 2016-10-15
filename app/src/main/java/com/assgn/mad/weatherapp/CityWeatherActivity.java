@@ -34,6 +34,13 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Locale;
 
+/**
+ * Homework 06
+ * CityWeatherActivity.java
+ * Sanket Patil
+ * Atul Kumar Banwar
+ */
+
 public class CityWeatherActivity extends Activity implements GetWeatherForecastAsyncTask.IData, WaitFor5Seconds.IData {
 
     private ProgressDialog progressDialog;

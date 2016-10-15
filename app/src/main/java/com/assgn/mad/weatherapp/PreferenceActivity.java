@@ -6,6 +6,13 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.widget.Toast;
 
+/**
+ * Homework 06
+ * PreferenceActivity.java
+ * Sanket Patil
+ * Atul Kumar Banwar
+ */
+
 public class PreferenceActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {

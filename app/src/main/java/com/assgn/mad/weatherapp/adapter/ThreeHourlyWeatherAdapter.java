@@ -18,7 +18,10 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 /**
- * Created by Sanket on 10/14/2016.
+ * Homework 06
+ * ThreeHourlyWeatherAdapter.java
+ * Sanket Patil
+ * Atul Kumar Banwar
  */
 
 public class ThreeHourlyWeatherAdapter extends RecyclerView.Adapter<ThreeHourlyWeatherAdapter.ViewHolder> {

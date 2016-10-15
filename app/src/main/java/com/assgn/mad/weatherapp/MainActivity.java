@@ -44,6 +44,7 @@ public class MainActivity extends Activity {
     private SavedCitiesAdapter adapter;
     List<City> cities;
 
+    public int txtViewNoSavedCitiesId = 1001;
     public static DatabaseDataManager dm;
     private SharedPreferences sharedPreferences;
 
@@ -76,18 +77,13 @@ public class MainActivity extends Activity {
         params1.setMargins(0, 150, 10, 10);
         params1.addRule(RelativeLayout.CENTER_IN_PARENT);
         txtViewNoSavedCities = new TextView(MainActivity.this);
+        txtViewNoSavedCities.setId(R.id.txtViewNoSavedCitiesId);
         txtViewNoSavedCities.setText(getResources().getString(R.string.text_lable_no_saved_cities));
         txtViewNoSavedCities.setTextSize(16);
         txtViewNoSavedCities.setGravity(Gravity.CENTER_HORIZONTAL);
         txtViewNoSavedCities.setTypeface(null, Typeface.BOLD);
         txtViewNoSavedCities.setTextColor(getResources().getColor(R.color.black));
         layout.addView(txtViewNoSavedCities, params1);
-
-        //dm.saveCity(new City("Charlotte", "NC", 70, false, "14/10/2016"));
-        //dm.saveCity(new City("Raleigh", "NC", 65, false, "10/22/2016"));
-        //dm.saveCity(new City("New York", "NY", 66, false, "10/22/2016"));
-        //dm.saveCity(new City("Sacramento", "CA", 67, false, "10/22/2016"));
-        //dm.saveCity(new City("San Jose", "CA", 72, false, "10/22/2016"));
 
         cities = dm.getALL();
         moveFavouritesOnTop();
@@ -174,14 +170,6 @@ public class MainActivity extends Activity {
                 cities.get(i).setTemperature(newTemp.intValue());
             }
         }
-
-        /*if (pref_temp_type.equals("c") && isTemperatureSettingUpdated) {
-            isTemperatureSettingUpdated = false;
-            for (int i = 0; i < cities.size(); i++) {
-                Double newTemp = (cities.get(i).getTemperature() - 32) / 1.8;
-                cities.get(i).setTemperature(newTemp.intValue());
-            }
-        }*/
     }
 
     @Override
@@ -202,12 +190,6 @@ public class MainActivity extends Activity {
     }
 
     private void moveFavouritesOnTop() {
-        /*Collections.sort(cities, new Comparator<City>(){
-            public int compare(City c1, City c2){
-                return c1.getId() < c2.getId() ? -1 : 1;
-            }
-        });*/
-
         int favouriteIndex = 0;
         City city;
         for (int i = 0; i < cities.size(); i++) {

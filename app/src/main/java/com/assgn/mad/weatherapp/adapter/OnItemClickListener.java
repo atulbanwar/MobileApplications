@@ -3,7 +3,10 @@ package com.assgn.mad.weatherapp.adapter;
 import android.view.View;
 
 /**
- * Created by Sanket on 10/14/2016.
+ * Homework 06
+ * OnItemClickListener.java
+ * Sanket Patil
+ * Atul Kumar Banwar
  */
 
 public interface OnItemClickListener {

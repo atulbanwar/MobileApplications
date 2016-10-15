@@ -1,5 +1,6 @@
 package com.assgn.mad.weatherapp;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.BitmapFactory;
@@ -104,10 +105,10 @@ public class SavedCitiesAdapter extends RecyclerView.Adapter<SavedCitiesAdapter.
             textViewSavedTemp.setText(context.getResources().getString(R.string.text_view_saved_temperature_fahrenhiet, String.valueOf(city.getTemperature())));
         }
 
-        TextView textViewSavedUpdatedDate  = holder.textViewSavedUpdatedDate;
+        TextView textViewSavedUpdatedDate = holder.textViewSavedUpdatedDate;
         textViewSavedUpdatedDate.setText(context.getResources().getString(R.string.text_view_updated_on, city.getDate()));
 
-        ImageView imageViewFavouriteStar  = holder.imageViewFavouriteStar;
+        ImageView imageViewFavouriteStar = holder.imageViewFavouriteStar;
         if (city.isFavourite()) {
             imageViewFavouriteStar.setImageBitmap(BitmapFactory.decodeResource(context.getResources(), R.drawable.star_gold));
         } else {
@@ -120,6 +121,12 @@ public class SavedCitiesAdapter extends RecyclerView.Adapter<SavedCitiesAdapter.
                 MainActivity.dm.delete(cities.get(position));
                 cities.remove(position);
                 notifyDataSetChanged();
+
+                if (cities.size() == 0) {
+                    ((TextView) ((Activity) context).findViewById(R.id.textViewSavedCitiesLable)).setVisibility(View.INVISIBLE);
+                    ((TextView) ((Activity) context).findViewById(R.id.txtViewNoSavedCitiesId)).setVisibility(View.VISIBLE);
+                }
+
                 return true;
             }
         });

@@ -105,10 +105,9 @@ public class DayWeatherSummaryAdapter extends
 
         Picasso.with(mContext)
                 .load(dailyWeather.getMedianImageUrl())
-                .resize(300, 300)
+                .resize(200, 200)
                 .centerCrop()
                 .into(imageViewFavouriteStar);
-        //imageViewFavouriteStar.setImageBitmap();
     }
 
     @Override

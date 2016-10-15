@@ -42,7 +42,6 @@ import java.util.Locale;
  */
 
 public class CityWeatherActivity extends Activity implements GetWeatherForecastAsyncTask.IData, WaitFor5Seconds.IData {
-
     private ProgressDialog progressDialog;
     private ArrayList<DailyWeather> dayWeatherItems;
     private RecyclerView dayWeatherRV;
@@ -84,7 +83,6 @@ public class CityWeatherActivity extends Activity implements GetWeatherForecastA
         horizontalLayoutManagerTwo = new LinearLayoutManager(CityWeatherActivity.this, LinearLayoutManager.HORIZONTAL, false);
         horizontalLayoutManagerTwo.setSmoothScrollbarEnabled(true);
 
-
         dayWeatherRV.setLayoutManager(horizontalLayoutManagerOne);
         dayWeatherAdapter = new DayWeatherSummaryAdapter(this, null);
         dayWeatherRV.setAdapter(dayWeatherAdapter);
@@ -101,7 +99,6 @@ public class CityWeatherActivity extends Activity implements GetWeatherForecastA
             textViewDailyForecastLocationValue.setText(getResources().getString(R.string.text_view_daily_forecast_value, cityName, stateInitials));
             new GetWeatherForecastAsyncTask(this).execute(hourlyForcaseURL);
         }
-
     }
 
     @Override
@@ -111,7 +108,6 @@ public class CityWeatherActivity extends Activity implements GetWeatherForecastA
 
     @Override
     public void setupData(ArrayList<DailyWeather> result) {
-
         progressDialog.dismiss();
 
         if (result.size() > 0) {
@@ -141,7 +137,6 @@ public class CityWeatherActivity extends Activity implements GetWeatherForecastA
             Toast.makeText(CityWeatherActivity.this, getResources().getString(R.string.msg_no_matches), Toast.LENGTH_SHORT).show();
             new WaitFor5Seconds(this).execute("");
         }
-
     }
 
     private int getScreenWidth() {

@@ -36,9 +36,7 @@ public class WeatherUtils {
         return WIND_DIRECTION[value % 16];
     }
 
-
-    public static double getWindDirectionDegree(double directionDegree)
-    {
+    public static double getWindDirectionDegree(double directionDegree) {
         return (Math.round(directionDegree * 100.0) / 100.0);
     }
 
@@ -54,7 +52,7 @@ public class WeatherUtils {
     }
 
     public static String getFormattedTime(String timeString) {
-        Date requireTime= null;
+        Date requireTime = null;
         try {
             requireTime = parseDate(timeString);
         } catch (ParseException e) {
@@ -65,17 +63,12 @@ public class WeatherUtils {
     }
 
     public static Date parseDate(String dateString) throws ParseException {
-
-
         SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 
         return df.parse(dateString);
-
     }
 
-    public static double fahrenheitToCelsius( double fahrenheit) {
-
-        return ((fahrenheit-32)/1.8);
-
+    public static double fahrenheitToCelsius(double fahrenheit) {
+        return ((fahrenheit - 32) / 1.8);
     }
 }

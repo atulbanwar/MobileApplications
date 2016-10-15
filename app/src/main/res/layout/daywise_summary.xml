@@ -17,8 +17,10 @@
         android:id="@+id/textViewDate"
         android:gravity="center"
         android:textStyle="bold"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/black"
+        android:paddingLeft="4.5sp"
+        android:paddingRight="4.5sp"
         />
 
     <ImageView
@@ -32,7 +34,7 @@
         android:id="@+id/textViewTemp"
         android:gravity="center"
         android:textStyle="bold"
-        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textAppearance="?android:attr/textAppearanceSmall"
         android:textColor="@color/black"/>
     </LinearLayout>
     <LinearLayout

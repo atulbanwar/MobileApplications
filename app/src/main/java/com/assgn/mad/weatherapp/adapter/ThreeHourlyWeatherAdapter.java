@@ -38,7 +38,6 @@ public class ThreeHourlyWeatherAdapter extends RecyclerView.Adapter<ThreeHourlyW
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
     }
 
-
     private Context getContext() {
         return mContext;
     }
@@ -64,21 +63,20 @@ public class ThreeHourlyWeatherAdapter extends RecyclerView.Adapter<ThreeHourlyW
         TextView tvPress = holder.textViewCurrentPressure;
         TextView tvHumd = holder.textViewCurrentHumidity;
         TextView tvWind = holder.textViewCurrentWind;
-        ImageView ivIcon= holder.imageViewCurrentIconUrl;
+        ImageView ivIcon = holder.imageViewCurrentIconUrl;
 
         String temperature = String.valueOf(hourlyWeather.getTemperature());
         String pressure = String.valueOf(hourlyWeather.getPressure());
         String humidity = String.valueOf(hourlyWeather.getHumidity());
         String windSpeed = String.valueOf(hourlyWeather.getWindSpeed());
-        String windDirectionDegree= String.valueOf(hourlyWeather.getWindDirectionDegree());
+        String windDirectionDegree = String.valueOf(hourlyWeather.getWindDirectionDegree());
         String windDirection = hourlyWeather.getWindDirection();
 
         tvTime.setText(hourlyWeather.getTime());
 
-
         Picasso.with(mContext)
                 .load(hourlyWeather.getIconUrl())
-                .resize(300, 300)
+                .resize(400, 400)
                 .centerCrop()
                 .into(ivIcon);
 
@@ -90,19 +88,18 @@ public class ThreeHourlyWeatherAdapter extends RecyclerView.Adapter<ThreeHourlyW
         }
 
         tvCond.setText(hourlyWeather.getCondition());
-        tvPress.setText(String.format(getContext().getResources().getString(R.string.text_view_pressure_value),pressure));
-        tvHumd.setText(String.format(getContext().getResources().getString(R.string.text_view_humidity_value),humidity)+"%");
-        tvWind.setText(String.format(getContext().getResources().getString(R.string.text_view_winds_value),windSpeed,windDirectionDegree, windDirection));
+        tvPress.setText(String.format(getContext().getResources().getString(R.string.text_view_pressure_value), pressure));
+        tvHumd.setText(String.format(getContext().getResources().getString(R.string.text_view_humidity_value), humidity) + "%");
+        tvWind.setText(String.format(getContext().getResources().getString(R.string.text_view_winds_value), windSpeed, windDirectionDegree, windDirection));
     }
 
     @Override
     public int getItemCount() {
-        if(hourlyWeatherList !=null)
+        if (hourlyWeatherList != null)
             return hourlyWeatherList.size();
         else
             return 0;
     }
-
 
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView textViewCurrentTime;
@@ -112,7 +109,6 @@ public class ThreeHourlyWeatherAdapter extends RecyclerView.Adapter<ThreeHourlyW
         public TextView textViewCurrentPressure;
         public TextView textViewCurrentHumidity;
         public TextView textViewCurrentWind;
-
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -124,10 +120,6 @@ public class ThreeHourlyWeatherAdapter extends RecyclerView.Adapter<ThreeHourlyW
             textViewCurrentPressure = (TextView) itemView.findViewById(R.id.textViewPressure);
             textViewCurrentHumidity = (TextView) itemView.findViewById(R.id.textViewHumidity);
             textViewCurrentWind = (TextView) itemView.findViewById(R.id.textViewWinds);
-
-
-
         }
-
     }
 }

@@ -138,12 +138,6 @@ public class SavedCitiesAdapter extends RecyclerView.Adapter<SavedCitiesAdapter.
     }
 
     private void moveFavouritesOnTop() {
-        /*Collections.sort(cities, new Comparator<City>(){
-            public int compare(City c1, City c2){
-                return c1.getId() < c2.getId() ? -1 : 1;
-            }
-        });*/
-
         int favouriteIndex = 0;
         City city;
         for (int i = 0; i < cities.size(); i++) {

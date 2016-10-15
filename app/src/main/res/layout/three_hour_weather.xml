@@ -28,7 +28,7 @@
             android:layout_height="match_parent"
             android:layout_below="@+id/DividerTwo"
             android:layout_centerHorizontal="true"
-            android:layout_marginTop="@dimen/activity_vertical_margin">
+            android:layout_marginTop="-30sp">
             <TableRow
                 android:gravity="center_horizontal">
                 <TextView

@@ -59,6 +59,20 @@ public class CityDAO {
         return city;
     }
 
+    public City get(String cityName, String country) {
+        City city = null;
+        Cursor c = db.query(true, CityTable.TABLE_NAME,
+                new String[]{CityTable.COLUMN_ID, CityTable.COLUMN_CITY_NAME, CityTable.COLUMN_COUNTRY, CityTable.COLUMN_TEMERATURE, CityTable.COLUMN_IS_FAVOURITE, CityTable.COLUMN_DATE},
+                CityTable.COLUMN_CITY_NAME + "=? AND " + CityTable.COLUMN_COUNTRY + "=?",
+                new String[]{cityName, country},
+                null, null, null, null, null);
+        if (c != null && c.moveToFirst()) {
+            city = buildCityFromCursor(c);
+            c.close();
+        }
+        return city;
+    }
+
     public List<City> getAll() {
         List<City> citys = new ArrayList<City>();
         Cursor c = db.query(CityTable.TABLE_NAME,

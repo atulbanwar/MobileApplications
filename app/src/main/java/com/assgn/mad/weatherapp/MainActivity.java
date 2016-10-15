@@ -43,7 +43,6 @@ public class MainActivity extends Activity {
     private LinearLayout linearLayout;
     private SavedCitiesAdapter adapter;
     List<City> cities;
-    private boolean isTemperatureSettingUpdated = false;
 
     public static DatabaseDataManager dm;
     private SharedPreferences sharedPreferences;
@@ -94,22 +93,6 @@ public class MainActivity extends Activity {
         moveFavouritesOnTop();
         setTemperatureAsPerType();
         setSavedCityItems();
-
-        sharedPreferences.registerOnSharedPreferenceChangeListener(new SharedPreferences.OnSharedPreferenceChangeListener() {
-            @Override
-            public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-                if (key.equals("preference_temperature_type")) {
-                    isTemperatureSettingUpdated = true;
-
-                    String pref_temp_type = sharedPreferences.getString("preference_temperature_type", "");
-                    if (pref_temp_type.equals("c")) {
-                        Toast.makeText(MainActivity.this, getResources().getString(R.string.msg_temperature_change_celsius), Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(MainActivity.this, getResources().getString(R.string.msg_temperature_change_fahrenheit), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        });
     }
 
     /**
@@ -203,7 +186,7 @@ public class MainActivity extends Activity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater menuInflator= getMenuInflater();
+        MenuInflater menuInflator = getMenuInflater();
         menuInflator.inflate(R.menu.main_activity_menu, menu);
         return true;
     }

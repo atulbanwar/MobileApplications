@@ -52,6 +52,10 @@ public class DatabaseDataManager {
         return this.cityDAO.get(id);
     }
 
+    public City getCity(String cityName, String country) {
+        return this.cityDAO.get(cityName, country);
+    }
+
     public List<City> getALL() {
         return this.cityDAO.getAll();
     }

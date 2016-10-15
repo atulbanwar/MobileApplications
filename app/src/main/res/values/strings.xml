@@ -16,6 +16,8 @@
     <string name="text_view_daily_forecast_value">%1$s, %2$s&#160;</string>
     <string name="msg_progress_dialog_loading">Loading Hourly Data</string>
     <string name="msg_no_matches">No cities match your query</string>
+    <string name="msg_city_updated">City Updated.</string>
+    <string name="msg_city_saved">City Saved.</string>
 
     <string name="msg_temperature_change_celsius">Temperature unit has been changed to \u00B0C</string>
     <string name="msg_temperature_change_fahrenheit">Temperature unit has been changed to \u00B0F</string>

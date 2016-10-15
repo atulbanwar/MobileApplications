@@ -44,9 +44,7 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:id="@+id/textViewTemperature"
                     android:text="@string/text_view_temperature_value"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+                    android:textStyle="bold"/>
             </TableRow>
 
             <TableRow
@@ -63,9 +61,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:id="@+id/textViewCondition"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+                    android:textStyle="bold"/>
             </TableRow>
 
             <TableRow
@@ -84,9 +80,7 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:id="@+id/textViewPressure"
                     android:text="@string/text_view_pressure_value"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+                    android:textStyle="bold"/>
             </TableRow>
 
             <TableRow
@@ -105,9 +99,7 @@
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:id="@+id/textViewHumidity"
                     android:text="@string/text_view_humidity_value"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+                    android:textStyle="bold"/>
             </TableRow>
 
             <TableRow
@@ -125,9 +117,7 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:id="@+id/textViewWinds"
-                    android:textStyle="bold"
-                    android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                    android:layout_marginBottom="@dimen/activity_vertical_margin"/>
+                    android:textStyle="bold"/>
             </TableRow>
         </TableLayout>
     </LinearLayout>

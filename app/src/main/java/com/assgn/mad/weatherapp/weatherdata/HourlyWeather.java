@@ -176,7 +176,7 @@ public class HourlyWeather implements Serializable {
         double temprature= (((tempObj.getDouble("temp"))*9/5)-459.67);
         hourlyWeather.setTemperature( (Math.round(temprature*100))/100);
         hourlyWeather.setPressure(tempObj.getDouble("pressure"));
-        hourlyWeather.setPressure(tempObj.getDouble("humidity"));
+        hourlyWeather.setHumidity(tempObj.getString("humidity"));
 
         //To fetch wind speed and direction
         JSONObject windObj = obj.getJSONObject("wind");

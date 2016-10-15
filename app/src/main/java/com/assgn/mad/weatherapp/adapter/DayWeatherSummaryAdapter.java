@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.assgn.mad.weatherapp.R;
 import com.assgn.mad.weatherapp.db.City;
@@ -30,6 +31,8 @@ public class DayWeatherSummaryAdapter extends
     // Store the context for easy access
     private Context mContext;
 
+    private OnItemClickListener mItemClickListener;
+
     public DayWeatherSummaryAdapter(Context context, List<DailyWeather> dailyWeathers) {
         this.dailyWeathers = dailyWeathers;
         mContext = context;
@@ -39,10 +42,11 @@ public class DayWeatherSummaryAdapter extends
         return mContext;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public TextView textViewDate;
         public TextView textViewTemp;
         public ImageView imageViewMedianIconUrl;
+
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -50,7 +54,20 @@ public class DayWeatherSummaryAdapter extends
             textViewDate = (TextView) itemView.findViewById(R.id.textViewDate);
             textViewTemp = (TextView) itemView.findViewById(R.id.textViewTemp);
             imageViewMedianIconUrl = (ImageView) itemView.findViewById(R.id.imageViewMedianIcon);
+            itemView.setOnClickListener(this);  //Bind your setOnClickLister Here on ViewHolder creation
         }
+
+        @Override
+        public void onClick(View v) {
+            if (mItemClickListener != null) {
+                mItemClickListener.onItemClick(v, getAdapterPosition());
+            }
+        }
+    }
+
+    //Method to initialize ItemCLickListner
+    public void SetOnItemClickListener(final OnItemClickListener mItemClickListener) {
+        this.mItemClickListener = mItemClickListener;
     }
 
     @Override
@@ -74,7 +91,7 @@ public class DayWeatherSummaryAdapter extends
         TextView textViewSavedTemp = holder.textViewTemp;
         textViewSavedTemp.setText(String.valueOf(dailyWeather.getMedianTemprature()));
 
-        ImageView imageViewFavouriteStar  = holder.imageViewMedianIconUrl;
+        ImageView imageViewFavouriteStar = holder.imageViewMedianIconUrl;
 
         Picasso.with(mContext)
                 .load(dailyWeather.getMedianImageUrl())
@@ -86,8 +103,8 @@ public class DayWeatherSummaryAdapter extends
 
     @Override
     public int getItemCount() {
-        if(dailyWeathers !=null)
-        return dailyWeathers.size();
+        if (dailyWeathers != null)
+            return dailyWeathers.size();
         else
             return 0;
     }

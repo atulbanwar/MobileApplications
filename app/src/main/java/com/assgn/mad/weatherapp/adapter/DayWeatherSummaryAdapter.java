@@ -1,6 +1,8 @@
 package com.assgn.mad.weatherapp.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,6 +29,7 @@ public class DayWeatherSummaryAdapter extends
         RecyclerView.Adapter<DayWeatherSummaryAdapter.ViewHolder> {
 
     private List<DailyWeather> dailyWeathers;
+    private SharedPreferences sharedPreferences;
 
     // Store the context for easy access
     private Context mContext;
@@ -36,6 +39,7 @@ public class DayWeatherSummaryAdapter extends
     public DayWeatherSummaryAdapter(Context context, List<DailyWeather> dailyWeathers) {
         this.dailyWeathers = dailyWeathers;
         mContext = context;
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
     }
 
     private Context getContext() {
@@ -89,7 +93,13 @@ public class DayWeatherSummaryAdapter extends
         textViewSavedCityState.setText(dailyWeather.getDate());
 
         TextView textViewSavedTemp = holder.textViewTemp;
-        textViewSavedTemp.setText(String.valueOf(dailyWeather.getMedianTemprature()));
+
+        String pref_temp_type = sharedPreferences.getString("preference_temperature_type", "");
+        if (pref_temp_type.isEmpty() || pref_temp_type.equals("c")) {
+            textViewSavedTemp.setText(mContext.getResources().getString(R.string.text_view_saved_temperature_celsius, String.valueOf(dailyWeather.getMedianTemprature())));
+        } else {
+            textViewSavedTemp.setText(mContext.getResources().getString(R.string.text_view_saved_temperature_fahrenhiet, String.valueOf(dailyWeather.getMedianTemprature())));
+        }
 
         ImageView imageViewFavouriteStar = holder.imageViewMedianIconUrl;
 

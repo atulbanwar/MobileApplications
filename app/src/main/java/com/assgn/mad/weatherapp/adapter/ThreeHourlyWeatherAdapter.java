@@ -1,6 +1,8 @@
 package com.assgn.mad.weatherapp.adapter;
 
 import android.content.Context;
+import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,6 +24,7 @@ import java.util.StringTokenizer;
 public class ThreeHourlyWeatherAdapter extends RecyclerView.Adapter<ThreeHourlyWeatherAdapter.ViewHolder> {
 
     private List<HourlyWeather> hourlyWeatherList;
+    private SharedPreferences sharedPreferences;
 
     // Store the context for easy access
     private Context mContext;
@@ -29,6 +32,7 @@ public class ThreeHourlyWeatherAdapter extends RecyclerView.Adapter<ThreeHourlyW
     public ThreeHourlyWeatherAdapter(Context context, List<HourlyWeather> hourlyWeatherList) {
         this.hourlyWeatherList = hourlyWeatherList;
         mContext = context;
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context.getApplicationContext());
     }
 
 
@@ -59,7 +63,6 @@ public class ThreeHourlyWeatherAdapter extends RecyclerView.Adapter<ThreeHourlyW
         TextView tvWind = holder.textViewCurrentWind;
         ImageView ivIcon= holder.imageViewCurrentIconUrl;
 
-
         String temperature = String.valueOf(hourlyWeather.getTemperature());
         String pressure = String.valueOf(hourlyWeather.getPressure());
         String humidity = String.valueOf(hourlyWeather.getHumidity());
@@ -76,14 +79,17 @@ public class ThreeHourlyWeatherAdapter extends RecyclerView.Adapter<ThreeHourlyW
                 .centerCrop()
                 .into(ivIcon);
 
-        tvTemp.setText(String.format(getContext().getResources().getString(R.string.text_view_temperature_value),temperature,"F"));
+        String pref_temp_type = sharedPreferences.getString("preference_temperature_type", "");
+        if (pref_temp_type.isEmpty() || pref_temp_type.equals("c")) {
+            tvTemp.setText(mContext.getResources().getString(R.string.text_view_saved_temperature_celsius, String.valueOf(temperature)));
+        } else {
+            tvTemp.setText(mContext.getResources().getString(R.string.text_view_saved_temperature_fahrenhiet, String.valueOf(temperature)));
+        }
+
         tvCond.setText(hourlyWeather.getCondition());
         tvPress.setText(String.format(getContext().getResources().getString(R.string.text_view_pressure_value),pressure));
         tvHumd.setText(String.format(getContext().getResources().getString(R.string.text_view_humidity_value),humidity)+"%");
         tvWind.setText(String.format(getContext().getResources().getString(R.string.text_view_winds_value),windSpeed,windDirectionDegree, windDirection));
-
-
-
     }
 
     @Override

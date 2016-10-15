@@ -79,7 +79,7 @@ public class CityWeatherActivity extends Activity implements GetWeatherForecastA
             hourlyForcaseURL = getIntent().getExtras().getString(MainActivity.CITY_WEATHER_URL);
 
             textViewDailyForecastLocationValue.setText(getResources().getString(R.string.text_view_daily_forecast_value, cityName, stateInitials));
-            new GetWeatherForecastAsyncTask(this).execute("http://api.openweathermap.org/data/2.5/forecast?q=London,UK&mode=json&appid=c145e85ff53d712456d2a094f94e404f");
+            new GetWeatherForecastAsyncTask(this).execute(hourlyForcaseURL);
         }
 
     }

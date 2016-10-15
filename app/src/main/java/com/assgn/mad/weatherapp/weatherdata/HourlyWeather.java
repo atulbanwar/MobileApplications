@@ -173,8 +173,9 @@ public class HourlyWeather implements Serializable {
 
         //To fetch temp, pressure and humidity
         JSONObject tempObj = obj.getJSONObject("main");
-        double temprature= (((tempObj.getDouble("temp"))*9/5)-459.67);
-        hourlyWeather.setTemperature( (Math.round(temprature*100))/100);
+        double temperature= (((tempObj.getDouble("temp"))*9/5)-459.67);
+        temperature = WeatherUtils.fahrenheitToCelsius(temperature);
+        hourlyWeather.setTemperature( (Math.round(temperature*100))/100);
         hourlyWeather.setPressure(tempObj.getDouble("pressure"));
         hourlyWeather.setHumidity(tempObj.getString("humidity"));
 

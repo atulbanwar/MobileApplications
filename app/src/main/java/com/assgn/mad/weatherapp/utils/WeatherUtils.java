@@ -72,4 +72,10 @@ public class WeatherUtils {
         return df.parse(dateString);
 
     }
+
+    public static double fahrenheitToCelsius( double fahrenheit) {
+
+        return ((fahrenheit-32)/1.8);
+
+    }
 }

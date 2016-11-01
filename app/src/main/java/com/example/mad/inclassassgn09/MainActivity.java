@@ -1,6 +1,7 @@
 package com.example.mad.inclassassgn09;
 
 import android.app.Activity;
+import android.graphics.Bitmap;
 import android.os.AsyncTask;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,7 +18,9 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements MesssageRepository.IData {
+    MesssageRepository messsageRepository;
+    public static final String USER_AUTH = "USER_AUTH";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,56 +30,40 @@ public class MainActivity extends Activity {
         PrettyTime pt = new PrettyTime();
         Log.d("demo", pt.format(new Date()));
 
-        /* Asynchronous */
-        OkHttpClient client = new OkHttpClient();
+        messsageRepository = new MesssageRepository(this, getApplicationContext());
+        messsageRepository.Login("user@test.com", "test");
 
-        Request request = new Request.Builder()
-                .url("http://publicobject.com/helloworld.txt")
-                .build();
+        messsageRepository.Signup("a1@xyz.com", "123456", "f1", "l1");
 
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(Call call, IOException e) {
+        messsageRepository.GetFile("slJfe6i", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0Nzc2Mjc3MTAsImV4cCI6MTUwOTE2MzcxMCwianRpIjoiMXhhWkdBV1o3RkxpNWpYZ0RiS0dTSSIsInVzZXIiOjJ9.dKLFNjt1Uz-2cOsGYFrfMH_XfoJZSJuGK3qqMt9NgQA");
 
-            }
+        messsageRepository.GetMessages("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0Nzc2Mjc3MTAsImV4cCI6MTUwOTE2MzcxMCwianRpIjoiMXhhWkdBV1o3RkxpNWpYZ0RiS0dTSSIsInVzZXIiOjJ9.dKLFNjt1Uz-2cOsGYFrfMH_XfoJZSJuGK3qqMt9NgQA");
 
-            @Override
-            public void onResponse(Call call, Response response) throws IOException {
-                Log.d("demo", response.body().string());
-            }
-        });
-
-        /* Synchronous */
-        /*
-        MyAsyncTask myAsyncTask = new MyAsyncTask();
-        myAsyncTask.execute("parameter");
-        */
+        messsageRepository.AddNewMessages("TEXT", "comment", "", "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpYXQiOjE0Nzc2Mjc3MTAsImV4cCI6MTUwOTE2MzcxMCwianRpIjoiMXhhWkdBV1o3RkxpNWpYZ0RiS0dTSSIsInVzZXIiOjJ9.dKLFNjt1Uz-2cOsGYFrfMH_XfoJZSJuGK3qqMt9NgQA");
     }
 
-    /* Synchronous */
-    /*
-    private class MyAsyncTask extends AsyncTask<String, Void, String> {
-        @Override
-        protected String doInBackground(String... params) {
-            OkHttpClient client = new OkHttpClient();
+    @Override
+    public void LoginResponse(UserResponse userResponse) {
 
-            Request request = new Request.Builder()
-                    .url("http://www.reddit.com/all.json?limit=5")
-                    .build();
+    }
 
-            try {
-                Response response = client.newCall(request).execute();
-                return response.body().string();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+    @Override
+    public void SignupResponse(UserResponse userResponse) {
 
-            return null;
-        }
+    }
 
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-        }
-    }*/
+    @Override
+    public void GetFileResponse(Bitmap btmp) {
+
+    }
+
+    @Override
+    public void GetMessagesResponse(MessagesResponse messagesResponse) {
+
+    }
+
+    @Override
+    public void AddMessageResponse(MessageResponse messageResponse) {
+
+    }
 }

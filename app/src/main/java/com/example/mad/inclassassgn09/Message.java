@@ -10,7 +10,7 @@ public class Message {
     private String Id;
     private String Comment;
     private String FileThumbnailId;
-        private String Type;
+    private String Type;
     private String CreatedAt;
 
     public String getUserFname() {

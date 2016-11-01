@@ -57,16 +57,17 @@ public class MesssageRepository {
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
+                    String responseStr = response.body().string();
                     sharedPreferences = PreferenceManager.getDefaultSharedPreferences(appContext);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(MainActivity.USER_AUTH, response.body().string());
+                    editor.putString(MainActivity.USER_AUTH, responseStr);
                     editor.apply();
 
                     gson = gsonBuilder.create();
-                    UserResponse userResponse = gson.fromJson(response.body().string(), UserResponse.class);
+                    UserResponse userResponse = gson.fromJson(responseStr, UserResponse.class);
                     activity.LoginResponse(userResponse);
                 } else {
-                    Toast.makeText(appContext, "Invalid Credentails", Toast.LENGTH_SHORT).show();
+                    activity.LoginResponse(null);
                 }
             }
         });
@@ -109,7 +110,7 @@ public class MesssageRepository {
 
                     activity.SignupResponse(userResponse);
                 } else {
-                    Toast.makeText(appContext, response.message(), Toast.LENGTH_SHORT).show();
+                    activity.SignupResponse(null);
                 }
             }
         });
@@ -137,7 +138,7 @@ public class MesssageRepository {
 
                     activity.GetFileResponse(btmp);
                 } else {
-                    Toast.makeText(appContext, response.message(), Toast.LENGTH_SHORT).show();
+                    activity.GetFileResponse(null);
                 }
             }
         });
@@ -166,7 +167,7 @@ public class MesssageRepository {
 
                     activity.GetMessagesResponse(messagesResponse);
                 } else {
-                    Toast.makeText(appContext, response.message(), Toast.LENGTH_SHORT).show();
+                    activity.GetMessagesResponse(null);
                 }
             }
         });
@@ -201,7 +202,7 @@ public class MesssageRepository {
 
                     activity.AddMessageResponse(messageResponse);
                 } else {
-                    Toast.makeText(appContext, response.message(), Toast.LENGTH_SHORT).show();
+                    activity.AddMessageResponse(null);
                 }
             }
         });

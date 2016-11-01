@@ -38,7 +38,7 @@ public class ChatListAdapter extends ArrayAdapter<Message>{
     private ArrayList<Message> objects;
     private Gson gson;
     private SharedPreferences sharedPreferences;
-    public ChatListAdapter(Context context, int resource, ArrayList<Message> objects) {
+    public ChatListAdapter(Context context, ArrayList<Message> objects) {
         super(context, R.layout.listview_chat, objects);
         this.context = context;
         this.objects = objects;

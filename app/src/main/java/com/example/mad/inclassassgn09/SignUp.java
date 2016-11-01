@@ -6,6 +6,7 @@ import android.widget.TextView;
 
 public class SignUp extends Activity {
 
+
     private TextView firstName, lastName, email, password, confirmPassword;
 
     @Override

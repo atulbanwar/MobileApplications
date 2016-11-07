@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">InClassAssgn10</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="text_view_welcome_status">Hello, %s</string>
+    <string name="text_view_status_signed_out">Signed Out</string>
+    <string name="button_sunny">Sunny</string>
+    <string name="button_foggy">foggy</string>
+</resources>

@@ -13,7 +13,6 @@ import android.widget.TextView;
 import java.text.SimpleDateFormat;
 import java.util.Locale;
 
-
 /**
  * A simple {@link Fragment} subclass.
  */

@@ -10,6 +10,7 @@ import android.widget.Button;
 import android.widget.Switch;
 import android.widget.TextView;
 
+import com.google.android.gms.auth.account.WorkAccountApi;
 import com.google.android.gms.auth.api.Auth;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
@@ -25,8 +26,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-public class MainActivity extends FragmentActivity implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener {
+public class MainActivity extends FragmentActivity implements LoginFragment.LoginFragmentInterface, NewAccountFragment.SignupFragmentInterface {
+    /* implements GoogleApiClient.OnConnectionFailedListener, View.OnClickListener */
+
+    /*
     TextView textViewStatus;
+
     GoogleApiClient googleApiClient;
 
     SignInButton buttonSignIn;
@@ -41,11 +46,15 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.On
 
     DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     DatabaseReference conditionRef = rootRef.child("condition");
+    */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getSupportFragmentManager().beginTransaction().add(R.id.layout_container, new LoginFragment(), "login_fragment").commit();
+        /*
         GoogleSignInOptions googleSignInOptions = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
                 .requestEmail()
                 .build();
@@ -83,8 +92,43 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.On
 
             }
         });
+        */
     }
 
+    @Override
+    public void goToCreateAccount() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.layout_container, new NewAccountFragment(), "new_account_fragment")
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void goToExpenses() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.layout_container, new ExpenseAppFragment(), "expense_app_fragment")
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void goToLogin() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        }
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        } else {
+            super.onBackPressed();
+        }
+    }
+    /*
     public void signIn() {
         Intent signInIntent = Auth.GoogleSignInApi.getSignInIntent(googleApiClient);
         startActivityForResult(signInIntent, RC_SIGN_IN);
@@ -146,4 +190,5 @@ public class MainActivity extends FragmentActivity implements GoogleApiClient.On
     private void sunny() {
         conditionRef.setValue("Sunny");
     }
+    */
 }

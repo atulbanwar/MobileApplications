@@ -10,6 +10,10 @@ public class UserExpense {
     private String userName;
     private ArrayList<Expense> expenses;
 
+    public UserExpense() {
+
+    }
+
     public String getUserName() {
         return userName;
     }

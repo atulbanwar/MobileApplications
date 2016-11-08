@@ -10,14 +10,19 @@ import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 
 public class MainActivity extends FragmentActivity implements LoginFragment.LoginFragmentInterface, NewAccountFragment.SignupFragmentInterface, ExpenseAppFragment.ExpenseAppFragmentInterface, AddExpenseFragment.AddExpenseFragmentInterface, ShowExpensesFragment.ShowExpenseInterface {
     public static FirebaseAuth firebaseAuth;
     public static DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+    DatabaseReference childRef;
+
     String fullName = "";
     ArrayList<Expense> expenses;
     int selectedItemPosition = -1;
@@ -37,6 +42,21 @@ public class MainActivity extends FragmentActivity implements LoginFragment.Logi
 
                 if (user != null) {
                     String userId = user.getUid();
+
+                    childRef = rootRef.child(userId);
+                    childRef.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(DataSnapshot dataSnapshot) {
+                            UserExpense userExpense = dataSnapshot.getChildren().iterator().next().getValue(UserExpense.class);
+                            expenses = userExpense.getExpenses();
+                        }
+
+                        @Override
+                        public void onCancelled(DatabaseError databaseError) {
+
+                        }
+                    });
+
                     goToExpenses();
                 }
             }
@@ -122,7 +142,19 @@ public class MainActivity extends FragmentActivity implements LoginFragment.Logi
 
     @Override
     public ArrayList<Expense> getExpenses() {
-        return expenses;
+        //return expenses;
+
+        /*
+        if (expenses == null) {
+            FirebaseUser user = firebaseAuth.getCurrentUser();
+
+            if (user != null) {
+                String userId = user.getUid();
+                rootRef.child(userId);
+            }
+        }*/
+
+        return expenses == null ? new ArrayList<Expense>() : expenses;
     }
 
     @Override

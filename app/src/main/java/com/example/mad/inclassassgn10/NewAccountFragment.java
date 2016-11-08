@@ -17,12 +17,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.auth.api.credentials.internal.SaveRequest;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class NewAccountFragment extends Fragment {
     EditText editTextFullName;
@@ -33,7 +38,6 @@ public class NewAccountFragment extends Fragment {
     Button buttonCancel;
 
     SignupFragmentInterface listner;
-    private FirebaseAuth firebaseAuth;
 
     public NewAccountFragment() {
         // Required empty public constructor
@@ -59,8 +63,6 @@ public class NewAccountFragment extends Fragment {
         buttonSignup = (Button) getActivity().findViewById(R.id.button_sing_up);
         buttonCancel = (Button) getActivity().findViewById(R.id.button_cancel);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-
         buttonSignup.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -75,17 +77,7 @@ public class NewAccountFragment extends Fragment {
                 } else if (password.equals("")) {
                     Toast.makeText(getActivity(), "Please enter password", Toast.LENGTH_SHORT).show();
                 } else {
-                    firebaseAuth.createUserWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        listner.goToLogin();
-                                    } else {
-                                        Toast.makeText(getActivity(), "Incorrect Data Passed.", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
+                    listner.signUp(fullName, email, password);
                 }
             }
         });
@@ -99,6 +91,7 @@ public class NewAccountFragment extends Fragment {
     }
 
     public interface SignupFragmentInterface {
-        public void goToLogin();
+        void goToLogin();
+        void signUp(String fullName, String email, String password);
     }
 }

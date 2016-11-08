@@ -16,7 +16,14 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,7 +36,9 @@ public class LoginFragment extends Fragment {
     Button buttonCreateAccount;
 
     LoginFragmentInterface listner;
-    private FirebaseAuth firebaseAuth;
+
+    String email = "";
+    String password = "";
 
     public LoginFragment() {
         // Required empty public constructor
@@ -55,30 +64,18 @@ public class LoginFragment extends Fragment {
         buttonLogin = (Button) getActivity().findViewById(R.id.button_login);
         buttonCreateAccount = (Button) getActivity().findViewById(R.id.button_create_new_account);
 
-        firebaseAuth = FirebaseAuth.getInstance();
-
         buttonLogin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String email = editTextEmail.getText().toString();
-                String password = editTextPassword.getText().toString();
+                email = editTextEmail.getText().toString();
+                password = editTextPassword.getText().toString();
 
                 if (email.equals("")) {
                     Toast.makeText(getActivity(), "Please enter email", Toast.LENGTH_SHORT).show();
                 } else if (password.equals("")) {
                     Toast.makeText(getActivity(), "Please enter password", Toast.LENGTH_SHORT).show();
                 } else {
-                    firebaseAuth.signInWithEmailAndPassword(email, password)
-                            .addOnCompleteListener(getActivity(), new OnCompleteListener<AuthResult>() {
-                                @Override
-                                public void onComplete(@NonNull Task<AuthResult> task) {
-                                    if (task.isSuccessful()) {
-                                        listner.goToExpenses();
-                                    } else {
-                                        Toast.makeText(getActivity(), "Incorrect Data Passed.", Toast.LENGTH_SHORT).show();
-                                    }
-                                }
-                            });
+                    listner.signIn(email, password);
                 }
             }
         });
@@ -93,6 +90,7 @@ public class LoginFragment extends Fragment {
 
     public interface LoginFragmentInterface {
         void goToCreateAccount();
-        void goToExpenses();
+
+        void signIn(String email, String password);
     }
 }

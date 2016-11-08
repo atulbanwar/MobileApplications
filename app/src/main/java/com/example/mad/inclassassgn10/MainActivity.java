@@ -15,10 +15,12 @@ import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.ArrayList;
 
-public class MainActivity extends FragmentActivity implements LoginFragment.LoginFragmentInterface, NewAccountFragment.SignupFragmentInterface {
+public class MainActivity extends FragmentActivity implements LoginFragment.LoginFragmentInterface, NewAccountFragment.SignupFragmentInterface, ExpenseAppFragment.ExpenseAppFragmentInterface, AddExpenseFragment.AddExpenseFragmentInterface, ShowExpensesFragment.ShowExpenseInterface {
     public static FirebaseAuth firebaseAuth;
     public static DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
     String fullName = "";
+    ArrayList<Expense> expenses;
+    int selectedItemPosition = -1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +117,63 @@ public class MainActivity extends FragmentActivity implements LoginFragment.Logi
             getSupportFragmentManager().popBackStack();
         } else {
             super.onBackPressed();
+        }
+    }
+
+    @Override
+    public ArrayList<Expense> getExpenses() {
+        return expenses;
+    }
+
+    @Override
+    public void updateExpenses(ArrayList<Expense> expenses) {
+        expenses = expenses;
+    }
+
+    @Override
+    public void goToAddExpense() {
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.layout_container, new AddExpenseFragment(), "add_expense_fragment")
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public void addExpense(Expense expense) {
+        expenses.add(expense);
+
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        }
+    }
+
+    @Override
+    public void cancelAddExpense() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
+        }
+    }
+
+    @Override
+    public void showExpense(int position) {
+        selectedItemPosition = position;
+        getSupportFragmentManager()
+                .beginTransaction()
+                .replace(R.id.layout_container, new ShowExpensesFragment(), "show_expense_fragment")
+                .addToBackStack(null)
+                .commit();
+    }
+
+    @Override
+    public Expense getExpense() {
+        return expenses.get(selectedItemPosition);
+    }
+
+    @Override
+    public void closeShowExpense() {
+        if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
+            getSupportFragmentManager().popBackStack();
         }
     }
 }

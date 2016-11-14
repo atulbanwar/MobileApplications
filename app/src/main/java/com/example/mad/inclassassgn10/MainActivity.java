@@ -26,6 +26,7 @@ public class MainActivity extends FragmentActivity implements LoginFragment.Logi
     String fullName = "";
     ArrayList<Expense> expenses;
     int selectedItemPosition = -1;
+    UserExpense userExpense;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +35,7 @@ public class MainActivity extends FragmentActivity implements LoginFragment.Logi
 
         firebaseAuth = FirebaseAuth.getInstance();
         firebaseAuth.signOut();
+        userExpense = new UserExpense();
 
         firebaseAuth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
             @Override
@@ -47,8 +49,19 @@ public class MainActivity extends FragmentActivity implements LoginFragment.Logi
                     childRef.addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(DataSnapshot dataSnapshot) {
-                            UserExpense userExpense = dataSnapshot.getChildren().iterator().next().getValue(UserExpense.class);
-                            expenses = userExpense.getExpenses();
+                            userExpense = dataSnapshot.getValue(UserExpense.class);
+
+                            if (userExpense != null) {
+                                expenses = userExpense.getExpenses();
+                                //fullName = userExpense.getUserName();
+
+                                if (expenses == null) {
+                                    expenses = new ArrayList<Expense>();
+                                    userExpense.setExpenses(expenses);
+                                }
+
+                                goToExpenses();
+                            }
                         }
 
                         @Override
@@ -56,8 +69,6 @@ public class MainActivity extends FragmentActivity implements LoginFragment.Logi
 
                         }
                     });
-
-                    goToExpenses();
                 }
             }
         });
@@ -81,7 +92,7 @@ public class MainActivity extends FragmentActivity implements LoginFragment.Logi
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (!task.isSuccessful()) {
-                            Toast.makeText(MainActivity.this, "Incorrect Data Passed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -111,7 +122,6 @@ public class MainActivity extends FragmentActivity implements LoginFragment.Logi
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
-
                             FirebaseUser user = firebaseAuth.getCurrentUser();
                             if (user != null) {
                                 String userId = user.getUid();
@@ -120,12 +130,11 @@ public class MainActivity extends FragmentActivity implements LoginFragment.Logi
                                 userExpense.setUserName(MainActivity.this.fullName);
                                 userExpense.setExpenses(new ArrayList<Expense>());
 
-                                rootRef.child(userId)
-                                        .push()
-                                        .setValue(userExpense);
+                                rootRef.child(userId).push();
+                                rootRef.child(userId).setValue(userExpense);
                             }
                         } else {
-                            Toast.makeText(MainActivity.this, "Incorrect Data Passed.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, "User already Exist.", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
@@ -142,24 +151,21 @@ public class MainActivity extends FragmentActivity implements LoginFragment.Logi
 
     @Override
     public ArrayList<Expense> getExpenses() {
-        //return expenses;
-
-        /*
-        if (expenses == null) {
-            FirebaseUser user = firebaseAuth.getCurrentUser();
-
-            if (user != null) {
-                String userId = user.getUid();
-                rootRef.child(userId);
-            }
-        }*/
-
         return expenses == null ? new ArrayList<Expense>() : expenses;
     }
 
     @Override
     public void updateExpenses(ArrayList<Expense> expenses) {
+        /*
         expenses = expenses;
+        if (expenses.size() == 0) {
+            userExpense.setUserName(fullName);
+        }*/
+
+        userExpense.setExpenses(expenses);
+        childRef.setValue(userExpense);
+
+        Toast.makeText(MainActivity.this, "Expense Deleted", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -173,7 +179,8 @@ public class MainActivity extends FragmentActivity implements LoginFragment.Logi
 
     @Override
     public void addExpense(Expense expense) {
-        expenses.add(expense);
+        userExpense.getExpenses().add(expense);
+        childRef.setValue(userExpense);
 
         if (getSupportFragmentManager().getBackStackEntryCount() > 0) {
             getSupportFragmentManager().popBackStack();

@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -74,8 +75,14 @@ public class NewAccountFragment extends Fragment {
                     Toast.makeText(getActivity(), "Please enter full name", Toast.LENGTH_SHORT).show();
                 } else if (email.equals("")) {
                     Toast.makeText(getActivity(), "Please enter email", Toast.LENGTH_SHORT).show();
+                } else if (!isValidEmail(email)) {
+                    Toast.makeText(getActivity(), "Please enter valid email", Toast.LENGTH_SHORT).show();
+                } else if (!email.contains(".com")) {
+                    Toast.makeText(getActivity(), "Please enter valid email (xyz@xyx.com)", Toast.LENGTH_SHORT).show();
                 } else if (password.equals("")) {
                     Toast.makeText(getActivity(), "Please enter password", Toast.LENGTH_SHORT).show();
+                } else if (password.length() < 6) {
+                    Toast.makeText(getActivity(), "Please enter password with length > 6.", Toast.LENGTH_SHORT).show();
                 } else {
                     listner.signUp(fullName, email, password);
                 }
@@ -88,6 +95,14 @@ public class NewAccountFragment extends Fragment {
                 listner.goToLogin();
             }
         });
+    }
+
+    public final static boolean isValidEmail(CharSequence emailString) {
+        if (emailString == null) {
+            return false;
+        } else {
+            return Patterns.EMAIL_ADDRESS.matcher(emailString).matches();
+        }
     }
 
     public interface SignupFragmentInterface {

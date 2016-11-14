@@ -1,0 +1,50 @@
+<resources>
+    <string name="app_name">InClassAssgn11</string>
+    <string name="sign_out">Sign Out</string>
+    <string name="text_view_welcome_status">Hello, %s</string>
+    <string name="text_view_status_signed_out">Signed Out</string>
+    <string name="button_sunny">Sunny</string>
+    <string name="button_foggy">foggy</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="text_view_email">Email</string>
+    <string name="text_view_password">Password</string>
+    <string name="button_login">Login</string>
+    <string name="button_create_new_account">Create New Account</string>
+    <string name="text_view_full_name">Full Name</string>
+    <string name="button_sign_up">Sign Up</string>
+    <string name="button_cancel">Cancel</string>
+
+    <string name="text_view_current_expenses_lable">Current Expenses: </string>
+    <string-array name="spinner_category">
+        <item>Select Category</item>
+        <item>Groceries</item>
+        <item>Invoice</item>
+        <item>Transportation</item>
+        <item>Shopping</item>
+        <item>Rent</item>
+        <item>Trips</item>
+        <item>Utilities</item>
+        <item>Others</item>
+    </string-array>
+
+    <string name="text_view_expense_cost">$%s</string>
+
+    <string name="text_view_amount">Amount</string>
+    <string name="text_view_date">Date</string>
+    <string name="text_view_expense_detail">Expense Details</string>
+    <string name="text_view_category">Category</string>
+    <string name="text_view_name">Name</string>
+    <string name="button_close">Close</string>
+
+    <string name="error_empty_expense_name">Please enter Expense Name.</string>
+    <string name="error_empty_category">Please select Expense Cagegory.</string>
+    <string name="error_empty_amount">Please enter Expense Amount</string>
+
+    <string name="text_view_add_expense_lable">Add an Expense</string>
+    <string name="text_view_expense_name">Expense Name</string>
+    <string name="button_add_expense">Add Expense</string>
+
+    <string name="empty_list">There is no expense to show, please add your expenses from the menu.</string>
+</resources>

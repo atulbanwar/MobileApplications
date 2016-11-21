@@ -9,6 +9,7 @@ public class User {
     private String lastName;
     private String imagePath;
     private String userID;
+    private String gender;
 
     public User() {
     }
@@ -43,5 +44,13 @@ public class User {
 
     public void setUserID(String userID) {
         this.userID = userID;
+    }
+
+    public String getGender() {
+        return gender;
+    }
+
+    public void setGender(String gender) {
+        this.gender = gender;
     }
 }

@@ -15,6 +15,8 @@ import android.util.Patterns;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -39,10 +41,15 @@ public class RegistrationActivity extends AppCompatActivity {
 
     private EditText firstNameEditText, lastNameEditText, emailEditText, passwordEditText, confirmPasswordEditText;
     private ImageView profileImageView;
+    private RadioGroup genderRadioGroup;
+    private RadioButton maleRadioButton, femaleRadioButton;
     private ProgressDialog progressDialog;
 
-    private String firstName, lastName, email, password, confirmPassword, fullName;
 
+    private String firstName, lastName, email, password, confirmPassword, gender;
+
+    public static final String MALE="male";
+    public static final String FEMALE="femal";
     private static final String EMPTY="";
     private static final int PICK_IMAGE_REQUEST = 1;
 
@@ -60,6 +67,9 @@ public class RegistrationActivity extends AppCompatActivity {
         passwordEditText = (EditText) findViewById(R.id.editTextPassword);
         confirmPasswordEditText = (EditText) findViewById(R.id.editTextConfirmPassword);
         profileImageView = (ImageView) findViewById(R.id.imageViewProfile);
+        genderRadioGroup = (RadioGroup) findViewById(R.id.genderRadioGroup);
+        maleRadioButton =  (RadioButton) findViewById(R.id.radioButtonMale);
+        femaleRadioButton = (RadioButton) findViewById(R.id.radioButtonFemale);
         progressDialog = new ProgressDialog(this);
         progressDialog.setIndeterminate(true);
 
@@ -78,6 +88,20 @@ public class RegistrationActivity extends AppCompatActivity {
         email = emailEditText.getText().toString();
         password = passwordEditText.getText().toString();
         confirmPassword = confirmPasswordEditText.getText().toString();
+
+        int selectedId = genderRadioGroup.getCheckedRadioButtonId();
+
+        if(selectedId == maleRadioButton.getId()) {
+            gender=MALE;
+
+        } else if(selectedId == femaleRadioButton.getId()) {
+            gender=FEMALE;
+        } else {
+            Toast.makeText(this, "Please select Gender!", Toast.LENGTH_SHORT).show();
+        }
+
+
+
 
         if (validateForm()) {
             progressDialog.show();
@@ -108,10 +132,10 @@ public class RegistrationActivity extends AppCompatActivity {
                                                 // stop progress bar
                                                 Uri uploadedImageUri = taskSnapshot.getDownloadUrl();
                                                 userPOJO.setImagePath(uploadedImageUri.toString());
-
                                                 userPOJO.setFirstName(firstName);
                                                 userPOJO.setLastName(lastName);
                                                 userPOJO.setUserID(userId);
+                                                userPOJO.setGender(gender);
                                                 FirebaseService.getRootRef().child("Users").child(userId).setValue(userPOJO);
                                                 progressDialog.dismiss();
                                                 Toast.makeText(RegistrationActivity.this, "Sign Up Successful!", Toast.LENGTH_LONG).show();

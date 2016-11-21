@@ -40,6 +40,7 @@ public class ProfileUpdateActivity extends AppCompatActivity {
 
     private ImageView profileImageView;
     private EditText firstNameEditText, lastNameEditText;
+    private TextView fullNameTextView;
     private RadioGroup genderRadioGroup;
     private RadioButton maleRadioButton, femaleRadioButton;
     private User user=null;
@@ -62,7 +63,7 @@ public class ProfileUpdateActivity extends AppCompatActivity {
         maleRadioButton= (RadioButton) findViewById(R.id.radioButtonMale);
         femaleRadioButton = (RadioButton) findViewById(R.id.radioButtonFemale);
         profileImageView = (ImageView) findViewById(R.id.imageViewProfile);
-
+        fullNameTextView=(TextView) findViewById(R.id.textViewFullName);
         progressDialog = new ProgressDialog(this);
 
         FirebaseService.getRootRef().child("Users").child(userId).addValueEventListener(new ValueEventListener() {
@@ -72,8 +73,10 @@ public class ProfileUpdateActivity extends AppCompatActivity {
                 if( user!=null)
                 {
                     progressDialog.show();
+
                     firstNameEditText.setText(user.getFirstName());
                     lastNameEditText.setText(user.getLastName());
+                    fullNameTextView.setText(user.getFirstName()+" "+user.getLastName());
                     if(user.getGender().equals(RegistrationActivity.MALE))
                     {
                         maleRadioButton.setChecked(true);
@@ -128,6 +131,7 @@ public class ProfileUpdateActivity extends AppCompatActivity {
             user.setUserID(userId);
             user.setGender(gender);
             user.setFirstName(firstName);
+            user.setLastName(lastName);
             FirebaseService.getRootRef().child("Users").child(userId).setValue(user);
             Toast.makeText(this, "Profile Details Updated Successfully!!", Toast.LENGTH_SHORT).show();
         }

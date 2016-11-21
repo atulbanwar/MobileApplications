@@ -1,0 +1,47 @@
+package com.mad.chatmessenger.model;
+
+/**
+ * Created by Sanket on 11/18/2016.
+ */
+
+public class User {
+    private String firstName;
+    private String lastName;
+    private String imagePath;
+    private String userID;
+
+    public User() {
+    }
+
+    public String getFirstName() {
+        return firstName;
+    }
+
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
+    }
+
+    public String getLastName() {
+        return lastName;
+    }
+
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public String getImagePath() {
+        return imagePath;
+    }
+
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+
+    public String getUserID() {
+        return userID;
+    }
+
+    public void setUserID(String userID) {
+        this.userID = userID;
+    }
+}

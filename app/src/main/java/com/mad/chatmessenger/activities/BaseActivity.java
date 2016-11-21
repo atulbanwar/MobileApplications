@@ -29,11 +29,11 @@ public class BaseActivity extends AppCompatActivity {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null && !MainActivity.isSignUpInProgress) {
+                if (user != null ) {
                     userSignedIn=true;
                     Toast.makeText(BaseActivity.this, "Sign In Successful", Toast.LENGTH_SHORT).show();
                     //TODO add activity reference later
-                    Intent intentObj = new Intent(BaseActivity.this, LoginActivity.class);
+                    Intent intentObj = new Intent(BaseActivity.this, UserListActivity.class);
                     startActivity(intentObj);
 
                 }else {

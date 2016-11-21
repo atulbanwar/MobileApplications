@@ -14,6 +14,7 @@ import com.mad.chatmessenger.firebase.FirebaseService;
 public class MenuBaseActivity extends AppCompatActivity {
 
     private ProgressDialog progressDiaglog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -30,12 +31,12 @@ public class MenuBaseActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_main_activity_menu:
-                if(BaseActivity.userSignedIn)
-                {progressDiaglog = new ProgressDialog(this);
-                progressDiaglog.setIndeterminate(true);
-                FirebaseService.getFirebaseAuth().signOut();
-                progressDiaglog.dismiss();}
-                else {
+                if (BaseActivity.userSignedIn) {
+                    progressDiaglog = new ProgressDialog(this);
+                    progressDiaglog.setIndeterminate(true);
+                    FirebaseService.getFirebaseAuth().signOut();
+                    progressDiaglog.dismiss();
+                } else {
                     Toast.makeText(MenuBaseActivity.this, "You are not logged In", Toast.LENGTH_SHORT).show();
                 }
                 return true;

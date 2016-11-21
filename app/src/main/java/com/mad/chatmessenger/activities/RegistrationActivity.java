@@ -80,8 +80,6 @@ public class RegistrationActivity extends AppCompatActivity {
         confirmPassword = confirmPasswordEditText.getText().toString();
 
         if (validateForm()) {
-            fullName = firstName + " " + lastName;
-            MainActivity.isSignUpInProgress = true;
             progressDialog.show();
             auth.createUserWithEmailAndPassword(email, password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -102,10 +100,11 @@ public class RegistrationActivity extends AppCompatActivity {
                                         StorageReference ref = firebaseStorage.getReference(path);
 
                                         UploadTask uploadTask = ref.putBytes(byteArray);
-
+                                        progressDialog.dismiss();
                                         uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
                                             @Override
                                             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                                progressDialog.show();
                                                 // stop progress bar
                                                 Uri uploadedImageUri = taskSnapshot.getDownloadUrl();
                                                 userPOJO.setImagePath(uploadedImageUri.toString());
@@ -114,12 +113,8 @@ public class RegistrationActivity extends AppCompatActivity {
                                                 userPOJO.setLastName(lastName);
                                                 userPOJO.setUserID(userId);
                                                 FirebaseService.getRootRef().child("Users").child(userId).setValue(userPOJO);
-                                                auth.signOut();
-                                                MainActivity.isSignUpInProgress = false;
                                                 progressDialog.dismiss();
-                                                finish();
-                                                Toast.makeText(RegistrationActivity.this, "Please login!", Toast.LENGTH_LONG).show();
-
+                                                Toast.makeText(RegistrationActivity.this, "Sign Up Successful!", Toast.LENGTH_LONG).show();
                                             }
                                         });
 

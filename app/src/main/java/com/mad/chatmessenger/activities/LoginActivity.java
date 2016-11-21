@@ -24,7 +24,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.mad.chatmessenger.R;
 import com.mad.chatmessenger.firebase.FirebaseService;
 
-public class LoginActivity extends MenuBaseActivity  {
+public class LoginActivity extends AppCompatActivity  {
 
     private Button signInButton, signUpButton;
     private EditText emailEditText, passwordEditText;
@@ -117,6 +117,8 @@ public class LoginActivity extends MenuBaseActivity  {
            startActivity(intent);
        }
     }
+
+
 
 
 }

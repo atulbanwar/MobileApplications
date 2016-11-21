@@ -19,8 +19,12 @@ import com.google.firebase.auth.AuthCredential;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.ValueEventListener;
 import com.mad.chatmessenger.R;
 import com.mad.chatmessenger.firebase.FirebaseService;
+import com.mad.chatmessenger.model.User;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -96,6 +100,32 @@ public class MainActivity extends AppCompatActivity {
                         if (!task.isSuccessful()) {
                             Toast.makeText(MainActivity.this, "Authentication failed.",
                                     Toast.LENGTH_SHORT).show();
+                        }else {
+                            final FirebaseUser firebaseUser = FirebaseService.getFirebaseAuth().getCurrentUser();
+
+                            FirebaseService.getRootRef().child("Users").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    Intent intent = new Intent(MainActivity.this, BaseActivity.class);
+                                    if(dataSnapshot.hasChild(firebaseUser.getUid()))
+                                    {
+
+                                        //DO nothing
+                                    }else
+                                    {
+                                        User user = new User();
+                                        user.setUserID(firebaseUser.getUid());
+                                        FirebaseService.getRootRef().child("Users").child(firebaseUser.getUid()).setValue(user);
+                                        Toast.makeText(MainActivity.this, "Please update profile details", Toast.LENGTH_SHORT).show();
+                                    }
+                                    startActivity(intent);
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
                         }
 
                     }

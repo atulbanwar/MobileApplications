@@ -72,35 +72,42 @@ public class ProfileUpdateActivity extends AppCompatActivity {
                 user = dataSnapshot.getValue(User.class);
                 if( user!=null)
                 {
-                    progressDialog.show();
+                    if( user.getLastName()!=null
+                            && user.getFirstName()!=null
+                            && user.getGender()!=null) {
+                        progressDialog.show();
 
-                    firstNameEditText.setText(user.getFirstName());
-                    lastNameEditText.setText(user.getLastName());
-                    fullNameTextView.setText(user.getFirstName()+" "+user.getLastName());
-                    if(user.getGender().equals(RegistrationActivity.MALE))
-                    {
-                        maleRadioButton.setChecked(true);
-                        femaleRadioButton.setChecked(false);
-                    }else
-                    {
-                        maleRadioButton.setChecked(false);
-                        femaleRadioButton.setChecked(true);
+                        firstNameEditText.setText(user.getFirstName());
+                        lastNameEditText.setText(user.getLastName());
+                        fullNameTextView.setText(user.getFirstName() + " " + user.getLastName());
+                        if (user.getGender().equals(RegistrationActivity.MALE)) {
+                            maleRadioButton.setChecked(true);
+                            femaleRadioButton.setChecked(false);
+                        } else {
+                            maleRadioButton.setChecked(false);
+                            femaleRadioButton.setChecked(true);
+                        }
+
+
+                        if( user.getImagePath() !=null) {
+                            progressDialog.show();
+                            Picasso.with(ProfileUpdateActivity.this)
+                                    .load(user.getImagePath())
+                                    .into(profileImageView, new com.squareup.picasso.Callback() {
+                                        @Override
+                                        public void onSuccess() {
+                                            progressDialog.dismiss();
+                                        }
+
+                                        @Override
+                                        public void onError() {
+
+                                        }
+                                    });
+                        }else {
+                            progressDialog.dismiss();
+                        }
                     }
-
-
-                    Picasso.with(ProfileUpdateActivity.this)
-                            .load(user.getImagePath())
-                            .into(profileImageView, new com.squareup.picasso.Callback() {
-                                @Override
-                                public void onSuccess() {
-                                    progressDialog.dismiss();
-                                }
-
-                                @Override
-                                public void onError() {
-
-                                }
-                            });
 
                 }
             }

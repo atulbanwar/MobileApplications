@@ -238,8 +238,6 @@ public class RegistrationActivity extends AppCompatActivity {
         } else {
             return true;
         }
-
-
     }
 
     private boolean isValidEmail(CharSequence emailString) {

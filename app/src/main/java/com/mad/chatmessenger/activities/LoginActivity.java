@@ -7,6 +7,8 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -22,12 +24,12 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.mad.chatmessenger.R;
 import com.mad.chatmessenger.firebase.FirebaseService;
 
-public class LoginActivity extends AppCompatActivity {
+public class LoginActivity extends MenuBaseActivity  {
 
     private Button signInButton, signUpButton;
     private EditText emailEditText, passwordEditText;
     private ProgressDialog progressDialog;
-    private boolean userSignedIn=false;
+
     private FirebaseAuth auth= FirebaseService.getFirebaseAuth();
 
     @Override
@@ -42,7 +44,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-        FirebaseUser user = auth.getCurrentUser();
+        //FirebaseUser user = auth.getCurrentUser();
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setIndeterminate(true);
@@ -94,19 +96,27 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     public void onBackPressed() {
-        new AlertDialog.Builder(this)
-                .setTitle("Really Exit?")
-                .setMessage("Are you sure you want to exit?")
-                .setNegativeButton(android.R.string.no, null)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface arg0, int arg1) {
-                        Intent intent = new Intent(Intent.ACTION_MAIN);
-                        intent.addCategory(Intent.CATEGORY_HOME);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                        startActivity(intent);
-                        finish();
+       if(BaseActivity.userSignedIn) {
+           new AlertDialog.Builder(this)
+                   .setTitle("Really Exit?")
+                   .setMessage("Are you sure you want to exit?")
+                   .setNegativeButton(android.R.string.no, null)
+                   .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                       public void onClick(DialogInterface arg0, int arg1) {
+                           Intent intent = new Intent(Intent.ACTION_MAIN);
+                           intent.addCategory(Intent.CATEGORY_HOME);
+                           intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                           startActivity(intent);
+                           finish();
 
-                    }
-                }).create().show();
+                       }
+                   }).create().show();
+       }else
+       {
+           Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+           startActivity(intent);
+       }
     }
+
+
 }

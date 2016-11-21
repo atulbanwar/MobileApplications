@@ -26,29 +26,14 @@ public class MainActivity extends AppCompatActivity {
 
     public static boolean isSignUpInProgress = false;
 
-    private FirebaseAuth auth= FirebaseService.getFirebaseAuth();
+
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        auth.addAuthStateListener(new FirebaseAuth.AuthStateListener() {
-            @Override
-            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-                FirebaseUser user = firebaseAuth.getCurrentUser();
-                if (user != null && !MainActivity.isSignUpInProgress) {
 
-                    Toast.makeText(MainActivity.this, "Sign In Successful", Toast.LENGTH_SHORT).show();
-                    //TODO add activity reference later
-                    Intent intentObj = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(intentObj);
-                }else {
-                    Intent intentObj = new Intent(MainActivity.this, LoginActivity.class);
-                    startActivity(intentObj);
-                }
-            }
-        });
 
     }
 

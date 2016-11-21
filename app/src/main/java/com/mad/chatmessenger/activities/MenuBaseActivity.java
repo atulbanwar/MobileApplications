@@ -30,7 +30,7 @@ public class MenuBaseActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.action_main_activity_menu:
+            case R.id.action_main_sign_out:
                 if (BaseActivity.userSignedIn) {
                     progressDiaglog = new ProgressDialog(this);
                     progressDiaglog.setIndeterminate(true);
@@ -40,6 +40,9 @@ public class MenuBaseActivity extends AppCompatActivity {
                     Toast.makeText(MenuBaseActivity.this, "You are not logged In", Toast.LENGTH_SHORT).show();
                 }
                 return true;
+            case R.id.action_main_profile_update:
+                Toast.makeText(this, "Profile update clicked", Toast.LENGTH_SHORT).show();
+            return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

@@ -1,6 +1,13 @@
 package com.mad.chatmessenger.activities;
 
 import android.app.ProgressDialog;
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.ParcelFileDescriptor;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -11,14 +18,23 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.mad.chatmessenger.R;
 import com.mad.chatmessenger.firebase.FirebaseService;
 import com.mad.chatmessenger.model.User;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+
+import java.io.ByteArrayOutputStream;
+import java.io.FileDescriptor;
+import java.io.IOException;
+import java.util.UUID;
 
 public class ProfileUpdateActivity extends AppCompatActivity {
 
@@ -30,6 +46,10 @@ public class ProfileUpdateActivity extends AppCompatActivity {
     private String userId=FirebaseService.GetCurrentUser().getUid();
     private String firstName, lastName, gender;
     private ProgressDialog progressDialog;
+    private static final int PICK_IMAGE_REQUEST = 1;
+    private FirebaseStorage firebaseStorage = FirebaseStorage.getInstance();
+
+    private Uri uri = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +110,6 @@ public class ProfileUpdateActivity extends AppCompatActivity {
     }
 
     public void actionUpdate(View view) {
-
         firstName=firstNameEditText.getText().toString();
         lastName=lastNameEditText.getText().toString();
         int selectedId = genderRadioGroup.getCheckedRadioButtonId();
@@ -110,6 +129,7 @@ public class ProfileUpdateActivity extends AppCompatActivity {
             user.setGender(gender);
             user.setFirstName(firstName);
             FirebaseService.getRootRef().child("Users").child(userId).setValue(user);
+            Toast.makeText(this, "Profile Details Updated Successfully!!", Toast.LENGTH_SHORT).show();
         }
 
 
@@ -147,4 +167,52 @@ public class ProfileUpdateActivity extends AppCompatActivity {
         }
     }
 
+    public void imageUpload(View view) {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), PICK_IMAGE_REQUEST);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == PICK_IMAGE_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
+            uri = data.getData();
+                try {
+                    Bitmap bitmap = getBitmapFromUri(uri, getContentResolver());
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                    byte[] byteArray = baos.toByteArray();
+
+                    String path = "profileImages/" + UUID.randomUUID() + ".png";
+                    StorageReference ref = firebaseStorage.getReference(path);
+
+                    progressDialog.show();
+                    UploadTask uploadTask = ref.putBytes(byteArray);
+
+                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            // stop progress bar
+                            progressDialog.dismiss();
+                            Uri uploadedImageUri = taskSnapshot.getDownloadUrl();
+                            user.setImagePath(uploadedImageUri.toString());
+                            FirebaseService.getRootRef().child("Users").child(userId).setValue(user);
+                            Toast.makeText(ProfileUpdateActivity.this, "Profile Image Updated Successfully!!", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } catch (IOException e) {
+                    Toast.makeText(ProfileUpdateActivity.this, "Problem in fetching Image path", Toast.LENGTH_SHORT).show();
+                }
+        }
+    }
+
+    public static Bitmap getBitmapFromUri(Uri uri, ContentResolver cr) throws IOException {
+        ParcelFileDescriptor parcelFileDescriptor = cr.openFileDescriptor(uri, "r");
+        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+        parcelFileDescriptor.close();
+        return image;
+    }
 }

@@ -10,6 +10,15 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.mad.chatmessenger.activities.MainActivity">
 
+
+
+    <com.google.android.gms.common.SignInButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/googleSignInButton">
+
+    </com.google.android.gms.common.SignInButton>
+
     <Button
         android:text="Login"
         android:layout_width="match_parent"
@@ -23,7 +32,10 @@
         android:layout_alignRight="@+id/editTextPassword"
         android:layout_alignEnd="@+id/editTextPassword"
         android:backgroundTint="@color/colorAccent"
-        android:onClick="actionSignIn"/>
+        android:onClick="actionSignIn"
+        android:layout_below="@+id/googleSignInButton"/>
+
+
 
     <Button
         android:text="Sign Up"

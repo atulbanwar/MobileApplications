@@ -1,6 +1,7 @@
 package com.mad.chatmessenger.activities;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -41,7 +42,8 @@ public class MenuBaseActivity extends AppCompatActivity {
                 }
                 return true;
             case R.id.action_main_profile_update:
-                Toast.makeText(this, "Profile update clicked", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(MenuBaseActivity.this, ProfileUpdateActivity.class);
+                startActivity(intent);
             return true;
             default:
                 return super.onOptionsItemSelected(item);

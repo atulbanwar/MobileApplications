@@ -49,7 +49,7 @@ public class RegistrationActivity extends AppCompatActivity {
     private String firstName, lastName, email, password, confirmPassword, gender;
 
     public static final String MALE="male";
-    public static final String FEMALE="femal";
+    public static final String FEMALE="female";
     private static final String EMPTY="";
     private static final int PICK_IMAGE_REQUEST = 1;
 

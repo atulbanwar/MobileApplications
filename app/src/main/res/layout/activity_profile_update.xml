@@ -18,10 +18,178 @@
         android:id="@+id/imageViewProfile"
         android:layout_marginTop="9dp"
         android:adjustViewBounds="true"
-        android:maxWidth="100dp"
-        android:maxHeight="100dp"
+        android:maxWidth="200dp"
+        android:maxHeight="200dp"
         android:scaleType="fitCenter"
         android:layout_below="@+id/editTextConfirmPassword"
         android:layout_centerHorizontal="true"
         android:onClick="imageUpload"/>
+
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/imageViewProfile"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/activity_vertical_margin"
+        android:id="@+id/tableLayoutUserProfile">
+        <TableRow
+            android:gravity="center_horizontal"
+            >
+            <TextView
+                android:text="First Name: "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/colorPrimaryDark"
+                />
+
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:id="@+id/editTextFirstName"
+                />
+        </TableRow>
+
+        <TableRow
+            android:gravity="center_horizontal"
+            >
+            <TextView
+                android:text="Last Name: "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/colorPrimaryDark"
+                />
+
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="textPersonName"
+                android:id="@+id/editTextLastName"
+                />
+        </TableRow>
+
+        <TableRow
+            android:gravity="center_horizontal"
+            android:layout_marginTop="5sp"
+            >
+            <TextView
+                android:text="Gender : "
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:textColor="@color/colorPrimaryDark"
+                />
+
+            <RadioGroup
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:id="@+id/genderRadioGroup">
+
+                <RadioButton
+                    android:text="Male"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioButtonMale"
+                    android:textColor="@color/colorPrimaryDark"
+                    />
+
+                <RadioButton
+                    android:text="Female"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/radioButtonFemale"
+                    android:textColor="@color/colorPrimaryDark"
+                    />
+            </RadioGroup>
+        </TableRow>
+
+
+    </TableLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tableLayoutUserProfile"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="34dp">
+
+        <Button
+            android:text="Update"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/buttonSignUp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/buttonCancel"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/colorAccent"
+            android:onClick="actionUpdate"
+            android:layout_weight="1" />
+
+        <Button
+            android:text="Cancel"
+            android:textStyle="bold"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/buttonSignUp"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/buttonReset"
+            android:textColor="@android:color/white"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:onClick="actionCancel"
+            android:layout_weight="1"
+            />
+    </LinearLayout>
+
+    <!--
+
+    <LinearLayout
+        android:layout_marginTop="25dp"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/linearLayoutName"
+        android:layout_below="@+id/imageViewProfile"
+        android:layout_centerHorizontal="true"
+        >
+
+        <TextView
+            android:text="Gender"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/textView"
+            android:textSize="20sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_marginLeft="5sp"
+            android:layout_weight="1"
+            android:layout_gravity="center"
+            />
+
+        <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="First Name"
+            android:ems="10"
+            android:id="@+id/editTextFirstName"
+            android:layout_weight="1"
+            android:layout_gravity="center"/>
+
+        &lt;!&ndash;<EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="textPersonName"
+            android:hint="Last Name"
+            android:ems="10"
+            android:id="@+id/editTextLastName"
+            android:layout_weight="1" />&ndash;&gt;
+    </LinearLayout>-->
 </RelativeLayout>

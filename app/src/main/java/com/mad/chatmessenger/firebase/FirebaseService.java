@@ -30,4 +30,9 @@ public class FirebaseService {
         return rootRef;
     }
 
+    public static FirebaseUser GetCurrentUser()
+    {
+       return firebaseAuth.getCurrentUser();
+    }
+
 }

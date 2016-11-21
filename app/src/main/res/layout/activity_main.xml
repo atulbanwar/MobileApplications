@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
@@ -11,32 +12,6 @@
     tools:context="com.mad.chatmessenger.activities.MainActivity">
 
 
-
-    <com.google.android.gms.common.SignInButton
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/googleSignInButton">
-
-    </com.google.android.gms.common.SignInButton>
-
-    <Button
-        android:text="Login"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-
-        android:layout_marginTop="22dp"
-        android:id="@+id/buttonLogin"
-        android:textColor="@android:color/white"
-        android:layout_alignLeft="@+id/editTextPassword"
-        android:layout_alignStart="@+id/editTextPassword"
-        android:layout_alignRight="@+id/editTextPassword"
-        android:layout_alignEnd="@+id/editTextPassword"
-        android:backgroundTint="@color/colorAccent"
-        android:onClick="actionSignIn"
-        android:layout_below="@+id/googleSignInButton"/>
-
-
-
     <Button
         android:text="Sign Up"
         android:layout_width="match_parent"
@@ -45,7 +20,45 @@
         android:textColor="@android:color/white"
         android:backgroundTint="@color/colorPrimaryDark"
         android:onClick="actionSignUp"
-        android:layout_below="@+id/buttonLogin"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true" />
+
+    <com.google.android.gms.common.SignInButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/googleSignInButton"
+        android:layout_marginLeft="32dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginBottom="35dp"
+        android:layout_above="@+id/buttonLogin"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+
+    </com.google.android.gms.common.SignInButton>
+
+    <Button
+        android:text="Login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:id="@+id/buttonLogin"
+        android:textColor="@android:color/white"
+        android:backgroundTint="@color/colorAccent"
+        android:onClick="actionSignIn"
+        android:layout_above="@+id/buttonSignUp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:srcCompat="@drawable/main_screen"
+        android:id="@+id/imageView"
+        android:layout_above="@+id/googleSignInButton"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="43dp" />
+
+
 </RelativeLayout>

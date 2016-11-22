@@ -66,11 +66,21 @@ public class UserListActivity extends MenuBaseActivity {
         ) {
             @Override
             protected void populateViewHolder(UserViewHolder viewHolder, User model, int position) {
-                viewHolder.fullName.setText(model.getFirstName()+" "+model.getLastName());
+                TextView fullNameTextView = viewHolder.fullName;
+                ImageView thumbnailImageView = viewHolder.displayPicThumbnail;
+                View view = viewHolder.view;
+
+                fullNameTextView.setText(model.getFirstName()+" "+model.getLastName());
 
 
-                Picasso.with(UserListActivity.this).load(model.getImagePath()).into(viewHolder.displayPicThumbnail);
-                viewHolder.displayPicThumbnail.setOnClickListener(new View.OnClickListener() {
+                Picasso.with(UserListActivity.this).load(model.getImagePath()).into(thumbnailImageView);
+                thumbnailImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(v.getContext(), "Image Clicked", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                view.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(v.getContext(), "Item Clicked", Toast.LENGTH_SHORT).show();
@@ -84,13 +94,14 @@ public class UserListActivity extends MenuBaseActivity {
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {
 
+        View view;
         ImageView displayPicThumbnail;
         TextView fullName;
         public UserViewHolder(final View itemView) {
             super(itemView);
             displayPicThumbnail = (ImageView) itemView.findViewById(R.id.imageViewThumbnail);
             fullName = (TextView) itemView.findViewById(R.id.textViewFullName);
-
+            view=itemView;
 
         }
     }

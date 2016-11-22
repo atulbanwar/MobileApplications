@@ -176,47 +176,5 @@
             />
     </LinearLayout>
 
-    <!--
 
-    <LinearLayout
-        android:layout_marginTop="25dp"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayoutName"
-        android:layout_below="@+id/imageViewProfile"
-        android:layout_centerHorizontal="true"
-        >
-
-        <TextView
-            android:text="Gender"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/textView"
-            android:textSize="20sp"
-            android:textColor="@color/colorPrimaryDark"
-            android:layout_marginLeft="5sp"
-            android:layout_weight="1"
-            android:layout_gravity="center"
-            />
-
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:hint="First Name"
-            android:ems="10"
-            android:id="@+id/editTextFirstName"
-            android:layout_weight="1"
-            android:layout_gravity="center"/>
-
-        &lt;!&ndash;<EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:hint="Last Name"
-            android:ems="10"
-            android:id="@+id/editTextLastName"
-            android:layout_weight="1" />&ndash;&gt;
-    </LinearLayout>-->
 </RelativeLayout>

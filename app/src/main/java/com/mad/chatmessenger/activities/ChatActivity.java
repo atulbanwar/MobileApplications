@@ -1,7 +1,12 @@
 package com.mad.chatmessenger.activities;
 
-import android.media.Image;
-import android.support.v7.app.AppCompatActivity;
+import android.app.ProgressDialog;
+import android.content.ContentResolver;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
+import android.os.ParcelFileDescriptor;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -9,13 +14,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.UploadTask;
 import com.mad.chatmessenger.R;
 import com.mad.chatmessenger.Utility.Util;
 import com.mad.chatmessenger.firebase.FirebaseService;
@@ -23,20 +28,25 @@ import com.mad.chatmessenger.model.Message;
 import com.mad.chatmessenger.model.User;
 import com.squareup.picasso.Picasso;
 
+import java.io.ByteArrayOutputStream;
+import java.io.FileDescriptor;
+import java.io.IOException;
 import java.util.Calendar;
+import java.util.UUID;
 
-public class ChatActivity extends AppCompatActivity {
+public class ChatActivity extends MenuBaseActivity {
     private String currentUserId;
     private String currentUserName;
-
     private String peerUserId;
     private String peerUserName;
-
     private String currentChatId;
+
+    private static int SELECT_PICTURE = 1;
 
     private RecyclerView recyclerViewMessages;
     private TextView editTextPeerName;
     private EditText editTextMessageToSend;
+    private ProgressDialog progressDialog;
 
     FirebaseRecyclerAdapter<Message, ChatActivity.MessageViewHolder> adapter;
 
@@ -51,6 +61,9 @@ public class ChatActivity extends AppCompatActivity {
 
         editTextMessageToSend = (EditText) findViewById(R.id.edit_text_message_to_send);
         editTextPeerName = (TextView) findViewById(R.id.text_view_peer_name);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(true);
 
         if (getIntent().getExtras() != null) {
             currentUserId = FirebaseService.GetCurrentUser().getUid();
@@ -95,10 +108,23 @@ public class ChatActivity extends AppCompatActivity {
             ) {
                 @Override
                 protected void populateViewHolder(ChatActivity.MessageViewHolder viewHolder, Message model, final int position) {
+                    viewHolder.chatMesssage.setText("");
+                    viewHolder.chatImage.setImageBitmap(null);
                     if (model.getType().equals("TEXT")) {
                         viewHolder.chatMesssage.setText(model.getText());
                     } else {
-                        Picasso.with(ChatActivity.this).load(model.getImageUrl()).into(viewHolder.chatImage);
+                        progressDialog.show();
+                        Picasso.with(ChatActivity.this).load(model.getImageUrl()).into(viewHolder.chatImage, new com.squareup.picasso.Callback() {
+                            @Override
+                            public void onSuccess() {
+                                progressDialog.dismiss();
+                            }
+
+                            @Override
+                            public void onError() {
+                                progressDialog.dismiss();
+                            }
+                        });
                     }
 
                     if (model.getUserId().equals(currentUserId)) {
@@ -145,6 +171,62 @@ public class ChatActivity extends AppCompatActivity {
         FirebaseService.getCurrentChatRef(currentChatId).push().setValue(message);
 
         editTextMessageToSend.setText("");
+    }
+
+    public void actionSendImage(View view) {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+        startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
+    }
+
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (resultCode == RESULT_OK) {
+            if (requestCode == SELECT_PICTURE && data != null) {
+                Uri selectedImageUri = data.getData();
+                try {
+                    Bitmap bitmap = getBitmapFromUri(selectedImageUri, getContentResolver());
+
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    bitmap.compress(Bitmap.CompressFormat.PNG, 100, baos);
+                    byte[] byteArray = baos.toByteArray();
+
+                    //String path = "messageChatImages/" + UUID.randomUUID() + ".png";
+                    String fileName = UUID.randomUUID() + ".png";
+                    //StorageReference ref = firebaseStorage.getReference(path);
+
+                    UploadTask uploadTask = FirebaseService.getStorageRef().child(fileName).putBytes(byteArray);
+
+                    uploadTask.addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                        @Override
+                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                            Uri uploadedImageUri = taskSnapshot.getDownloadUrl();
+
+                            Message message = new Message();
+                            message.setId("1");
+                            message.setType("IMAGE");
+                            message.setImageUrl(uploadedImageUri.toString());
+                            message.setUserId(currentUserId);
+                            message.setRead(false);
+                            message.setTime(Calendar.getInstance().getTime().toString());
+
+                            FirebaseService.getCurrentChatRef(currentChatId).push().setValue(message);
+                        }
+                    });
+
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+    }
+
+    public static Bitmap getBitmapFromUri(Uri uri, ContentResolver cr) throws IOException {
+        ParcelFileDescriptor parcelFileDescriptor = cr.openFileDescriptor(uri, "r");
+        FileDescriptor fileDescriptor = parcelFileDescriptor.getFileDescriptor();
+        Bitmap image = BitmapFactory.decodeFileDescriptor(fileDescriptor);
+        parcelFileDescriptor.close();
+        return image;
     }
 
     public static class MessageViewHolder extends RecyclerView.ViewHolder {

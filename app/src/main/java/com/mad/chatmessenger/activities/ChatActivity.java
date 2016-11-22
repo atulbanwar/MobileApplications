@@ -45,6 +45,7 @@ public class ChatActivity extends MenuBaseActivity {
 
     private RecyclerView recyclerViewMessages;
     private TextView editTextPeerName;
+    private ImageView imageViewPeerImage;
     private EditText editTextMessageToSend;
     private ProgressDialog progressDialog;
 
@@ -61,6 +62,7 @@ public class ChatActivity extends MenuBaseActivity {
 
         editTextMessageToSend = (EditText) findViewById(R.id.edit_text_message_to_send);
         editTextPeerName = (TextView) findViewById(R.id.text_view_peer_name);
+        imageViewPeerImage = (ImageView) findViewById(R.id.image_view_user_profile_pic);
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setIndeterminate(true);
@@ -92,6 +94,17 @@ public class ChatActivity extends MenuBaseActivity {
                     User peerUser = dataSnapshot.getValue(User.class);
                     peerUserName = peerUser.getFirstName() + " " + peerUser.getLastName();
                     editTextPeerName.setText(peerUserName);
+                    Picasso.with(ChatActivity.this).load(peerUser.getImagePath()).into(imageViewPeerImage, new com.squareup.picasso.Callback() {
+                        @Override
+                        public void onSuccess() {
+                            progressDialog.dismiss();
+                        }
+
+                        @Override
+                        public void onError() {
+                            progressDialog.dismiss();
+                        }
+                    });
                 }
 
                 @Override
@@ -176,7 +189,7 @@ public class ChatActivity extends MenuBaseActivity {
     public void actionSendImage(View view) {
         Intent intent = new Intent();
         intent.setType("image/*");
-        intent.setAction(Intent.ACTION_OPEN_DOCUMENT);
+        intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
     }
 

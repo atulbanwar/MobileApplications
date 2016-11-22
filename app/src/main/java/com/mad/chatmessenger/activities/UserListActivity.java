@@ -68,7 +68,7 @@ public class UserListActivity extends MenuBaseActivity {
             protected void populateViewHolder(UserViewHolder viewHolder, User model, int position) {
                 TextView fullNameTextView = viewHolder.fullName;
                 ImageView thumbnailImageView = viewHolder.displayPicThumbnail;
-                View view = viewHolder.view;
+                final View view = viewHolder.view;
 
                 fullNameTextView.setText(model.getFirstName()+" "+model.getLastName());
 
@@ -78,6 +78,8 @@ public class UserListActivity extends MenuBaseActivity {
                     @Override
                     public void onClick(View v) {
                         Toast.makeText(v.getContext(), "Image Clicked", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(view.getContext(), ProfileViewActivity.class);
+                        startActivity(intent);
                     }
                 });
                 view.setOnClickListener(new View.OnClickListener() {

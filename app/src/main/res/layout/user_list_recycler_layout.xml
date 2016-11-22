@@ -18,11 +18,9 @@
             android:maxWidth="50dp"
             android:maxHeight="50dp"
             android:scaleType="fitCenter"
-            android:src="@drawable/main_screen"
              />
 
         <TextView
-            android:text="TextView"
             android:layout_marginLeft="30sp"
             android:textSize="20sp"
             android:layout_width="wrap_content"

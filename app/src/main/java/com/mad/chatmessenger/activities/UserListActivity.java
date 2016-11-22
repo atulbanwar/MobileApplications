@@ -24,19 +24,24 @@ import com.squareup.picasso.Picasso;
 public class UserListActivity extends MenuBaseActivity {
 
     private RecyclerView mRecyclerView;
+    public static final String USER_ID = "user_id";
+    private static String currentUSerId;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list);
         mRecyclerView = (RecyclerView) findViewById(R.id.recylerView);
         mRecyclerView.setHasFixedSize(true);
-        mRecyclerView.setLayoutManager( new LinearLayoutManager(this));
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        currentUSerId=FirebaseService.GetCurrentUser().getUid();
+
     }
 
 
     @Override
     public void onBackPressed() {
-        if(BaseActivity.userSignedIn) {
+        if (BaseActivity.userSignedIn) {
             new AlertDialog.Builder(this)
                     .setTitle("Really Exit?")
                     .setMessage("Are you sure you want to exit?")
@@ -65,30 +70,33 @@ public class UserListActivity extends MenuBaseActivity {
                 FirebaseService.getUSerListRef()
         ) {
             @Override
-            protected void populateViewHolder(UserViewHolder viewHolder, User model, int position) {
+            protected void populateViewHolder(UserViewHolder viewHolder, final User model, int position) {
                 TextView fullNameTextView = viewHolder.fullName;
                 ImageView thumbnailImageView = viewHolder.displayPicThumbnail;
                 final View view = viewHolder.view;
 
-                fullNameTextView.setText(model.getFirstName()+" "+model.getLastName());
+
+                    fullNameTextView.setText(model.getFirstName() + " " + model.getLastName());
 
 
-                Picasso.with(UserListActivity.this).load(model.getImagePath()).into(thumbnailImageView);
-                thumbnailImageView.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(v.getContext(), "Image Clicked", Toast.LENGTH_SHORT).show();
-                        Intent intent = new Intent(view.getContext(), ProfileViewActivity.class);
-                        startActivity(intent);
-                    }
-                });
-                view.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View v) {
-                        Toast.makeText(v.getContext(), "Item Clicked", Toast.LENGTH_SHORT).show();
-                    }
-                });
-            }
+                    Picasso.with(UserListActivity.this).load(model.getImagePath()).into(thumbnailImageView);
+                    thumbnailImageView.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(v.getContext(), "Image Clicked", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(view.getContext(), ProfileViewActivity.class);
+                            intent.putExtra(USER_ID, model.getUserID());
+                            startActivity(intent);
+                        }
+                    });
+                    view.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            Toast.makeText(v.getContext(), "Item Clicked", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+
         };
 
         mRecyclerView.setAdapter(adapter);
@@ -99,11 +107,12 @@ public class UserListActivity extends MenuBaseActivity {
         View view;
         ImageView displayPicThumbnail;
         TextView fullName;
+
         public UserViewHolder(final View itemView) {
             super(itemView);
             displayPicThumbnail = (ImageView) itemView.findViewById(R.id.imageViewThumbnail);
             fullName = (TextView) itemView.findViewById(R.id.textViewFullName);
-            view=itemView;
+            view = itemView;
 
         }
     }

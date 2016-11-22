@@ -27,6 +27,7 @@
         <activity android:name=".activities.MenuBaseActivity" />
         <activity android:name=".activities.UserListActivity" />
         <activity android:name=".activities.ProfileUpdateActivity"></activity>
+        <activity android:name=".activities.ChatActivity"></activity>
 
     </application>
 

@@ -2,18 +2,35 @@ package com.mad.chatmessenger.activities;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.media.Image;
+import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
 
+import com.firebase.ui.database.FirebaseRecyclerAdapter;
+import com.google.firebase.database.DatabaseReference;
 import com.mad.chatmessenger.R;
+import com.mad.chatmessenger.firebase.FirebaseService;
+import com.mad.chatmessenger.model.User;
+import com.squareup.picasso.Picasso;
 
 public class UserListActivity extends MenuBaseActivity {
 
+    private RecyclerView mRecyclerView;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_list);
+        mRecyclerView = (RecyclerView) findViewById(R.id.recylerView);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager( new LinearLayoutManager(this));
     }
 
 
@@ -34,6 +51,47 @@ public class UserListActivity extends MenuBaseActivity {
 
                         }
                     }).create().show();
+        }
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        FirebaseRecyclerAdapter<User, UserViewHolder> adapter = new FirebaseRecyclerAdapter<User, UserViewHolder>(
+                User.class,
+                R.layout.user_list_recycler_layout,
+                UserViewHolder.class,
+                FirebaseService.getUSerListRef()
+        ) {
+            @Override
+            protected void populateViewHolder(UserViewHolder viewHolder, User model, int position) {
+                viewHolder.fullName.setText(model.getFirstName()+" "+model.getLastName());
+
+
+                Picasso.with(UserListActivity.this).load(model.getImagePath()).into(viewHolder.displayPicThumbnail);
+                viewHolder.displayPicThumbnail.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Toast.makeText(v.getContext(), "Item Clicked", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+        };
+
+        mRecyclerView.setAdapter(adapter);
+    }
+
+    public static class UserViewHolder extends RecyclerView.ViewHolder {
+
+        ImageView displayPicThumbnail;
+        TextView fullName;
+        public UserViewHolder(final View itemView) {
+            super(itemView);
+            displayPicThumbnail = (ImageView) itemView.findViewById(R.id.imageViewThumbnail);
+            fullName = (TextView) itemView.findViewById(R.id.textViewFullName);
+
+
         }
     }
 }

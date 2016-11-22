@@ -35,4 +35,10 @@ public class FirebaseService {
        return firebaseAuth.getCurrentUser();
     }
 
+    public static DatabaseReference getUSerListRef()
+    {
+       return rootRef.child("Users");
+    }
+
+
 }

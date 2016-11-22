@@ -22,11 +22,11 @@
             android:src="@drawable/user_upload" />
 
         <TextView
-            android:id="@+id/text_view_user_name"
+            android:id="@+id/text_view_peer_name"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight=".8"
-            android:padding="15dp"
+            android:padding="10dp"
             android:text="User Name"
             android:textSize="20dp"
             android:textStyle="bold" />

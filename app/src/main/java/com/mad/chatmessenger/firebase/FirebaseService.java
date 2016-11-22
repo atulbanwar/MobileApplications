@@ -40,5 +40,8 @@ public class FirebaseService {
        return rootRef.child("Users");
     }
 
-
+    public static DatabaseReference getCurrentChatRef(String currentChatId)
+    {
+        return rootRef.child("Messages").child(currentChatId).getRef();
+    }
 }

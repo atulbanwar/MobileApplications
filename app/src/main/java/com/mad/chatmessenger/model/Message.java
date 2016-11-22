@@ -9,7 +9,9 @@ public class Message {
     private String type;
     private String text;
     private String imageUrl;
+    private String userId;
     private Boolean isRead;
+    private String time;
 
     public String getId() {
         return id;
@@ -25,6 +27,14 @@ public class Message {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getUserId() {
+        return userId;
+    }
+
+    public void setUserId(String userId) {
+        this.userId = userId;
     }
 
     public Boolean getRead() {
@@ -49,5 +59,13 @@ public class Message {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getTime() {
+        return time;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

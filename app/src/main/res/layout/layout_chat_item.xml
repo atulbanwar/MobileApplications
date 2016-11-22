@@ -46,7 +46,7 @@
             android:textSize="15sp" />
 
         <ImageView
-            android:id="@+id/image_view_delete"
+            android:id="@+id/image_view_delete_message"
             android:layout_width="0dp"
             android:layout_height="20dp"
             android:layout_weight=".05"

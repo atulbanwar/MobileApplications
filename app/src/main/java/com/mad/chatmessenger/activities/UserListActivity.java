@@ -35,7 +35,6 @@ public class UserListActivity extends MenuBaseActivity {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         currentUSerId=FirebaseService.GetCurrentUser().getUid();
-
     }
 
 
@@ -53,7 +52,6 @@ public class UserListActivity extends MenuBaseActivity {
                             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
                             finish();
-
                         }
                     }).create().show();
         }
@@ -74,16 +72,11 @@ public class UserListActivity extends MenuBaseActivity {
                 TextView fullNameTextView = viewHolder.fullName;
                 ImageView thumbnailImageView = viewHolder.displayPicThumbnail;
                 final View view = viewHolder.view;
-
-
                     fullNameTextView.setText(model.getFirstName() + " " + model.getLastName());
-
-
                     Picasso.with(UserListActivity.this).load(model.getImagePath()).into(thumbnailImageView);
                     thumbnailImageView.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(v.getContext(), "Image Clicked", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(view.getContext(), ProfileViewActivity.class);
                             intent.putExtra(USER_ID, model.getUserID());
                             startActivity(intent);
@@ -92,7 +85,9 @@ public class UserListActivity extends MenuBaseActivity {
                     view.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            Toast.makeText(v.getContext(), "Item Clicked", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(view.getContext(), ChatActivity.class);
+                            intent.putExtra(USER_ID, model.getUserID());
+                            startActivity(intent);
                         }
                     });
                 }

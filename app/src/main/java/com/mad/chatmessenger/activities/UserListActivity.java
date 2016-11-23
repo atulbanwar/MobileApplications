@@ -80,11 +80,11 @@ public class UserListActivity extends MenuBaseActivity {
                 fullNameTextView.setText(model.getFirstName() + " " + model.getLastName());
 
                 HashMap<String, Integer> unreadMessageInfo = model.getUnreadMessageInfo();
-                if (unreadMessageInfo != null ) {
+                if (unreadMessageInfo != null) {
                     for (Map.Entry<String, Integer> entry : unreadMessageInfo.entrySet()) {
                         String key = entry.getKey();
                         if (key.equals(FirebaseService.getFirebaseAuth().getCurrentUser().getUid())) {
-                            if (entry.getValue().equals(0) ) {
+                            if (entry.getValue().equals(0)) {
                                 unreadMessageCount.setVisibility(View.INVISIBLE);
                             } else {
                                 unreadMessageCount.setText(entry.getValue().toString());
@@ -92,11 +92,10 @@ public class UserListActivity extends MenuBaseActivity {
                         }
                     }
                 } else {
-                    unreadMessageCount.setVisibility(View.INVISIBLE);
+                    // This is magic
                 }
 
-                if( unreadMessageCount.getText().toString().equals(""))
-                {
+                if (unreadMessageCount.getText().toString().equals("")) {
                     unreadMessageCount.setVisibility(View.INVISIBLE);
                 }
 

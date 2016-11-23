@@ -21,6 +21,9 @@ import com.mad.chatmessenger.firebase.FirebaseService;
 import com.mad.chatmessenger.model.User;
 import com.squareup.picasso.Picasso;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class UserListActivity extends MenuBaseActivity {
 
     private RecyclerView mRecyclerView;
@@ -34,7 +37,7 @@ public class UserListActivity extends MenuBaseActivity {
         mRecyclerView = (RecyclerView) findViewById(R.id.recylerView);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
-        currentUSerId=FirebaseService.GetCurrentUser().getUid();
+        currentUSerId = FirebaseService.GetCurrentUser().getUid();
     }
 
 
@@ -71,26 +74,45 @@ public class UserListActivity extends MenuBaseActivity {
             protected void populateViewHolder(UserViewHolder viewHolder, final User model, int position) {
                 TextView fullNameTextView = viewHolder.fullName;
                 ImageView thumbnailImageView = viewHolder.displayPicThumbnail;
+                TextView unreadMessageCount = viewHolder.unreadMessageCount;
+
                 final View view = viewHolder.view;
-                    fullNameTextView.setText(model.getFirstName() + " " + model.getLastName());
-                    Picasso.with(UserListActivity.this).load(model.getImagePath()).into(thumbnailImageView);
-                    thumbnailImageView.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(view.getContext(), ProfileViewActivity.class);
-                            intent.putExtra(USER_ID, model.getUserID());
-                            startActivity(intent);
+                fullNameTextView.setText(model.getFirstName() + " " + model.getLastName());
+
+                HashMap<String, Integer> unreadMessageInfo = model.getUnreadMessageInfo();
+                if (unreadMessageInfo != null) {
+                    for (Map.Entry<String, Integer> entry : unreadMessageInfo.entrySet()) {
+                        String key = entry.getKey();
+                        if (key.equals(FirebaseService.getFirebaseAuth().getCurrentUser().getUid())) {
+                            if (entry.getValue().equals(0)) {
+                                unreadMessageCount.setText("");
+                            } else {
+                                unreadMessageCount.setText(entry.getValue().toString());
+                            }
                         }
-                    });
-                    view.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            Intent intent = new Intent(view.getContext(), ChatActivity.class);
-                            intent.putExtra(USER_ID, model.getUserID());
-                            startActivity(intent);
-                        }
-                    });
+                    }
+                } else {
+                    unreadMessageCount.setText("");
                 }
+
+                Picasso.with(UserListActivity.this).load(model.getImagePath()).into(thumbnailImageView);
+                thumbnailImageView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(view.getContext(), ProfileViewActivity.class);
+                        intent.putExtra(USER_ID, model.getUserID());
+                        startActivity(intent);
+                    }
+                });
+                view.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        Intent intent = new Intent(view.getContext(), ChatActivity.class);
+                        intent.putExtra(USER_ID, model.getUserID());
+                        startActivity(intent);
+                    }
+                });
+            }
 
         };
 
@@ -98,17 +120,17 @@ public class UserListActivity extends MenuBaseActivity {
     }
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {
-
         View view;
         ImageView displayPicThumbnail;
         TextView fullName;
+        TextView unreadMessageCount;
 
         public UserViewHolder(final View itemView) {
             super(itemView);
             displayPicThumbnail = (ImageView) itemView.findViewById(R.id.imageViewThumbnail);
             fullName = (TextView) itemView.findViewById(R.id.textViewFullName);
+            unreadMessageCount = (TextView) itemView.findViewById(R.id.text_view_unread_count);
             view = itemView;
-
         }
     }
 }

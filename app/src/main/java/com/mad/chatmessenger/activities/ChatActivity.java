@@ -41,6 +41,8 @@ public class ChatActivity extends MenuBaseActivity {
     private String peerUserName;
     private String currentChatId;
 
+    private int unreadCount = 0;
+
     private static int SELECT_PICTURE = 1;
 
     private RecyclerView recyclerViewMessages;
@@ -105,6 +107,40 @@ public class ChatActivity extends MenuBaseActivity {
                             progressDialog.dismiss();
                         }
                     });
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+            FirebaseService.getUSerListRef().child(currentUserId).child("unreadMessageInfo").child(peerUserId).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String abc = "";
+                    if (dataSnapshot.getValue() != null) {
+                        unreadCount = Integer.parseInt(dataSnapshot.getValue().toString());
+                    }
+                    //User currentUser = dataSnapshot.getValue(User.class);
+                    //currentUserName = currentUser.getFirstName() + " " + currentUser.getLastName();
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
+            FirebaseService.getUSerListRef().child(peerUserId).child("unreadMessageInfo").child(currentUserId).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    String abc = "";
+                    if (dataSnapshot.getValue() != null) {
+                        FirebaseService.getUSerListRef().child(peerUserId).child("unreadMessageInfo").child(currentUserId).setValue(0);
+                    }
+                    //User currentUser = dataSnapshot.getValue(User.class);
+                    //currentUserName = currentUser.getFirstName() + " " + currentUser.getLastName();
                 }
 
                 @Override
@@ -183,6 +219,9 @@ public class ChatActivity extends MenuBaseActivity {
 
         FirebaseService.getCurrentChatRef(currentChatId).push().setValue(message);
 
+        unreadCount = unreadCount + 1;
+        FirebaseService.getUSerListRef().child(currentUserId).child("unreadMessageInfo").child(peerUserId).setValue(unreadCount);
+
         editTextMessageToSend.setText("");
     }
 
@@ -224,6 +263,9 @@ public class ChatActivity extends MenuBaseActivity {
                             message.setTime(Calendar.getInstance().getTime().toString());
 
                             FirebaseService.getCurrentChatRef(currentChatId).push().setValue(message);
+
+                            unreadCount = unreadCount + 1;
+                            FirebaseService.getUSerListRef().child(currentUserId).child("unreadMessageInfo").child(peerUserId).setValue(unreadCount);
                         }
                     });
 

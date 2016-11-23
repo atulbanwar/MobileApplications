@@ -36,12 +36,14 @@ import com.mad.chatmessenger.model.User;
 
 public class MainActivity extends AppCompatActivity {
 
-    public static boolean isSignUpInProgress = false;
     private GoogleApiClient mGoogleApiClient;
     private SignInButton signInButton;
     private static final int RC_SIGN_IN=9001;
     private ProgressDialog progressDialog;
     private CallbackManager mCallbackManager;
+    public static boolean firstTimeFacebookUser=false;
+    public static boolean firstTimeGoogleUser =false;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -86,17 +88,13 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onCancel() {
-                // [START_EXCLUDE]
-  //              updateUI(null);
-                // [END_EXCLUDE]
+
             }
 
 
             @Override
             public void onError(FacebookException error) {
-                // [START_EXCLUDE]
-//                updateUI(null);
-                // [END_EXCLUDE]
+                Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -113,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         progressDialog.show();
+        mCallbackManager.onActivityResult(requestCode, resultCode, data);
         // Result returned from launching the Intent from GoogleSignInApi.getSignInIntent(...);
         if (requestCode == RC_SIGN_IN) {
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
@@ -153,10 +152,11 @@ public class MainActivity extends AppCompatActivity {
                                     if(dataSnapshot.hasChild(firebaseUser.getUid()))
                                     {
 
-                                        //DO nothing
+
                                     }else
                                     {
                                         User user = new User();
+                                        firstTimeGoogleUser = true;
                                         user.setUserID(firebaseUser.getUid());
                                         FirebaseService.getRootRef().child("Users").child(firebaseUser.getUid()).setValue(user);
                                         Toast.makeText(MainActivity.this, "Please update profile details", Toast.LENGTH_SHORT).show();
@@ -202,9 +202,6 @@ public class MainActivity extends AppCompatActivity {
 
 
     private void handleFacebookAccessToken(AccessToken token) {
-        // [START_EXCLUDE silent]
-        //showProgressDialog();
-        // [END_EXCLUDE]
 
         AuthCredential credential = FacebookAuthProvider.getCredential(token.getToken());
         FirebaseService.getFirebaseAuth().signInWithCredential(credential)
@@ -217,11 +214,36 @@ public class MainActivity extends AppCompatActivity {
                         // signed in user can be handled in the listener.
                         if (!task.isSuccessful()) {
 
-                        }
+                        }{
+                            final FirebaseUser firebaseUser = FirebaseService.getFirebaseAuth().getCurrentUser();
 
-                        // [START_EXCLUDE]
-                        //hideProgressDialog();
-                        // [END_EXCLUDE]
+                            FirebaseService.getRootRef().child("Users").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(DataSnapshot dataSnapshot) {
+                                    Intent intent = new Intent(MainActivity.this, BaseActivity.class);
+                                    if(dataSnapshot.hasChild(firebaseUser.getUid()))
+                                    {
+
+
+
+                                    }else
+                                    {
+                                        User user = new User();
+                                        firstTimeFacebookUser=true;
+                                        user.setUserID(firebaseUser.getUid());
+                                        FirebaseService.getRootRef().child("Users").child(firebaseUser.getUid()).setValue(user);
+                                        Toast.makeText(MainActivity.this, "Please update profile details", Toast.LENGTH_SHORT).show();
+                                    }
+                                    startActivity(intent);
+                                }
+
+                                @Override
+                                public void onCancelled(DatabaseError databaseError) {
+
+                                }
+                            });
+                        }
+                        progressDialog.dismiss();
                     }
                 });
     }

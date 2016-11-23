@@ -65,7 +65,7 @@ public class UserListActivity extends MenuBaseActivity {
                 User.class,
                 R.layout.user_list_recycler_layout,
                 UserViewHolder.class,
-                FirebaseService.getUSerListRef()
+                FirebaseService.getUSerListRef().orderByChild("firstName")
         ) {
             @Override
             protected void populateViewHolder(UserViewHolder viewHolder, final User model, int position) {

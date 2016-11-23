@@ -158,7 +158,16 @@ public class ProfileUpdateActivity extends AppCompatActivity {
     }
 
     public void actionCancel(View view) {
-        this.onBackPressed();
+        if(MainActivity.firstTimeFacebookUser || MainActivity.firstTimeGoogleUser)
+        {
+            Intent intent = new Intent(ProfileUpdateActivity.this, UserListActivity.class);
+            startActivity(intent);
+            MainActivity.firstTimeFacebookUser=false;
+            MainActivity.firstTimeGoogleUser=false;
+        }else
+        {
+            this.onBackPressed();
+        }
     }
 
 

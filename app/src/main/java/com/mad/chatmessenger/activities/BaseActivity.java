@@ -21,6 +21,7 @@ public class BaseActivity extends AppCompatActivity {
 
     public static boolean userSignedIn = false;
     private FirebaseAuth auth= FirebaseService.getFirebaseAuth();
+    private Intent intentObj;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,8 +36,15 @@ public class BaseActivity extends AppCompatActivity {
                     userSignedIn=true;
                     Toast.makeText(BaseActivity.this, "Sign In Successful", Toast.LENGTH_SHORT).show();
                     //TODO add activity reference later
-                    Intent intentObj = new Intent(BaseActivity.this, UserListActivity.class);
-                    startActivity(intentObj);
+
+                    if( MainActivity.firstTimeFacebookUser || MainActivity.firstTimeGoogleUser )
+                    {
+                        intentObj = new Intent(BaseActivity.this, ProfileUpdateActivity.class);
+
+                    }else {
+
+                        intentObj = new Intent(BaseActivity.this, UserListActivity.class);
+                    }startActivity(intentObj);
 
                 }else {
                     Intent intentObj = new Intent(BaseActivity.this, MainActivity.class);

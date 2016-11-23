@@ -300,4 +300,10 @@ public class ChatActivity extends MenuBaseActivity {
             deleteMessage = (ImageView) itemView.findViewById(R.id.image_view_delete_message);
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 }

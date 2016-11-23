@@ -28,11 +28,16 @@
             android:id="@+id/textViewFullName"
             android:layout_gravity="center|fill_horizontal"
             />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_view_unread_count"/>
     </LinearLayout>
 
-    <TextView
+
+    <View
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/text_view_unread_count"/>
+        android:layout_height="1px"
+        android:background="#000"/>
 
 </LinearLayout>

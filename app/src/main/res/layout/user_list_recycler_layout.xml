@@ -36,12 +36,12 @@
             android:text="5"
             android:textSize="15sp"
             android:textStyle="bold"
-            android:textColor="@android:color/white"
-            android:background="@drawable/item"
+            android:textColor="@android:color/black"
             android:padding="10dp"
             android:layout_gravity="center"/>
     </LinearLayout>
 
+    <!--android:background="@drawable/item"-->
 
     <View
         android:layout_width="match_parent"

@@ -53,6 +53,9 @@ public class ChatActivity extends MenuBaseActivity {
 
     FirebaseRecyclerAdapter<Message, ChatActivity.MessageViewHolder> adapter;
 
+    ValueEventListener selfListner = null;
+    ValueEventListener peerListner = null;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -115,7 +118,7 @@ public class ChatActivity extends MenuBaseActivity {
                 }
             });
 
-            FirebaseService.getUSerListRef().child(currentUserId).child("unreadMessageInfo").child(peerUserId).addValueEventListener(new ValueEventListener() {
+            selfListner = FirebaseService.getUSerListRef().child(currentUserId).child("unreadMessageInfo").child(peerUserId).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     String abc = "";
@@ -132,7 +135,7 @@ public class ChatActivity extends MenuBaseActivity {
                 }
             });
 
-            FirebaseService.getUSerListRef().child(peerUserId).child("unreadMessageInfo").child(currentUserId).addValueEventListener(new ValueEventListener() {
+            peerListner = FirebaseService.getUSerListRef().child(peerUserId).child("unreadMessageInfo").child(currentUserId).addValueEventListener(new ValueEventListener() {
                 @Override
                 public void onDataChange(DataSnapshot dataSnapshot) {
                     String abc = "";
@@ -304,6 +307,13 @@ public class ChatActivity extends MenuBaseActivity {
     @Override
     public void onBackPressed() {
         super.onBackPressed();
+        if (selfListner != null) {
+            FirebaseService.getUSerListRef().child(currentUserId).child("unreadMessageInfo").child(peerUserId).removeEventListener(selfListner);
+        }
+
+        if (peerListner != null) {
+            FirebaseService.getUSerListRef().child(peerUserId).child("unreadMessageInfo").child(currentUserId).removeEventListener(peerListner);
+        }
         finish();
     }
 }

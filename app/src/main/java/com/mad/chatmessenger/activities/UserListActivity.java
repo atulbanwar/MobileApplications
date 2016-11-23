@@ -80,10 +80,6 @@ public class UserListActivity extends MenuBaseActivity {
                 fullNameTextView.setText(model.getFirstName() + " " + model.getLastName());
 
                 HashMap<String, Integer> unreadMessageInfo = model.getUnreadMessageInfo();
-                if( unreadMessageCount.getText().toString()=="")
-                {
-                    unreadMessageCount.setVisibility(View.INVISIBLE);
-                }
                 if (unreadMessageInfo != null ) {
                     for (Map.Entry<String, Integer> entry : unreadMessageInfo.entrySet()) {
                         String key = entry.getKey();
@@ -96,6 +92,11 @@ public class UserListActivity extends MenuBaseActivity {
                         }
                     }
                 } else {
+                    unreadMessageCount.setVisibility(View.INVISIBLE);
+                }
+
+                if( unreadMessageCount.getText().toString().equals(""))
+                {
                     unreadMessageCount.setVisibility(View.INVISIBLE);
                 }
 

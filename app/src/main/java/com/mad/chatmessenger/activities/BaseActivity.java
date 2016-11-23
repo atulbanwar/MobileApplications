@@ -34,9 +34,6 @@ public class BaseActivity extends AppCompatActivity {
                 FirebaseUser user = firebaseAuth.getCurrentUser();
                 if (user != null ) {
                     userSignedIn=true;
-                    Toast.makeText(BaseActivity.this, "Sign In Successful", Toast.LENGTH_SHORT).show();
-                    //TODO add activity reference later
-
                     if( MainActivity.firstTimeFacebookUser || MainActivity.firstTimeGoogleUser )
                     {
                         intentObj = new Intent(BaseActivity.this, ProfileUpdateActivity.class);

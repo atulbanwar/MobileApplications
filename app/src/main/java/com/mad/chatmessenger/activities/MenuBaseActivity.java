@@ -9,6 +9,7 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.widget.Toast;
 
+import com.facebook.login.LoginManager;
 import com.mad.chatmessenger.R;
 import com.mad.chatmessenger.firebase.FirebaseService;
 
@@ -36,6 +37,7 @@ public class MenuBaseActivity extends AppCompatActivity {
                     progressDiaglog = new ProgressDialog(this);
                     progressDiaglog.setIndeterminate(true);
                     FirebaseService.getFirebaseAuth().signOut();
+                    LoginManager.getInstance().logOut();
                     progressDiaglog.dismiss();
                 } else {
                     Toast.makeText(MenuBaseActivity.this, "You are not logged In", Toast.LENGTH_SHORT).show();

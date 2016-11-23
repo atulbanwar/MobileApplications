@@ -85,14 +85,14 @@ public class UserListActivity extends MenuBaseActivity {
                         String key = entry.getKey();
                         if (key.equals(FirebaseService.getFirebaseAuth().getCurrentUser().getUid())) {
                             if (entry.getValue().equals(0)) {
-                                unreadMessageCount.setText("");
+                                unreadMessageCount.setVisibility(View.INVISIBLE);
                             } else {
                                 unreadMessageCount.setText(entry.getValue().toString());
                             }
                         }
                     }
                 } else {
-                    unreadMessageCount.setText("");
+                    unreadMessageCount.setVisibility(View.INVISIBLE);
                 }
 
                 Picasso.with(UserListActivity.this).load(model.getImagePath()).into(thumbnailImageView);

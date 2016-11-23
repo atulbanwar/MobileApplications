@@ -38,31 +38,6 @@ public class UserListActivity extends MenuBaseActivity {
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         currentUSerId = FirebaseService.GetCurrentUser().getUid();
-    }
-
-
-    @Override
-    public void onBackPressed() {
-        if (BaseActivity.userSignedIn) {
-            new AlertDialog.Builder(this)
-                    .setTitle("Really Exit?")
-                    .setMessage("Are you sure you want to exit?")
-                    .setNegativeButton(android.R.string.no, null)
-                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                        public void onClick(DialogInterface arg0, int arg1) {
-                            Intent intent = new Intent(Intent.ACTION_MAIN);
-                            intent.addCategory(Intent.CATEGORY_HOME);
-                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
-                            finish();
-                        }
-                    }).create().show();
-        }
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
 
         FirebaseRecyclerAdapter<User, UserViewHolder> adapter = new FirebaseRecyclerAdapter<User, UserViewHolder>(
                 User.class,
@@ -87,6 +62,7 @@ public class UserListActivity extends MenuBaseActivity {
                             if (entry.getValue().equals(0)) {
                                 unreadMessageCount.setVisibility(View.INVISIBLE);
                             } else {
+                                Toast.makeText(UserListActivity.this, entry.getValue().toString(), Toast.LENGTH_SHORT).show();
                                 unreadMessageCount.setText(entry.getValue().toString());
                             }
                         }
@@ -121,6 +97,26 @@ public class UserListActivity extends MenuBaseActivity {
         };
 
         mRecyclerView.setAdapter(adapter);
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        if (BaseActivity.userSignedIn) {
+            new AlertDialog.Builder(this)
+                    .setTitle("Really Exit?")
+                    .setMessage("Are you sure you want to exit?")
+                    .setNegativeButton(android.R.string.no, null)
+                    .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface arg0, int arg1) {
+                            Intent intent = new Intent(Intent.ACTION_MAIN);
+                            intent.addCategory(Intent.CATEGORY_HOME);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }).create().show();
+        }
     }
 
     public static class UserViewHolder extends RecyclerView.ViewHolder {

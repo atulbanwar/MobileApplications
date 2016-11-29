@@ -14,6 +14,7 @@ import android.location.LocationManager;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.provider.Settings;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AlertDialog;
@@ -51,6 +52,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
     };
 
     private static final int LOCATION_REQUEST = 1340;
+
+    private static boolean isTackingStarted = false;
 
     /*
     private static final LatLng PERTH = new LatLng(-31.952854, 115.857342);
@@ -105,7 +108,7 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         */
     }
 
-    @TargetApi(Build.VERSION_CODES.M)
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onResume() {
         super.onResume();
@@ -155,28 +158,8 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         }
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case LOCATION_REQUEST:
-                if (canAccessLocation()) {
-                    doLocationThing();
-                } else {
-                    // Toast
-                }
-                break;
-        }
-    }
-
-    private boolean canAccessLocation() {
-        return (hasPermission(Manifest.permission.ACCESS_FINE_LOCATION));
-    }
-
-    private boolean hasPermission(String perm) {
-        return (PackageManager.PERMISSION_GRANTED == ActivityCompat.checkSelfPermission(this, perm));
-    }
-
-    private void doLocationThing() {
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void startTracking() {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             // TODO: Consider calling
             //    ActivityCompat#requestPermissions
@@ -185,14 +168,49 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
             //                                          int[] grantResults)
             // to handle the case where the user grants the permission. See the documentation
             // for ActivityCompat#requestPermissions for more details.
+
+            Toast.makeText(this, "Please provide location access, then long press again to start tracking", Toast.LENGTH_LONG).show();
+            requestPermissions(LOCATION_PERMS, LOCATION_REQUEST);
             return;
         }
 
-        //locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 0, locationListener);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
+    private void stopTracking() {
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+
+            return;
+        }
+
+        locationManager.removeUpdates(locationListener);
     }
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+
+        googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.M)
+            @Override
+            public void onMapLongClick(LatLng latLng) {
+                if (!isTackingStarted) {
+                    isTackingStarted = true;
+                    startTracking();
+                } else {
+                    isTackingStarted = false;
+                    stopTracking();
+                }
+            }
+        });
+
         //googleMap.addMarker(new MarkerOptions().position(new LatLng(0, 0)).title("Marker"));
 
         //googleMap.setMapType(GoogleMap.MAP_TYPE_NORMAL);
@@ -204,20 +222,9 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
                 .snippet("Population: 4,137,400"));;
         mPerth.setTag(0);
 
-        mSydney = googleMap.addMarker(new MarkerOptions()
-                .position(SYDNEY)
-                .title("Sydney"));
-        mSydney.setTag(0);
-
-        mBrisbane = googleMap.addMarker(new MarkerOptions()
-                .position(BRISBANE)
-                .title("Brisbane"));
-        mBrisbane.setTag(0);
-        */
-
         // Set a listener for marker click.
         //googleMap.setOnMarkerClickListener(this);
-        //googleMap.setOnInfoWindowClickListener(this);
+        */
     }
 
     /*
@@ -243,12 +250,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         return false;
     }
 
-    @Override
-    public void onInfoWindowClick(Marker marker) {
-        Toast.makeText(this, "Info window clicked",
-                Toast.LENGTH_SHORT).show();
-    }
-
     class GeoCodingTask extends AsyncTask<String, Void, Address> {
 
         @Override
@@ -271,40 +272,6 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
         protected void onPostExecute(Address address) {
             Log.d("demo", address.toString());
             super.onPostExecute(address);
-        }
-    }
-    */
-
-    /*
-    public void findPlace(View view) {
-        try {
-            Intent intent =
-                    new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_FULLSCREEN)
-                            .setFilter("")
-                            .build(this);
-            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
-        } catch (GooglePlayServicesRepairableException e) {
-            // TODO: Handle the error.
-        } catch (GooglePlayServicesNotAvailableException e) {
-            // TODO: Handle the error.
-        }
-    }
-
-    // A place has been received; use requestCode to track the request.
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
-            if (resultCode == RESULT_OK) {
-                Place place = PlaceAutocomplete.getPlace(this, data);
-                Log.i(TAG, "Place: " + place.getName());
-            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
-                Status status = PlaceAutocomplete.getStatus(this, data);
-                // TODO: Handle the error.
-                Log.i(TAG, status.getStatusMessage());
-
-            } else if (resultCode == RESULT_CANCELED) {
-                // The user canceled the operation.
-            }
         }
     }
     */

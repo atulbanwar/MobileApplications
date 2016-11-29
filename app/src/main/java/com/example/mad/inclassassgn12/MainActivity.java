@@ -32,6 +32,8 @@ import com.google.android.gms.location.places.Place;
 import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
 import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -196,6 +198,12 @@ public class MainActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
+        LatLng sydney = new LatLng(-34, 151);
+        googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
+
+        googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        CameraUpdate zoom = CameraUpdateFactory.zoomTo(20);
+        googleMap.animateCamera(zoom);
 
         googleMap.setOnMapLongClickListener(new GoogleMap.OnMapLongClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.M)

@@ -27,7 +27,8 @@
             android:id="@+id/image_view_add_expense"
             android:layout_width="60sp"
             android:layout_height="60sp"
-            android:background="@drawable/add_icon" />
+            android:background="@drawable/add_icon"
+            android:onClick="goToAddExpense"/>
 
     </LinearLayout>
 

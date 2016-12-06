@@ -178,4 +178,9 @@ public class MainActivity extends Activity {
         super.onDestroy();
         realm.close();
     }
+
+    public void goToAddExpense(View view) {
+        Intent intent = new Intent(MainActivity.this, AddExpenseActivity.class);
+        startActivity(intent);
+    }
 }

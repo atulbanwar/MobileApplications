@@ -7,7 +7,8 @@ import android.view.ViewGroup;
 import android.widget.ListAdapter;
 import android.widget.TextView;
 
-import com.example.mad.inclassassgn13.Pojo.User;
+import com.example.mad.inclassassgn13.Pojo.Expense;
+import com.example.mad.inclassassgn13.R;
 
 import io.realm.OrderedRealmCollection;
 import io.realm.RealmBaseAdapter;
@@ -16,13 +17,14 @@ import io.realm.RealmBaseAdapter;
  * Created by atulb on 12/5/2016.
  */
 
-public class ListViewAdapter extends RealmBaseAdapter<User> implements ListAdapter {
+public class ListViewAdapter extends RealmBaseAdapter<Expense> implements ListAdapter {
 
     private static class ViewHolder {
-        TextView timestamp;
+        TextView expenseName;
+        TextView expenseCost;
     }
 
-    public ListViewAdapter(Context context, OrderedRealmCollection<User> realmResults) {
+    public ListViewAdapter(Context context, OrderedRealmCollection<Expense> realmResults) {
         super(context, realmResults);
     }
 
@@ -31,16 +33,18 @@ public class ListViewAdapter extends RealmBaseAdapter<User> implements ListAdapt
         ViewHolder viewHolder;
         if (convertView == null) {
             convertView = LayoutInflater.from(parent.getContext())
-                    .inflate(android.R.layout.simple_list_item_1, parent, false);
+                    .inflate(R.layout.expense_list_item, parent, false);
             viewHolder = new ViewHolder();
-            viewHolder.timestamp = (TextView) convertView.findViewById(android.R.id.text1);
+            viewHolder.expenseName = (TextView) convertView.findViewById(R.id.text_view_expense_name);
+            viewHolder.expenseCost = (TextView) convertView.findViewById(R.id.text_view_expense_cost);
             convertView.setTag(viewHolder);
         } else {
             viewHolder = (ViewHolder) convertView.getTag();
         }
 
-        User item = adapterData.get(position);
-        viewHolder.timestamp.setText(item.getName());
+        Expense item = adapterData.get(position);
+        viewHolder.expenseName.setText(item.getName());
+        viewHolder.expenseCost.setText(context.getResources().getString(R.string.text_view_expense_cost, String.valueOf(item.getAmount())));
         return convertView;
     }
 }

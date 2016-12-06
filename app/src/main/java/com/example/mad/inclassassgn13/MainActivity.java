@@ -1,88 +1,175 @@
 package com.example.mad.inclassassgn13;
 
 import android.app.Activity;
-import android.app.Application;
-import android.support.v7.app.AppCompatActivity;
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import com.example.mad.inclassassgn13.Adapter.ListViewAdapter;
-import com.example.mad.inclassassgn13.Adapter.RecyclerViewAdapter;
+import com.example.mad.inclassassgn13.Pojo.Expense;
 import com.example.mad.inclassassgn13.Pojo.User;
 
+import java.util.Calendar;
+
 import io.realm.Realm;
-import io.realm.RealmConfiguration;
+import io.realm.RealmChangeListener;
 import io.realm.RealmResults;
 
 
 public class MainActivity extends Activity {
     private Realm realm;
-    RecyclerView recyclerView;
+    RealmResults<Expense> expenses;
+    ListViewAdapter adapter;
+
+    private TextView textViewEmptyList;
+
+    private Spinner spinnerSortBy;
+    private Spinner spinnerFilterBy;
+
+    String[] sortBy;
+    String[] filterBy;
+
+    public static final String DETAIL_KEY = "DETAIL_KEY";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        /*
-        Realm.init(this);
-        RealmConfiguration realmConfiguration = new RealmConfiguration.Builder().build();
-        Realm.setDefaultConfiguration(realmConfiguration);
-        */
+        textViewEmptyList = (TextView) findViewById(R.id.text_view_empty_list);
+        spinnerSortBy = (Spinner) findViewById(R.id.spinner_sort_by);
+        spinnerFilterBy = (Spinner) findViewById(R.id.spinner_filter_by_categories);
+
+        sortBy = getResources().getStringArray(R.array.sort_by);
+        filterBy = getResources().getStringArray(R.array.filter_by);;
 
         realm = Realm.getDefaultInstance();
 
+        /*
         realm.executeTransaction(new Realm.Transaction() {
             @Override
             public void execute(Realm realm) {
-                User myUser = realm.createObject(User.class);
-                myUser.setName("Atul");
-                myUser.setAge(1);
+                Expense expense = realm.createObject(Expense.class);
+                expense.setName("AAA");
+                expense.setAmount(100);
+                expense.setDate(Calendar.getInstance().getTime());
+                expense.setCategory("Groceries");
 
-                myUser = realm.createObject(User.class);
-                myUser.setName("Sanket");
-                myUser.setAge(2);
+                expense = realm.createObject(Expense.class);
+                expense.setName("CCC");
+                expense.setAmount(300);
+                expense.setDate(Calendar.getInstance().getTime());
+                expense.setCategory("Invoice");
+
+                expense = realm.createObject(Expense.class);
+                expense.setName("BBB");
+                expense.setAmount(200);
+                expense.setDate(Calendar.getInstance().getTime());
+                expense.setCategory("Trips");
+
+                expense = realm.createObject(Expense.class);
+                expense.setName("KKK");
+                expense.setAmount(280);
+                expense.setDate(Calendar.getInstance().getTime());
+                expense.setCategory("Trips");
+
+                expense = realm.createObject(Expense.class);
+                expense.setName("FFF");
+                expense.setAmount(210);
+                expense.setDate(Calendar.getInstance().getTime());
+                expense.setCategory("Utilities");
+            }
+        });
+        */
+
+
+        expenses = realm.where(Expense.class).findAll();
+
+        if (expenses.size() > 0) {
+            textViewEmptyList.setVisibility(View.INVISIBLE);
+        } else {
+            textViewEmptyList.setVisibility(View.VISIBLE);
+        }
+
+        adapter = new ListViewAdapter(this, expenses);
+
+        final ListView listView = (ListView) findViewById(R.id.list_view_expenses_items);
+        listView.setAdapter(adapter);
+
+        expenses.addChangeListener(new RealmChangeListener<RealmResults<Expense>>() {
+            @Override
+            public void onChange(RealmResults<Expense> element) {
+                if (element.size() > 0) {
+                    textViewEmptyList.setVisibility(View.INVISIBLE);
+                } else {
+                    textViewEmptyList.setVisibility(View.VISIBLE);
+                }
             }
         });
 
-        RealmResults<User> users = realm.where(User.class).findAll();
-        final ListViewAdapter adapter = new ListViewAdapter(this, users);
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Expense expense = adapter.getItem(position);
+                //Intent intentObj = new Intent(MainActivity.this, AddExpenseActivity.class);
+                //intentObj.putExtra(DETAIL_KEY, expense);
+                //startActivity(intentObj);
+            }
+        });
 
-        ListView listView = (ListView) findViewById(R.id.list_view_name);
-        listView.setAdapter(adapter);
+        /*
         listView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
-                final String userName = adapter.getItem(i).getName();
+                final String expenseName = adapter.getItem(i).getName();
                 realm.executeTransactionAsync(new Realm.Transaction() {
                     @Override
                     public void execute(Realm realm) {
-                        realm.where(User.class).equalTo("name", userName).findAll().deleteAllFromRealm();
+                        realm.where(Expense.class).equalTo("name", expenseName).findAll().deleteAllFromRealm();
                     }
                 });
                 return true;
             }
         });
+        */
 
-        recyclerView = (RecyclerView) findViewById(R.id.recycler_view_name);
-
-        recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        recyclerView.setAdapter(new RecyclerViewAdapter(this, realm.where(User.class).findAllAsync()));
-        recyclerView.setHasFixedSize(true);
-    }
-
-    public void deleteItem(User item) {
-        final String id = item.getName();
-        realm.executeTransactionAsync(new Realm.Transaction() {
+        spinnerSortBy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void execute(Realm realm) {
-                realm.where(User.class).equalTo("name", id)
-                        .findAll()
-                        .deleteAllFromRealm();
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String sortByItem = sortBy[position];
+                expenses = expenses.sort(sortByItem);
+
+                adapter.updateData(expenses);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        spinnerFilterBy.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                String filterByItem = filterBy[position];
+
+                if (filterByItem.equals("Show All")) {
+                    expenses = realm.where(Expense.class).findAll();
+                } else {
+                    expenses = realm.where(Expense.class).equalTo("category", filterByItem).findAll();
+                }
+
+                adapter.updateData(expenses);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
             }
         });
     }

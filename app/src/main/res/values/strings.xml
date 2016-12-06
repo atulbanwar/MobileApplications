@@ -14,7 +14,22 @@
         <item>Others</item>
     </string-array>
 
-    <string name="text_view_expense_cost">$%s</string>
+    <string-array name="filter_by">
+        <item>Show All</item>
+        <item>Groceries</item>
+        <item>Invoice</item>
+        <item>Transportation</item>
+        <item>Shopping</item>
+        <item>Rent</item>
+        <item>Trips</item>
+        <item>Utilities</item>
+        <item>Others</item>
+    </string-array>
+
+    <string-array name="sort_by">
+        <item>name</item>
+        <item>amount</item>
+    </string-array>
 
     <string name="text_view_amount">Amount</string>
     <string name="text_view_date">Date</string>
@@ -33,4 +48,7 @@
 
     <string name="empty_list">There is no expense to show, please add your expenses from the menu.</string>
     <string name="button_cancel">Cancel</string>
+
+    <string name="text_view_sort_by">Sort by:</string>
+    <string name="text_view_expense_cost">$%s</string>
 </resources>

@@ -1,18 +1,11 @@
 package com.example.mad.inclassassgn13.Pojo;
-
-import java.io.Serializable;
-import java.util.Date;
-import java.util.Random;
-
 import io.realm.RealmObject;
 
 /**
  * Created by atulb on 10/17/2016.
  */
 
-public class Expense extends RealmObject implements Serializable {
-
-
+public class Expense extends RealmObject {
     public int getExpenseId() {
         return expenseId;
     }
@@ -54,9 +47,11 @@ public class Expense extends RealmObject implements Serializable {
         this.amount = amount;
     }
 
+
     public String getDate() {
         return date;
     }
+
 
     public void setDate(String date) {
         this.date = date;

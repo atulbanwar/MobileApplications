@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.example.mad.inclassassgn13.Pojo.Expense;
 
 import java.util.Date;
+import java.util.Random;
 
 import io.realm.Realm;
 
@@ -21,6 +22,8 @@ public class AddExpenseActivity extends AppCompatActivity {
     private Spinner spnrCategory;
     private EditText edtTxtAmount;
     private Realm realm;
+    private Expense expense;
+    private int currentExpenseId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,19 +46,24 @@ public class AddExpenseActivity extends AppCompatActivity {
             Toast.makeText(AddExpenseActivity.this, getResources().getString(R.string.error_empty_amount), Toast.LENGTH_SHORT).show();
         } else {
 
-            saveIntoDatabase(expenseName, category, amount);
+            Random rand = new Random();
+            int  randomNum = rand.nextInt(50) + 1;
+
+            saveIntoDatabase(expenseName, category, amount, randomNum);
         }
     }
 
-    private void saveIntoDatabase(final String expenseName, final String category, final double amount) {
+    private void saveIntoDatabase(final String expenseName, final String category, final double amount, final int randomNum) {
         realm.executeTransactionAsync(new Realm.Transaction() {
             @Override
             public void execute(Realm bgRealm) {
-                Expense expense = bgRealm.createObject(Expense.class);
+                expense = bgRealm.createObject(Expense.class);
                 expense.setName(expenseName);
                 expense.setCategory(category);
                 expense.setAmount(amount);
-                expense.setDate(new Date());
+                expense.setExpenseId(randomNum);
+                expense.setDate(new Date().toString());
+                currentExpenseId=randomNum;
             }
         }, new Realm.Transaction.OnSuccess() {
             @Override
@@ -72,7 +80,8 @@ public class AddExpenseActivity extends AppCompatActivity {
     }
 
     private void navigateToMainActivity() {
-        Intent intent = new Intent(AddExpenseActivity.this, MainActivity.class);
+        Intent intent = new Intent(AddExpenseActivity.this, ShowExpenseActivity.class);
+        intent.putExtra("EXPENSE_SHOW", currentExpenseId);
         startActivity(intent);
     }
 

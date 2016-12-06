@@ -64,10 +64,14 @@ public class ShowExpenseActivity extends AppCompatActivity {
 
         if(currentExpense!=null)
         {
+            realm.beginTransaction();
             currentExpense.deleteFromRealm();
+            realm.commitTransaction();
+            finish();
         }else
         {
             Toast.makeText(this, "Not able t delete", Toast.LENGTH_SHORT).show();
+            finish();
         }
     }
 

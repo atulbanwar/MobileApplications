@@ -57,36 +57,35 @@ public class MainActivity extends Activity {
                 Expense expense = realm.createObject(Expense.class);
                 expense.setName("AAA");
                 expense.setAmount(100);
-                expense.setDate(Calendar.getInstance().getTime());
+                expense.setDate(Calendar.getInstance().getTime().toString());
                 expense.setCategory("Groceries");
 
                 expense = realm.createObject(Expense.class);
                 expense.setName("CCC");
                 expense.setAmount(300);
-                expense.setDate(Calendar.getInstance().getTime());
+                expense.setDate(Calendar.getInstance().getTime().toString());
                 expense.setCategory("Invoice");
 
                 expense = realm.createObject(Expense.class);
                 expense.setName("BBB");
                 expense.setAmount(200);
-                expense.setDate(Calendar.getInstance().getTime());
+                expense.setDate(Calendar.getInstance().getTime().toString());
                 expense.setCategory("Trips");
 
                 expense = realm.createObject(Expense.class);
                 expense.setName("KKK");
                 expense.setAmount(280);
-                expense.setDate(Calendar.getInstance().getTime());
+                expense.setDate(Calendar.getInstance().getTime().toString());
                 expense.setCategory("Trips");
 
                 expense = realm.createObject(Expense.class);
                 expense.setName("FFF");
                 expense.setAmount(210);
-                expense.setDate(Calendar.getInstance().getTime());
+                expense.setDate(Calendar.getInstance().getTime().toString());
                 expense.setCategory("Utilities");
             }
         });
         */
-
 
         expenses = realm.where(Expense.class).findAll();
 
@@ -116,9 +115,9 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Expense expense = adapter.getItem(position);
-                //Intent intentObj = new Intent(MainActivity.this, AddExpenseActivity.class);
-                //intentObj.putExtra(DETAIL_KEY, expense);
-                //startActivity(intentObj);
+                Intent intent = new Intent(MainActivity.this, ShowExpenseActivity.class);
+                intent.putExtra("EXPENSE_SHOW", expense.getExpenseId());
+                startActivity(intent);
             }
         });
 

@@ -1,5 +1,6 @@
 package com.example.mad.inclassassgn13.Pojo;
 
+import java.io.Serializable;
 import java.util.Date;
 
 import io.realm.RealmObject;
@@ -8,7 +9,7 @@ import io.realm.RealmObject;
  * Created by atulb on 10/17/2016.
  */
 
-public class Expense extends RealmObject {
+public class Expense extends RealmObject implements Serializable {
     private String name;
     private String category;
     private double amount;

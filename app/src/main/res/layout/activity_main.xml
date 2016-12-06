@@ -4,25 +4,73 @@
     android:id="@+id/activity_main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.mad.inclassassgn13.MainActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context="com.example.mad.inclassassgn13.MainActivity">
 
-    <ListView
-        android:id="@+id/list_view_name"
-        android:layout_width="match_parent"
-        android:layout_height="200dp"></ListView>
-
-    <TextView
+    <LinearLayout
+        android:id="@+id/add_expense_header_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Recycler View: " />
+        android:orientation="horizontal"
+        android:weightSum="1"
+        android:padding="5sp">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_view_name"
+        <TextView
+            android:layout_width="0sp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20sp"
+            android:layout_weight=".98"
+            android:text="@string/text_view_current_expenses_lable"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <ImageView
+            android:id="@+id/image_view_add_expense"
+            android:layout_width="60sp"
+            android:layout_height="60sp"
+            android:background="@drawable/add_icon" />
+
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5sp"
+        android:weightSum="1">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".2"
+            android:text="@string/text_view_sort_by"
+            android:textAppearance="?android:attr/textAppearanceMedium" />
+
+        <Spinner
+            android:id="@+id/spinner_sort_by"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".3"
+            android:entries="@array/sort_by" />
+
+        <Spinner
+            android:id="@+id/spinner_filter_by_categories"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".5"
+            android:entries="@array/filter_by" />
+
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/list_view_expenses_items"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <TextView
+        android:id="@+id/text_view_empty_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp"
+        android:text="@string/empty_list" />
+
 </LinearLayout>

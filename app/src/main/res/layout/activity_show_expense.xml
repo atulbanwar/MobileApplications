@@ -124,13 +124,23 @@
     </TableLayout>
 
     <Button
+        android:text="Delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/button_close"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="41dp"
+        android:id="@+id/button"
+        android:onClick="actionDel"/>
+
+    <Button
         android:layout_width="120sp"
         android:layout_height="wrap_content"
         android:text="@string/button_close"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="20sp"
-        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="101dp"
         android:id="@+id/button_close"
-        />
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:onClick="actionClose"/>
 
 </RelativeLayout>

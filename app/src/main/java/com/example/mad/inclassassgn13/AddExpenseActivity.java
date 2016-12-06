@@ -23,7 +23,6 @@ public class AddExpenseActivity extends AppCompatActivity {
     private EditText edtTxtAmount;
     private Realm realm;
     private Expense expense;
-    private int currentExpenseId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,7 +62,6 @@ public class AddExpenseActivity extends AppCompatActivity {
                 expense.setAmount(amount);
                 expense.setExpenseId(randomNum);
                 expense.setDate(new Date().toString());
-                currentExpenseId=randomNum;
             }
         }, new Realm.Transaction.OnSuccess() {
             @Override
@@ -80,8 +78,7 @@ public class AddExpenseActivity extends AppCompatActivity {
     }
 
     private void navigateToMainActivity() {
-        Intent intent = new Intent(AddExpenseActivity.this, ShowExpenseActivity.class);
-        intent.putExtra("EXPENSE_SHOW", currentExpenseId);
+        Intent intent = new Intent(AddExpenseActivity.this, MainActivity.class);
         startActivity(intent);
     }
 

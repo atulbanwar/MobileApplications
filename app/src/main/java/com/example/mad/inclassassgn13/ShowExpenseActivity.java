@@ -2,8 +2,10 @@ package com.example.mad.inclassassgn13;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mad.inclassassgn13.Pojo.Expense;
 
@@ -56,5 +58,20 @@ public class ShowExpenseActivity extends AppCompatActivity {
         txtViewCategory.setText(currentExpense.getCategory());
         txtViewAmount.setText(String.valueOf(currentExpense.getAmount()));
         txtViewDate.setText(currentExpense.getDate().toString());
+    }
+
+    public void actionDel(View view) {
+
+        if(currentExpense!=null)
+        {
+            currentExpense.deleteFromRealm();
+        }else
+        {
+            Toast.makeText(this, "Not able t delete", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void actionClose(View view) {
+        finish();
     }
 }

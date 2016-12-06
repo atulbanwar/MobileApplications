@@ -1,6 +1,8 @@
 package com.example.mad.inclassassgn13.Pojo;
 
+import java.io.Serializable;
 import java.util.Date;
+import java.util.Random;
 
 import io.realm.RealmObject;
 
@@ -8,11 +10,25 @@ import io.realm.RealmObject;
  * Created by atulb on 10/17/2016.
  */
 
-public class Expense extends RealmObject {
+public class Expense extends RealmObject implements Serializable {
+
+
+    public int getExpenseId() {
+        return expenseId;
+    }
+
+    public void setExpenseId(int expenseId) {
+        this.expenseId = expenseId;
+    }
+
+    private int expenseId;
+
+
+
     private String name;
     private String category;
     private double amount;
-    private Date date;
+    private String date;
 
     public String getName() {
         return name;
@@ -38,11 +54,11 @@ public class Expense extends RealmObject {
         this.amount = amount;
     }
 
-    public Date getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(Date date) {
+    public void setDate(String date) {
         this.date = date;
     }
 }

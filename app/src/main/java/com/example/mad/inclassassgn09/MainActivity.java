@@ -3,35 +3,53 @@ package com.example.mad.inclassassgn09;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
-import android.graphics.Bitmap;import android.os.Bundle;
-import android.util.Log;
+import android.content.SharedPreferences;
+import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+
 import org.ocpsoft.prettytime.PrettyTime;
+
+import java.io.IOException;
 import java.util.Date;
 
-public class MainActivity extends Activity implements MesssageRepository.IData {
-    MesssageRepository messsageRepository;
-    public static final String USER_AUTH = "USER_AUTH";
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.FormBody;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
-    EditText editTextEmail;
-    EditText editTextPassword;
+public class MainActivity extends Activity {
+    private EditText editTextEmail;
+    private EditText editTextPassword;
 
-    ProgressDialog progressDialog;
+    public static ProgressDialog progressDialog;
+    public static final String USER_OBJ = "USER_OBJ";
+    public static SharedPreferences sharedPreferences;
+
+    public static OkHttpClient client = new OkHttpClient();
+    private static GsonBuilder gsonBuilder = new GsonBuilder();
+    public static Gson gson = gsonBuilder.create();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        PrettyTime pt = new PrettyTime();
-        Log.d("demo", pt.format(new Date()));
+        //PrettyTime pt = new PrettyTime();
+        //Log.d("demo", pt.format(new Date()));
 
         progressDialog = new ProgressDialog(this);
         progressDialog.setIndeterminate(true);
 
-        messsageRepository = new MesssageRepository(this, getApplicationContext());
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
 
         /*
         messsageRepository.Login("user@test.com", "test");
@@ -43,38 +61,16 @@ public class MainActivity extends Activity implements MesssageRepository.IData {
 
         editTextEmail = (EditText) findViewById(R.id.editTextEmail);
         editTextPassword = (EditText) findViewById(R.id.editTextPassword);
-    }
 
-    @Override
-    public void LoginResponse(UserResponse userResponse) {
-        progressDialog.dismiss();
-        if (userResponse != null) {
-            Intent intent = new Intent(this, ChatScreen.class);
+        String userResponseStr = sharedPreferences.getString(MainActivity.USER_OBJ, "");
+        if (!userResponseStr.isEmpty()) {
+            UserResponse userResponse = gson.fromJson(userResponseStr, UserResponse.class);
+
+            Intent intent = new Intent(MainActivity.this, ChatScreen.class);
+            intent.putExtra(MainActivity.USER_OBJ, userResponse);
             startActivity(intent);
-        } else {
-            //Toast.makeText(this, "Invalid Credentials", Toast.LENGTH_SHORT).show();
         }
     }
-
-    @Override
-    public void SignupResponse(UserResponse userResponse) {
-    }
-
-    @Override
-    public void GetFileResponse(Bitmap btmp) {
-
-    }
-
-    @Override
-    public void GetMessagesResponse(MessagesResponse messagesResponse) {
-
-    }
-
-    @Override
-    public void AddMessageResponse(MessageResponse messageResponse) {
-
-    }
-
 
     public void actionSignIn(View view) {
         String email = editTextEmail.getText().toString();
@@ -85,8 +81,57 @@ public class MainActivity extends Activity implements MesssageRepository.IData {
             Toast.makeText(this, "Please enter password.", Toast.LENGTH_SHORT).show();
         } else {
             progressDialog.show();
-            messsageRepository.Login(email, password);
+            Login(email, password);
         }
+    }
+
+    public void Login(String email, String password) {
+        RequestBody formBody = new FormBody.Builder()
+                .add("email", email)
+                .add("password", password)
+                .build();
+
+        Request request = new Request.Builder()
+                .url("http://ec2-54-166-14-133.compute-1.amazonaws.com/api/login")
+                .post(formBody)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(Call call, IOException e) {
+                MainActivity.this.runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        Toast.makeText(MainActivity.this, "Invalid Credentails", Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                MainActivity.progressDialog.dismiss();
+
+                if (response.isSuccessful()) {
+                    String responseStr = response.body().string();
+                    UserResponse userResponse = gson.fromJson(responseStr, UserResponse.class);
+
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString(USER_OBJ, MainActivity.gson.toJson(userResponse));
+                    editor.apply();
+
+                    Intent intent = new Intent(MainActivity.this, ChatScreen.class);
+                    intent.putExtra(MainActivity.USER_OBJ, userResponse);
+                    startActivity(intent);
+                } else {
+                    MainActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(MainActivity.this, "Invalid Credentails", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
     }
 
     public void actionSignUp(View view) {

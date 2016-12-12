@@ -60,7 +60,7 @@ public class MesssageRepository {
                     String responseStr = response.body().string();
                     sharedPreferences = PreferenceManager.getDefaultSharedPreferences(appContext);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(MainActivity.USER_AUTH, responseStr);
+                    editor.putString("USER_AUTH", responseStr);
                     editor.apply();
 
                     gson = gsonBuilder.create();
@@ -105,7 +105,7 @@ public class MesssageRepository {
 
                     sharedPreferences = PreferenceManager.getDefaultSharedPreferences(appContext);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putString(MainActivity.USER_AUTH, gson.toJson(userResponse));
+                    editor.putString("USER_AUTH", gson.toJson(userResponse));
                     editor.apply();
 
                     activity.SignupResponse(userResponse);

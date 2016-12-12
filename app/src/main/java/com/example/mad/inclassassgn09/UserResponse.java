@@ -1,6 +1,8 @@
 package com.example.mad.inclassassgn09;
 
-public class UserResponse {
+import java.io.Serializable;
+
+public class UserResponse implements Serializable {
     private String status;
     private String token;
     private int userId;

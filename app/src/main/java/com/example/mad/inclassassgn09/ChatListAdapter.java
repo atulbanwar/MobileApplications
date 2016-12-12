@@ -28,22 +28,15 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-/**
- * Created by Sanket on 10/31/2016.
- */
-
-public class ChatListAdapter extends ArrayAdapter<Message>{
-
+public class ChatListAdapter extends ArrayAdapter<Message> {
     private Context context;
     private ArrayList<Message> objects;
-    private Gson gson;
-    private SharedPreferences sharedPreferences;
+
     public ChatListAdapter(Context context, ArrayList<Message> objects) {
         super(context, R.layout.listview_chat, objects);
         this.context = context;
         this.objects = objects;
     }
-
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -54,57 +47,67 @@ public class ChatListAdapter extends ArrayAdapter<Message>{
             holder = new ViewHolder();
             holder.name = (TextView) convertView.findViewById(R.id.textViewName);
             holder.timeFrom = (TextView) convertView.findViewById(R.id.textViewTime);
-            holder.layoutContainer = (LinearLayout) convertView.findViewById(R.id.linearLayoutContainer);
+            holder.textMessage = (TextView) convertView.findViewById(R.id.textViewMessage);
+            holder.imageMessage = (ImageView) convertView.findViewById(R.id.imageViewMessage);
             convertView.setTag(holder);
         }
+
         holder = (ViewHolder) convertView.getTag();
         TextView textName = holder.name;
         TextView textTimeFrom = holder.timeFrom;
-        LinearLayout layoutContainer = holder.layoutContainer;
+        TextView textMessage = holder.textMessage;
+        final ImageView imageMessage = holder.imageMessage;
 
-        Message message = objects.get(position);
+        final Message message = objects.get(position);
 
-        if(message.getType()=="IMAGE")
-        {
-            TextView chatMessage = new TextView(context);
-            chatMessage.setText(message.getComment());
-            layoutContainer.addView(chatMessage);
-
-        }else if(message.getType()=="IMAGE")
-        {
-            final ImageView image = new ImageView(context);
-
-            OkHttpClient client = new OkHttpClient();
-
-            GsonBuilder gsonBuilder = new GsonBuilder();
-            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(context);
-            gson = gsonBuilder.create();
-            UserResponse userResponse = gson.fromJson(sharedPreferences.getString("USER_AUTH", null), UserResponse.class);
+        textMessage.setText("");
+        imageMessage.setImageBitmap(null);
+        if (message.getType().equals("TEXT")) {
+            textMessage.setText(message.getComment());
+        } else if (message.getType().equals("IMAGE")) {
+            UserResponse userResponse = MainActivity.gson.fromJson(MainActivity.sharedPreferences.getString(MainActivity.USER_OBJ, null), UserResponse.class);
             Request request = new Request.Builder()
                     .url("http://ec2-54-166-14-133.compute-1.amazonaws.com/api/file/" + message.getFileThumbnailId())
                     .header("Authorization", "BEARER " + userResponse.getToken())
                     .build();
 
-            client.newCall(request).enqueue(new Callback() {
+            MainActivity.client.newCall(request).enqueue(new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
-                    Toast.makeText(context, "Invalid Id.", Toast.LENGTH_SHORT).show();
+                    ((ChatScreen) context).runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(context, "Invalid Id.", Toast.LENGTH_SHORT).show();
+                        }
+                    });
                 }
 
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     if (response.isSuccessful()) {
                         InputStream responseStr = response.body().byteStream();
-                        Bitmap btmp = BitmapFactory.decodeStream(responseStr);
-                        image.setImageBitmap(btmp);
+                        final Bitmap btmp = BitmapFactory.decodeStream(responseStr);
+
+                        ((ChatScreen) context).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                imageMessage.setImageBitmap(btmp);
+                            }
+                        });
+
                     } else {
-                        Toast.makeText(context, response.message(), Toast.LENGTH_SHORT).show();
+                        ((ChatScreen) context).runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(context, "Unable to fetch Image", Toast.LENGTH_SHORT).show();
+                            }
+                        });
                     }
                 }
             });
         }
 
-        textName.setText(message.getUserFname()+" "+message.getUserLname());
+        textName.setText(message.getUserFname() + " " + message.getUserLname());
         try {
             textTimeFrom.setText(TimeUtility.prettyDate(message.getCreatedAt()));
         } catch (Exception e) {
@@ -112,12 +115,12 @@ public class ChatListAdapter extends ArrayAdapter<Message>{
         }
 
         return convertView;
-
     }
+
     static class ViewHolder {
         TextView name;
         TextView timeFrom;
-        LinearLayout layoutContainer;
+        TextView textMessage;
+        ImageView imageMessage;
     }
-
 }

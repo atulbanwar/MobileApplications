@@ -1,0 +1,37 @@
+package com.example.mad.inclassassgn09;
+
+import org.ocpsoft.prettytime.PrettyTime;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
+/**
+ * Created by Sanket on 10/31/2016.
+ */
+
+public class TimeUtility     {
+
+
+    /**
+     * Converts String Date to Date object
+     * @param dateContender
+     * @return
+     * @throws Exception
+     */
+    public static String prettyDate(String dateContender) throws Exception {
+        Date stringToDate = null;
+        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss", Locale.ENGLISH);
+
+        try {
+            stringToDate = dateFormat.parse(dateContender);
+        } catch (ParseException e) {
+            throw new Exception("Given date and corresponding format doesn't match");
+        }
+        PrettyTime p = new PrettyTime();
+        return p.format(stringToDate);
+    }
+
+}

@@ -1,0 +1,51 @@
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.atulb.inclassassgn08.ExpenseAppFragment">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/add_expense_header_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="5sp">
+
+            <TextView
+                android:layout_width="1sp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20sp"
+                android:layout_weight="1"
+                android:text="@string/text_view_current_expenses_lable"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <ImageView
+                android:id="@+id/image_view_add_expense"
+                android:layout_width="60sp"
+                android:layout_height="60sp"
+                android:background="@drawable/add_icon" />
+
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/list_view_expenses_items"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/text_view_empty_list"
+            android:text="@string/empty_list"
+            android:layout_marginTop="10sp"
+
+            />
+    </LinearLayout>
+
+</FrameLayout>

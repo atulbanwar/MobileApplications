@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.mad.midterm.MainActivity">
+
+    <LinearLayout
+        android:id="@+id/layout_refresh_sort"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="5sp">
+
+        <ImageButton
+            android:layout_width="40sp"
+            android:layout_height="40sp"
+            android:background="@drawable/refresh_icon"
+            android:clickable="true"
+            android:onClick="refreshAction"/>
+
+        <Space
+            android:layout_width="0sp"
+            android:layout_height="0sp"
+            android:layout_weight="1" />
+
+        <TextView
+            android:id="@+id/text_view_sort_lable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="10sp"
+            android:layout_marginTop="5sp"
+            android:text="@string/text_view_descending"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold" />
+
+        <Switch
+            android:id="@+id/switch_sort"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5sp"
+            android:scrollbarAlwaysDrawHorizontalTrack="true"
+            android:showText="false"
+            android:switchMinWidth="60dp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/layout_refresh_sort"
+        android:weightSum="1"
+        android:orientation="vertical">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            android:id="@+id/list_view_apps"></ListView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.05"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="5dp"
+            android:text="@string/text_view_filtered_apps"
+            android:textStyle="bold"
+            />
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/text_view_no_filtered_apps"
+            android:id="@+id/text_view_no_filtered_apps"
+            android:gravity="center"
+            android:layout_marginTop="60dp"
+            android:textStyle="bold"
+            />
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycle_view_filtered_apps"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="0.5"
+            />
+    </LinearLayout>
+
+</RelativeLayout>

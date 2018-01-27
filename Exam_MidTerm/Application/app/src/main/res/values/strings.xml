@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MidTerm</string>
+
+    <string name="text_view_descending">Descending</string>
+    <string name="text_view_ascending">Ascending</string>
+    <string name="text_view_filtered_apps">Filtered Apps:</string>
+    <string name="text_view_no_filtered_apps">There is no filtered apps to display</string>
+
+    <string name="text_view_app_price_Value">Price: USD %f</string>
+    <string name="msg_no_internet_conn">Please check your internet connection</string>
+</resources>

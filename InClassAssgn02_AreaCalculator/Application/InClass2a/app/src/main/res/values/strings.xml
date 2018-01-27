@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">In Class 2a</string>
+    <string name="length_one">Lenght 1:</string>
+    <string name="length_two">Lenght 2:</string>
+    <string name="enter_length">Enter Length</string>
+    <string name="area">Area:</string>
+    <string name="triangle_area">Area of Triangle</string>
+    <string name="square_area">Area of Square </string>
+    <string name="circle_area">Area of Circle </string>
+    <string name="rectangle_area">Area of Rectangle </string>
+    <string name="clear_all">Clear All </string>
+
+</resources>

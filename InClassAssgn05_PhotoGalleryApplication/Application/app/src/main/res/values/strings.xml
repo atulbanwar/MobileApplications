@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">InClass05</string>
+    <string name="search_hint">Search Keyword</string>
+    <string name="button_go">Go</string>
+    <string-array name="Options">
+        <item>Uncc</item>
+        <item>Android</item>
+        <item>Winter</item>
+        <item>Auora</item>
+        <item>Wonders</item>
+    </string-array>
+
+</resources>

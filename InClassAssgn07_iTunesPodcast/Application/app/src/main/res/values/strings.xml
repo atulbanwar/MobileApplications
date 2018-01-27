@@ -1,0 +1,9 @@
+<resources>
+    <string name="app_name">InClassAssgn07</string>
+
+    <string name="buttonGo">Go</string>
+    <string name="buttonClear">Clear</string>
+
+    <string name="textViewReleaseDate">Released on: %s</string>
+    <string name="textViewSummaryLabel">Summary</string>
+</resources>
